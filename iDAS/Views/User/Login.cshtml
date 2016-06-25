@@ -1,0 +1,242 @@
+﻿@using System.Web.Optimization
+@model iDAS.Models.ModelSchoolUserAccount
+@{
+    ViewBag.Title = "School Admin Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Management System! | </title>Area
+    <!-- Bootstrap -->r-
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    @*<link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />*@
+    <link href="../Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Animate.css -->
+    <link href="https://colorlib.com/polygon/gentelella/css/animate.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../Content/css/iPaymentService.min.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+    <script src="~/vendors/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/vendors/validator/validator.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body class="login">
+    <div>
+        <a class="hiddenanchor" id="signup"></a>
+        <a class="hiddenanchor" id="signin"></a>
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                @Html.Partial("_alerts")
+                <section class="login_content">
+
+                    @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h1>Login Form</h1>
+                        <div>
+                            @Html.TextBoxFor(m => m.SchoolAccountId, new { @class = "form-control", placeholder = "School ID" })
+                            @Html.ValidationMessageFor(m => m.SchoolAccountId, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                        <div>
+                            @Html.TextBoxFor(m => m.UserEmail, new { @class = "form-control", placeholder = "Email" })
+                            @Html.ValidationMessageFor(m => m.UserEmail, string.Empty, new { @class = "help-block error" })
+                        </div>
+
+                        <div>
+                            @Html.TextBoxFor(m => m.UserPassword, new { @class = "form-control", placeholder = "Password", type = "password" })
+                            @Html.ValidationMessageFor(m => m.UserPassword, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        <div>
+                            <input type="submit" class="btn btn-primary submit" value="Log in" />
+                            @*<a class="btn btn-default submit" href="index.html">Log in</a>*@
+                            <a class="reset_pass" onclick="$('#ShowForgotPasswordModal').modal('show');">Lost your password?</a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                            @*<p class="change_link">
+                                New Registration ?
+                                <a href="#signup" class="to_register"> Create Account </a>
+                            </p>*@
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                                <h1><i class="fa fa-book"></i> Student Management !</h1>
+                                <p>All Rights Reserved. CM Technologies (Student Management) &copy; Company @System.DateTime.Now.ToString("yyyy")</p>
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div>
+            <div id="register" class="animate form registration_form">
+                <section class="login_content">
+
+                    @using (Html.BeginForm("Register", "Merchant", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h1>Registration</h1>
+                        <div>
+                            @Html.TextBoxFor(m => m.UserFName, new { @class = "form-control", placeholder = "First Name" })
+                            @Html.ValidationMessageFor(m => m.UserFName, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.UserLName, new { @class = "form-control", placeholder = "Last Name" })
+                            @Html.ValidationMessageFor(m => m.UserLName, string.Empty, new { @class = "help-block error" })
+                        </div>
+
+                        <div>
+                            @Html.TextBoxFor(m => m.UserFatherName, new { @class = "form-control", placeholder = "Father Name" })
+                            @Html.ValidationMessageFor(m => m.UserFatherName, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                        <div>
+                            @Html.TextBoxFor(m => m.UserAddress, new { @class = "form-control", placeholder = "Address" })
+                            @Html.ValidationMessageFor(m => m.UserAddress, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                        <div>
+                            @Html.TextBoxFor(m => m.UserCNIC, new { @class = "form-control", placeholder = "User CNIC" })
+                            @Html.ValidationMessageFor(m => m.UserCNIC, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                          
+                        <div>
+                            @Html.TextBoxFor(m => m.UserCity, new { @class = "form-control", placeholder = "City" })
+                            @Html.ValidationMessageFor(m => m.UserCity, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                         
+                        <div>
+                            @Html.TextBoxFor(m => m.UserCNIC, new { @class = "form-control", placeholder = "User CNIC" })
+                            @Html.ValidationMessageFor(m => m.UserCNIC, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                        <div>
+                            @Html.TextBoxFor(m => m.UserEmail, new { @class = "form-control", placeholder = "User Email" })
+                            @Html.ValidationMessageFor(m => m.UserEmail, string.Empty, new { @class = "help-block error" })
+                        </div>
+
+                        <div>
+                            @Html.TextBoxFor(m => m.UserPassword, new { @class = "form-control", placeholder = "Password", type = "password" })
+                            @Html.ValidationMessageFor(m => m.UserPassword, string.Empty, new { @class = "help-block error" })
+                        </div>
+
+                        <div>
+                            @Html.TextBoxFor(m => m.UserPasswordConfirm, new { @class = "form-control", placeholder = "Re-enter Password", type = "password" })
+                            @Html.ValidationMessageFor(m => m.UserPasswordConfirm, string.Empty, new { @class = "help-block error" })
+                        </div>
+
+                        <div>
+                            @Html.TextBoxFor(m => m.UserContactNumber, new { @class = "form-control", placeholder = "Contact Number", data_inputmask = "'mask' : '(999) 999-9999'" })
+                            <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(m => m.UserContactNumber, string.Empty, new { @class = "help-block error" })
+                        </div>
+
+                        <div>
+                            @Html.TextBoxFor(m => m.UserContactNumber2, new { @class = "form-control", placeholder = "Contact Number 2", data_inputmask = "'mask' : '(999) 999-9999'" })
+                            <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(m => m.UserContactNumber2, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                        <div>
+                            @Html.TextBoxFor(m => m.UserContactNumber3, new { @class = "form-control", placeholder = "Contact Number 3", data_inputmask = "'mask' : '(999) 999-9999'" })
+                            <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(m => m.UserContactNumber3, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                        <div>
+                            @Html.TextBoxFor(m => m.UserReferenceName, new { @class = "form-control", placeholder = "Reference Name" })
+                            @Html.ValidationMessageFor(m => m.UserReferenceName, string.Empty, new { @class = "help-block error" })
+                        </div>
+
+                        <div>
+                            @Html.TextBoxFor(m => m.UserReferenceContact, new { @class = "form-control", placeholder = "Reference Contact", data_inputmask = "'mask' : '(999) 999-9999'" })
+                            <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(m => m.UserReferenceContact, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <span class="btn btn-default btn-file">
+                                <span>Choose file</span>
+                                @Html.TextBoxFor(m => m.UserProfileImage, new { type = "file" })
+                            </span>
+                            <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>
+                        </div>
+
+                        <div>
+                            @Html.TextBoxFor(m => m.UserReferenceAddress, new { @class = "form-control", placeholder = "Reference Address", data_inputmask = "'mask' : '(999) 999-9999'" })
+                            <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(m => m.UserReferenceAddress, string.Empty, new { @class = "help-block error" })
+                        </div>
+                        
+                        <div>
+                            <input type="submit" class="btn btn-primary submit" value="Submit" />
+                            @*<a class="btn btn-default submit" href="index.html">Submit</a>*@
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                            <p class="change_link">
+                                Already a member ?
+                                <a href="#signin" class="to_register"> Log in </a>
+                            </p>
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                                <h1><i class="fa fa-book"></i> Student Management !</h1>
+                                <p>All Rights Reserved. CM Technologies (Student Management) &copy; Company @System.DateTime.Now.ToString("yyyy")</p>
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div>
+        </div>
+        <!-- PopUp Success -->
+        <!-- Button trigger modal -->
+        <button id="btnShowSuccess" type="button" class="btn" data-toggle="modal" style="visibility: hidden;"
+                data-target="#ShowForgotPasswordModal"></button>
+        <!-- Modal -->
+        <div class="modal fade" id="ShowForgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title text-success" id="ShowForgotPasswordModalLabel">
+                            Forget Password
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("ForgotPassword", "Merchant", FormMethod.Post, new { id = "frmForgotPassword" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                <input type="text" class="form-control has-feedback-left" id="EmailAddessForgot" name="EmailAddessForgot" placeholder="Email Address">
+                                <span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+                            </div>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnModelOK" type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#frmForgotPassword').submit();">
+                            Submit
+                        </button>
+                        <button id="btnModelCancel" type="button" class="btn btn-default" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PopUp Success -->
+    </div>
+</body>
+</html>

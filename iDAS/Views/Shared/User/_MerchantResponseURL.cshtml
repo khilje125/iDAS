@@ -1,0 +1,44 @@
+﻿@model iPaymentService.Models.ModelLandingURL
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Response Url <small>Merchant will get transaction response on the following urls.</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br />
+        @using (@Html.BeginForm("LandingURL", "Merchant", FormMethod.Post, new { id = "frmLandingUrl", @class = "form-horizontal form-label-left" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.MerchantSuccessURL, "Success Response URL :", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(m => m.MerchantSuccessURL, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(m => m.MerchantSuccessURL, string.Empty, new { @class = "help-block error" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.MerchantFailURL, "Fail Response URL :", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(m => m.MerchantFailURL, new { @class = "form-control col-md-7 col-xs-12" })
+                    @Html.ValidationMessageFor(m => m.MerchantFailURL, string.Empty, new { @class = "help-block error" })
+                </div>
+            </div>
+            <div class="ln_solid"></div>
+
+            <div class="form-group">
+                <div class="col-md-9 col-md-offset-3">
+                    <button type="submit" class="btn btn-info">Save</button>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+<!-- /.row -->
