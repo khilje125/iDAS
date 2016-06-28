@@ -14,6 +14,7 @@ namespace iDAS
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/jquery-migrate-{version}.js",
                 //"~/vendors/jquery/dist/jquery.min.js",
+                "~/Scripts/jquery.unobtrusive-ajax.js",
                 "~/vendors/bootstrap/dist/js/bootstrap.min.js",
                 "~/vendors/fastclick/lib/fastclick.js",
                 "~/vendors/nprogress/nprogress.js",

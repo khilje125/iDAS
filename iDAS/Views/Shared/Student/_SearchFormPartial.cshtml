@@ -1,0 +1,109 @@
+﻿
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Students <small>saerch student by info.</small></h2>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br />
+        @using (Ajax.BeginForm("Search1", "Student", FormMethod.Post,
+        new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            HttpMethod = "POST",
+            UpdateTargetId = "search-results"
+        }, new { @class = "form-horizontal form-label-left" }))
+        {
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ComputerCode">
+                    Computer Code
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBox("ComputerCode", "", new { @class = "form-control col-md-7 col-xs-12" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="RegNo">
+                    Registration No.
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBox("RegNo", "", new { @class = "form-control col-md-7 col-xs-12" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="StudentName">
+                    Student Name
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBox("StudentName", "", new { @class = "form-control col-md-7 col-xs-12" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="FatherName">
+                    Father Name
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.TextBox("FatherName", "", new { @class = "form-control col-md-7 col-xs-12" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Class</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownList("dropDownClass", new SelectList(ViewBag.dpClass, "Value", "Text", "0"), new { @class = "select2_single form-control" })
+
+
+                    @*<select class="select2_single form-control" tabindex="-1">
+                        <option></option>
+                        <option value="1">Prep</option>
+                        <option value="2">One</option>
+                        <option value="3">Two</option>
+                        <option value="4">Three</option>
+                        <option value="5">Four</option>
+                    </select>*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Section</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DropDownList("dropDownSection", new SelectList(ViewBag.dpSection, "Value", "Text", "0"), new { @class = "select2_single form-control" })
+
+                    @*<select class="select2_single form-control" tabindex="-1">
+                        <option></option>
+                        <option value="1">Lilly</option>
+                        <option value="2">Pensy</option>
+                        <option value="3">Rose</option>
+                    </select>*@
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Section</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    
+                    <select class="select2_single form-control" id="StudentStatus" name="StudentStatus">
+                        <option value="0">Select Status</option>
+                        <option value="1">Present</option>
+                        <option value="2">Left</option>
+                    </select>
+                </div>
+            </div>
+            
+            
+            <div class="ln_solid"></div>
+            <div class="form-group">
+                <div class="col-md-6 col-md-offset-3">
+
+                    <a href="@Url.Action("Search", "Student")" class="btn btn-primary">Reset</a>
+                    @*<button type="submit" class="btn btn-primary">Reset</button>*@
+                    <button id="send" type="submit" class="btn btn-success">Search</button>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

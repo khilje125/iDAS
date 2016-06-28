@@ -1,0 +1,124 @@
+﻿@model IEnumerable<iDAS.Models.ModelStudent>
+@{
+    ViewBag.Title = "Search";
+    
+    Layout = "~/Views/Shared/_MerchantLayout.cshtml";
+}
+@System.Web.Optimization.Scripts.Render("~/js/DataTable")
+<script type="text/javascript">
+    $(document).ready(function () {
+        var handleDataTableButtons = function () {
+            if ($("#datatable-responsive-transactionHistory").length) {
+                $("#datatable-responsive-transactionHistory").DataTable({
+                    dom: "Bfrtip",
+                    buttons: [
+                      {
+                          extend: "copy",
+                          className: "btn-sm"
+                      },
+                      {
+                          extend: "csv",
+                          className: "btn-sm"
+                      },
+                      {
+                          extend: "excel",
+                          className: "btn-sm"
+                      },
+                      //{
+                      //    extend: "pdfHtml5",
+                      //    className: "btn-sm"
+                      //},
+                      {
+                          extend: "print",
+                          className: "btn-sm"
+                      },
+                    ],
+                    responsive: true
+                });
+            }
+        };
+
+        TableManageButtons = function () {
+            "use strict";
+            return {
+                init: function () {
+                    handleDataTableButtons();
+                }
+            };
+        }();
+
+
+        //$('#datatable-responsive-transactionHistory').DataTable();
+        TableManageButtons.init();
+
+    });
+
+</script>
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Student Information <small>find student with search</small></h3>
+        </div>
+        @*<div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+            </div>
+        </div>*@
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Search</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="search-form">
+                        @Html.Action("Search1", "Student")
+                    </div>
+                    <div id="search-form11">
+                        @*@{ Html.RenderAction("Search1", "Student"); }*@
+                       @*@Html.Action("Search", "Student");  // GET action in controller that displays form*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Student Information</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div id="search-results">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

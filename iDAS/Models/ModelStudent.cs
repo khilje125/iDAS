@@ -7,6 +7,12 @@ namespace iDAS.Models
 {
     public class ModelStudent
     {
+        public ModelStudent()
+        {
+            StudentClass = new ModelStudentClass();
+            StudentSection = new ModelStudentSection();
+        }
+
         public int StudentId { get; set; }
         public int ComputerCode { get; set; }
         public int RegNo { get; set; }
@@ -32,5 +38,10 @@ namespace iDAS.Models
         public string Reason { get; set; }
         public int LeaveDues { get; set; }
         public int Status { get; set; }
+        public string StatusText { get; set; }
+
+        public ModelStudentClass StudentClass { get; set; }
+        public ModelStudentSection StudentSection { get; set; }
+
     }
 }
