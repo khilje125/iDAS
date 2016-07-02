@@ -1,4 +1,5 @@
-﻿@model IEnumerable<iDAS.Models.ModelStudent>
+﻿@using iDAS.DAL;
+@model IEnumerable<iDAS.Models.ModelStudent>
            @{
                int _resultCount = Model.Count();
                
@@ -51,8 +52,41 @@
         //$('#datatable-responsive-transactionHistory').DataTable();
         TableManageButtons.init();
 
+        function confirmDiaglogBox(id) {
+            AsyncConfirmYesNo(id);
+        };
+
+        function AsyncConfirmYesNo(controlId) {
+            alert(controlId);
+            var $confirm = $("#countryDelete");
+            $confirm.modal('show');
+            $("#btnConfirm").off('click').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Delete", "Country")',
+                    data: JSON.stringify({ id: controlId }),
+                    success: function (result) {
+                        // debugger;
+                        window.location.reload();
+                        //  window.location.href = result.Url;
+                    },
+                    dataType: "text",
+                    contentType: "application/json; charset=utf-8",
+                    processData: false
+                });
+                $confirm.modal("hide");
+            });
+        };
+
+        function OpenRecordBox() {
+            alert("MEMEMEMMEMEM");
+            $("#countryDelete").show();
+        };
+
+
     });
 
+    
 </script>
 <div class="clearfix"></div>
 <div class="row">
@@ -74,12 +108,14 @@
                             <tr>
                                 <th>Student Id</th>
                                 <th>Student Name</th>
+                                <th>Father Name</th>
                                 <th>Class Name</th>
                                 <th>Section Name</th>
                                 <th>Computer Code</th>
                                 <th>Reg No</th>
                                 <th>Date Of Birth</th>
                                 <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,6 +125,7 @@
                                 <tr>
                                     <td>@item.StudentId</td>
                                     <td>@item.StudentName</td>
+                                    <td>@item.FatherName</td>
                                     <td>@item.StudentClass.ClassName</td>
                                     <td>@item.StudentSection.SectionName</td>
                                     <td>@item.ComputerCode</td>
@@ -108,6 +145,21 @@
                                             <i class="remove-sign">@item.StatusText</i>
                                         </td>
                                     }
+                                    <td>
+                                        @*<a class="btn btn-success" onclick='confirmDiaglogBox'>
+                                            <i class=" glyphicon glyphicon-zoom-in white"></i>
+                                        </a>*@
+
+                                        <a class="btn btn-success" href="#">
+                                            <i class=" glyphicon glyphicon-zoom-in white"></i>
+                                        </a>
+                                        <a href="@Url.Action("Country", "Admin", new { id = EncryptDecrypt.Encrypt(item.StudentId.ToString()) })" class="btn btn-info"><i class="glyphicon glyphicon-edit white"></i></a>
+
+                                        @*@Html.Bootstrap().Button().Class("btn btn-danger").Id("confirmDelete").LoadingText("deleting").PrependIcon(Icons.trash, true)*@
+                                        <a class="btn btn-danger" onclick="OpenRecordBox();" id="btnDelete">
+                                            <i class="glyphicon glyphicon-trash white"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -123,5 +175,26 @@
                 }
             </div>
         </div>
+    </div>
+
+   
+</div>
+
+
+<div class="modal hide fade" id="countryDelete">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-header">Delete Parmanently</h4>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure about delete this ?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn " data-dismiss="modal">Close</a>
+        <a class="btn btn-success" href="#">
+            <i class="glyphicon glyphicon-trash white"></i>
+        </a>
+        @*<button type="button" class="btn btn-danger" id="btnConfirm"><i class="halflings-icon white trash">Delete</i></button>*@
+
     </div>
 </div>
