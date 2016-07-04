@@ -16,11 +16,45 @@ namespace iDAS.Controllers
         //
         // GET: /Add/
 
-        public ActionResult Add()
+        public ActionResult Index()
         {
-            return View();
-        }
+            try
+            {
+                BLLStudent objBLLStudent = new BLLStudent();
+                ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+                ViewBag.dpSection = objBLLStudent.GetClassSectionDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+                var objStudentModel = new ModelStudent();
+               // GetAllStudentData();
+                return PartialView(customview("_StudentInformation", "Student"), objStudentModel);
+                
 
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+        [HttpPost]
+        public ActionResult GetAllStudentData()
+        {
+            try
+            {
+                List<ModelStudent> lstModelStudent = new List<ModelStudent>();
+
+                BLLStudent objBLLStudent = new BLLStudent();
+
+                lstModelStudent = objBLLStudent.GetStudentList();
+                return PartialView(customview("_GetStudentList", "Student"), lstModelStudent);
+
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+       
         //
         // GET: /Search/
         [HttpGet]

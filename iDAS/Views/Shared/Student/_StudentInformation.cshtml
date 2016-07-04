@@ -1,0 +1,288 @@
+﻿@using System.Web.Optimization
+@*@using NavigationRoutes*@
+
+
+@model iDAS.Models.ModelStudent
+@{
+    ViewBag.Title = "Admin Login";
+    Layout = "~/Views/Shared/_MerchantLayout.cshtml";
+}
+
+
+<script type="text/javascript">
+   
+
+    $(document).ready(function () {
+        debugger;
+        $("#fmGetproductGroupItem").submit();
+
+        $('[id*=DateOf]').daterangepicker({
+            singleDatePicker: true,
+            calender_style: "picker_2"
+        }, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+        $('#LeaveDate').daterangepicker({
+            singleDatePicker: true,
+            calender_style: "picker_2"
+        }, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+    });
+
+    function OngetproductGroupItem(response) {
+        if (response > 0) {
+           
+        }
+    }
+
+
+    </script>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+
+            <div class="x_content">
+                @Html.Partial("_alerts")
+                @Html.Partial("_validationSummary")
+                <br />
+                @using (Html.BeginForm("CreateStudentInfo", "StudentData", FormMethod.Post, new { @class = "form-horizontal", id = "frmsubmit" }))
+                {
+                         
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Registrtion # <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.RegNo, new { @class = "form-control col-md-7 col-xs-12", @type = "number", })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Computer Code<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.ComputerCode, new { @class = "form-control col-md-7 col-xs-12", @type = "number", })
+
+                        </div>
+                    </div>
+                          
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Student Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control col-md-7 col-xs-12" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Father Name<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>  
+                    <div class="from-group">
+
+<p>
+M:
+<div class="iradio_flat-green checked" style="position: relative;">
+<input id="genderM" class="flat" type="radio" required="" checked="" value="M" name="gender" data-parsley-multiple="gender" style="position: absolute; opacity: 0;">
+    @Html.RadioButtonFor(mbox => mbox.Sex, "Male", new {@class="data_parsley_multiple"})
+<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins>
+</div>
+F:
+<div class="iradio_flat-green" style="position: relative;">
+ @Html.RadioButtonFor(mbox => mbox.Sex, "FeMale", new {@class="data_parsley_multiple"})
+<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins>
+</div>
+</p>
+                    </div>           
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Class <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(x => x.ClassId, new SelectList(ViewBag.dpClass, "Value", "Text", "Selected"), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Section <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(x => x.SectionId, new SelectList(ViewBag.dpSection, "Value", "Text", "Selected"), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Fee <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.MonthlyFee, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                   
+                     <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Date of Birth</label>
+                <div class="col-md-6 col-sm-6 col-xs-12 xdisplay_inputx form-group has-feedback">
+                      @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control has-feedback-left",@placeholder="Date of Birth" })
+                    
+                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                    <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                </div>
+            </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Address: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Home Phone <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.HomeNumber, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Mobile No <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.MoblieNumber, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Date Of Birth <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.OfficeNumber, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>@*
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Admission Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          @Html.TextBoxFor(m => m.DateOfAdmission, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>*@
+                     
+                     <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Date of Addmission</label>
+                <div class="col-md-6 col-sm-6 col-xs-12 xdisplay_inputx form-group has-feedback">
+                   
+                     @Html.TextBoxFor(m => m.DateOfAdmission, new { @class = "form-control has-feedback-left",@placeholder="Date of Admission" })
+                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                    <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                </div>
+            </div>
+                           
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Dues <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.Dues, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Leave Class <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.LeaveClass, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>@*
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Leave Class<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>*@
+                     
+                     <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Leave Date</label>
+                <div class="col-md-6 col-sm-6 col-xs-12 xdisplay_inputx form-group has-feedback">
+                     @Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control has-feedback-left",@placeholder="Leave Date" })
+                  
+                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                    <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                </div>
+            </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Leave Dues<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.LeaveDues, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Reason<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.Reason, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Reference<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextAreaFor(m => m.Reference, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                                      
+                    @*<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                            Present<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.CheckBoxFor(m => m., htmlAttributes: new { @checked = true })
+
+                        </div>
+                    </div>*@
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+
+                            <input type="submit" class="btn btn-success" value="Submit">
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divCategoriesList">
+
+</div>
+@using (Ajax.BeginForm("GetAllStudentData", "Student", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "divCategoriesList",
+    OnSuccess = "OngetproductGroupItem"
+
+}, new { id = "fmGetproductGroupItem" }))
+{ 
+    
+}
