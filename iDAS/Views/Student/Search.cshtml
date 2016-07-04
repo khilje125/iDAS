@@ -88,11 +88,6 @@
                     <div id="search-form">
                         @Html.Action("Search1", "Student")
                     </div>
-                    <div id="search-form11">
-                        @*@{ Html.RenderAction("Search1", "Student"); }*@
-                       @*@Html.Action("Search", "Student");  // GET action in controller that displays form*@
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -121,6 +116,25 @@
         </div>
     </div>
 
+
+
+    <div class="modal hide fade" id="confirmDailog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-header">Delete Parmanently</h4>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure about delete this ?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn " data-dismiss="modal">Close</a>
+            <a class="btn btn-success" href="#">
+                <i class="glyphicon glyphicon-trash white"></i>
+            </a>
+            @*<button type="button" class="btn btn-danger" id="btnConfirm"><i class="halflings-icon white trash">Delete</i></button>*@
+
+        </div>
+    </div>
 
 
 </div>

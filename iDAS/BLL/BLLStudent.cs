@@ -87,5 +87,33 @@ namespace iDAS.BLL
             return lstClassSection;
         }
 
+        public ModelStudent GetStudentInfoById(decimal StudentID)
+        {
+            ModelStudent objModelStudent = new ModelStudent();
+            DataTable tblStudentInfo = new DataTable();
+            SqlParameter[] param = new SqlParameter[1];
+
+            param[0] = new SqlParameter("@StudentId", StudentID);
+
+            tblStudentInfo = DALCommon.GetDataUsingDataTable("[sp_Admin_GetStudentInfoByStudentId]", param);
+            if (tblStudentInfo.Rows.Count > 0)
+            {
+                objModelStudent.StudentId = Convert.ToInt32(tblStudentInfo.Rows[0]["StudentId"].ToString());
+                objModelStudent.ComputerCode = Convert.ToInt32(tblStudentInfo.Rows[0]["ComputerCode"].ToString());
+                objModelStudent.RegNo = Convert.ToInt32(tblStudentInfo.Rows[0]["RegNo"].ToString());
+                objModelStudent.StudentName = Convert.ToString(tblStudentInfo.Rows[0]["StudentName"].ToString());
+                objModelStudent.FatherName = Convert.ToString(tblStudentInfo.Rows[0]["FatherName"].ToString());
+                objModelStudent.MonthlyFee = Convert.ToInt32(tblStudentInfo.Rows[0]["MonthlyFee"].ToString());
+                //objModelStudent.Sex = Convert.ToInt32(tblStudentInfo.Rows[0]["Sex"].ToString());
+                objModelStudent.DateOfBirth = Convert.ToDateTime(tblStudentInfo.Rows[0]["DateOfBirth"].ToString());
+                objModelStudent.Status = Convert.ToInt32(tblStudentInfo.Rows[0]["Status"].ToString());
+                objModelStudent.ClassId = Convert.ToInt32(tblStudentInfo.Rows[0]["ClassId"].ToString());
+                objModelStudent.SectionId = Convert.ToInt32(tblStudentInfo.Rows[0]["SectionId"].ToString());
+            }
+            return objModelStudent;
+        }
+
+
+
     }
 }

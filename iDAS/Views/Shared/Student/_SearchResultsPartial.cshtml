@@ -1,9 +1,9 @@
 ﻿@using iDAS.DAL;
 @model IEnumerable<iDAS.Models.ModelStudent>
-           @{
-               int _resultCount = Model.Count();
-               
-           }
+@{
+    int _resultCount = Model.Count();
+
+}
 <!-- end: Favicon -->
 @System.Web.Optimization.Scripts.Render("~/js/DataTable")
 <script type="text/javascript">
@@ -77,16 +77,13 @@
                 $confirm.modal("hide");
             });
         };
-
-        function OpenRecordBox() {
-            alert("MEMEMEMMEMEM");
-            $("#countryDelete").show();
-        };
-
-
     });
 
-    
+    function OpenRecordBox() {
+        var $confirm = $("#ShowEditStudentInfoModal");
+        $confirm.modal("show");
+    };
+
 </script>
 <div class="clearfix"></div>
 <div class="row">
@@ -147,16 +144,23 @@
                                     }
                                     <td>
                                         @*<a class="btn btn-success" onclick='confirmDiaglogBox'>
-                                            <i class=" glyphicon glyphicon-zoom-in white"></i>
-                                        </a>*@
+                                                <i class=" glyphicon glyphicon-zoom-in white"></i>
+                                            </a>*@
 
                                         <a class="btn btn-success" href="#">
                                             <i class=" glyphicon glyphicon-zoom-in white"></i>
                                         </a>
-                                        <a href="@Url.Action("Country", "Admin", new { id = EncryptDecrypt.Encrypt(item.StudentId.ToString()) })" class="btn btn-info"><i class="glyphicon glyphicon-edit white"></i></a>
+                                        @Ajax.ActionLink("Edit", "EditStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "editStudentForm",
+                                                OnSuccess = "OpenRecordBox();"
+                                            }, new { @class = "btn btn-success glyphicon glyphicon-edit white" })
+                                        @*<a href="@Url.Action("EditStudent", "Student", new { id = EncryptDecrypt.Encrypt(item.StudentId.ToString()) })" class="btn btn-info"><i class="glyphicon glyphicon-edit white"></i></a>*@
 
                                         @*@Html.Bootstrap().Button().Class("btn btn-danger").Id("confirmDelete").LoadingText("deleting").PrependIcon(Icons.trash, true)*@
-                                        <a class="btn btn-danger" onclick="OpenRecordBox();" id="btnDelete">
+                                        <a class="btn btn-danger" id="btnDelete" onclick="OpenRecordBox()">
                                             <i class="glyphicon glyphicon-trash white"></i>
                                         </a>
                                     </td>
@@ -177,24 +181,38 @@
         </div>
     </div>
 
-   
+    <!-- PopUp Success -->
+    <!-- Button trigger modal -->
+    <button id="btnShowSuccess" type="button" class="btn" data-toggle="modal" style="visibility: hidden;"
+            data-target="#ShowEditStudentInfoModal"></button>
+    <!-- Modal -->
+    <div class="modal fade" id="ShowEditStudentInfoModal" tabindex="-1" role="dialog" aria-labelledby="ShowEditStudentInfoModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title text-success" id="ShowEditStudentInfoModalLabel">
+                        Edit Student Information
+                    </h4>
+                </div>
+                <div id="editStudentForm" class="modal-body">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button id="btnModelOK" type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#frmEditStudentInfo').submit();">
+                        Submit
+                    </button>
+                    <button id="btnModelCancel" type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PopUp Success -->
+
 </div>
 
-
-<div class="modal hide fade" id="countryDelete">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-header">Delete Parmanently</h4>
-    </div>
-    <div class="modal-body">
-        <p>Are you sure about delete this ?</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn " data-dismiss="modal">Close</a>
-        <a class="btn btn-success" href="#">
-            <i class="glyphicon glyphicon-trash white"></i>
-        </a>
-        @*<button type="button" class="btn btn-danger" id="btnConfirm"><i class="halflings-icon white trash">Delete</i></button>*@
-
-    </div>
-</div>

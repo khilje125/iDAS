@@ -136,11 +136,22 @@ namespace iDAS.Controllers
         }
 
         //
-        // GET: /Update/
-
-        public ActionResult Update()
+        // POST: /EditStudent/
+        [HttpPost]
+        public ActionResult EditStudent(string studentID)
         {
-            return View();
+            ModelStudent objModelStudent = new ModelStudent();
+            if (!String.IsNullOrEmpty(studentID.Trim()))
+            {
+                BLLStudent objBLLStudent = new BLLStudent();
+
+                objModelStudent = objBLLStudent.GetStudentInfoById(Convert.ToDecimal(studentID));
+
+                ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+                ViewBag.dpSection = objBLLStudent.GetClassSectionDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+
+            }
+            return PartialView(customview("_EditFormStudent", "Student"), objModelStudent);
         }
 
         //

@@ -386,6 +386,7 @@
     <Content Include="Content\font\glyphiconshalflings-regular.woff" />
     <Content Include="Content\Scripts\jquery-2.2.3.min.map" />
     <Content Include="Content\Scripts\maps\us-unemployment.json" />
+    <Content Include="Reports\ReportStudentsInfo.rpt" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.3.js" />
@@ -3002,6 +3003,7 @@
     <Content Include="Views\Student\Search.cshtml" />
     <Content Include="Views\Shared\Student\_SearchFormPartial.cshtml" />
     <Content Include="Views\Shared\Student\_SearchResultsPartial.cshtml" />
+    <Content Include="Views\Shared\Student\_EditFormStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
