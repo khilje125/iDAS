@@ -31,3 +31,5 @@ E:\Projects\C#\DAS\iDAS\iDAS\bin\System.Web.WebPages.Razor.xml
 E:\Projects\C#\DAS\iDAS\iDAS\obj\Debug\iDAS.dll
 E:\Projects\C#\DAS\iDAS\iDAS\obj\Debug\iDAS.pdb
 E:\Projects\C#\DAS\iDAS\iDAS\obj\Debug\iDAS.csprojResolveAssemblyReference.cache
+E:\Projects\C#\DAS\iDAS\iDAS\bin\EntityFramework.dll
+E:\Projects\C#\DAS\iDAS\iDAS\bin\EntityFramework.xml

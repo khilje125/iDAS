@@ -258,5 +258,22 @@ namespace iDAS.DAL
             }
         }
         #endregion
+
+        #region "Numeric Null Check"
+        public static int isNumericDBNULL(string DbValue)
+        {
+            int _result = 0;
+            if (DBNull.Value.Equals(DbValue.Trim()))
+            {
+                return _result;
+            }
+            if (!String.IsNullOrEmpty(DbValue.Trim()))
+            {
+                return Convert.ToInt32(DbValue.Trim());
+            }
+
+            return _result;
+        }
+        #endregion
     }
 }
