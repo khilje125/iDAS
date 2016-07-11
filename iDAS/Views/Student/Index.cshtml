@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MerchantLayout.cshtml";
+}
+
+<h2>Student Information:</h2>
+<div class="">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>
+                    <i class="fa fa-bars"></i>
+                    Tabs
+                    <small>Float left</small>
+                </h2>
+                <div class="clearfix"></div>
+                <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                    <li class="active" role="presentation">
+                        <a id="home-tab" aria-expanded="true" data-toggle="tab" role="tab" href="#tab_content1">Home</a>
+                    </li>
+                    <li class="" role="presentation">
+                        <a id="profile-tab" aria-expanded="false" data-toggle="tab" role="tab" href="#tab_content2">Profile</a>
+                    </li>
+                    <li class="" role="presentation">
+                        <a id="profile-tab2" aria-expanded="false" data-toggle="tab" role="tab" href="#tab_content3">Profile</a>
+                    </li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div id="tab_content1" class="tab-pane fade active in" aria-labelledby="home-tab" role="tabpanel">
+                       @{Html.RenderAction("AddNewStudent", "Student");} 
+                    </div>
+                    <div id="tab_content2" class="tab-pane fade" aria-labelledby="profile-tab" role="tabpanel">
+                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip</p>
+                    </div>
+                    <div id="tab_content3" class="tab-pane fade" aria-labelledby="profile-tab" role="tabpanel">
+                        <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
