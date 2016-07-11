@@ -24,9 +24,9 @@ namespace iDAS.Controllers
                 ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
                 ViewBag.dpSection = objBLLStudent.GetClassSectionDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
                 var objStudentModel = new ModelStudent();
-               // GetAllStudentData();
+                GetAllStudentData();
                 return PartialView(customview("_StudentInformation", "Student"), objStudentModel);
-                
+               
 
             }
             catch (Exception)
@@ -169,6 +169,24 @@ namespace iDAS.Controllers
             return PartialView("Error");
         }
 
+        //Get Student info by Studentid
+        [HttpPost]
+        public ActionResult ViewStudent(string studentID)
+        {
+            ModelStudent objModelStudent = new ModelStudent();
+            if (!String.IsNullOrEmpty(studentID.Trim()))
+            {
+                BLLStudent objBLLStudent = new BLLStudent();
+
+                objModelStudent = objBLLStudent.GetStudentInfoById(Convert.ToDecimal(studentID));
+
+                ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+                ViewBag.dpSection = objBLLStudent.GetClassSectionDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+
+            }
+            return PartialView(customview("_ViewStudentInformation", "Student"), objModelStudent);
+        }
+      
         //
         // POST: /EditStudent/
         [HttpPost]

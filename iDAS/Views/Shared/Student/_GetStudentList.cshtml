@@ -82,15 +82,16 @@
     });
 
 
+   
     function OpenRecordBox() {
-        alert("MEMEMEMMEMEM");
-        $("#countryDelete").show();
+        var $confirm = $("#editStudentForm123");
+        $confirm.modal("show");
     };
 
-    function OpenReordBox() {
-        alert("view call");
-        $("#idVIEW").show();
-    }
+    function OpenRecordBoxForView() {
+        var $confirm = $("#ViewStudentForm");
+        $confirm.modal("show");
+    };
 </script>
 <div class="clearfix"></div>
 <div class="row">
@@ -157,15 +158,31 @@
                                             <i class=" glyphicon glyphicon-zoom-in white"></i>
                                         </a>*@
 
-                                        <a class="btn btn-success reset-class" href="#"  onclick="$('#ShowForgotPasswordModal').modal('show')">;
-                                            <i class=" glyphicon glyphicon-zoom-in white"></i>
+                                        <a  href="#"  onclick="$('#editStudentForm123').modal('show')">
+                                          
                                         </a>
-                                        <a href="@Url.Action("Country", "Admin", new { id = EncryptDecrypt.Encrypt(item.StudentId.ToString()) })" class="btn btn-info"><i class="glyphicon glyphicon-edit white"></i></a>
+                                         @Ajax.ActionLink("Edit", "EditStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "editStudentForm",
+                                                OnSuccess = "OpenRecordBox();"
+                                            }, new { @class = "btn btn-success glyphicon glyphicon-edit white" })
+                                       
+                                         <a  href="#"  onclick="$('#ViewStudentForm').modal('show')">
+                                         
+                                        </a>
+                                         @Ajax.ActionLink("View", "ViewStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "viewStudentForm",
+                                                OnSuccess = "OpenRecordBoxForView();"
+                                            }, new { @class = "btn btn-success glyphicon glyphicon white" })
+                                       
 
                                      
-                                        <a class="btn btn-danger" onclick="OpenRecordBox();" id="btnDelete">
-                                            <i class="glyphicon glyphicon-trash white"></i>
-                                        </a>
+                                        
                                     </td>
                                 </tr>
                             }
@@ -187,7 +204,7 @@
    
 </div>
 
-<div class="modal fade" id="ShowForgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
+<div class="modal fade" id="editStudentForm123" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -195,20 +212,32 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title text-success" id="ShowForgotPasswordModalLabel">
-                            Forget Password
+                            Edit Student Record
                         </h4>
                     </div>
                     <div class="modal-body">
-                     
+                     <div id="editStudentForm"></div>
                     </div>
-                    <div class="modal-footer">
-                        <button id="btnModelOK" type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#frmForgotPassword').submit();">
-                            Submit
+                   
+                </div>
+            </div>
+        </div>
+
+<div class="modal fade" id="ViewStudentForm" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                        <button id="btnModelCancel" type="button" class="btn btn-default" data-dismiss="modal">
-                            Close
-                        </button>
+                        <h4 class="modal-title text-success" id="ShowForgotPasswordModalLabel">
+                            View Student Record
+                        </h4>
                     </div>
+                    <div class="modal-body">
+                     <div id="viewStudentForm"></div>
+                    </div>
+                   
                 </div>
             </div>
         </div>
@@ -229,4 +258,5 @@
         @*<button type="button" class="btn btn-danger" id="btnConfirm"><i class="halflings-icon white trash">Delete</i></button>*@
 
     </div>
-</div>
+
+    </div>

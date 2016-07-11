@@ -45,7 +45,9 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -133,6 +135,7 @@
     <Compile Include="Controllers\DashBoardMerchantController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\StudentDataController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\DALCommon.cs" />
     <Compile Include="DAL\DALUtility.cs" />
@@ -161,6 +164,13 @@
     <Compile Include="Models\ModelSchoolUserAccount.cs" />
     <Compile Include="Models\ModelStudent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -290,6 +300,7 @@
     <Content Include="Content\Scripts\flot\jquery.flot.spline.js" />
     <Content Include="Content\Scripts\iPaymentService.js" />
     <Content Include="Content\Scripts\iPaymentService.min.js" />
+    <Content Include="WebForm1.aspx" />
     <None Include="Content\Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Content\Scripts\jquery-2.2.3.js" />
     <Content Include="Content\Scripts\jquery-2.2.3.min.js" />
@@ -3004,6 +3015,16 @@
     <Content Include="Views\Shared\Student\_SearchFormPartial.cshtml" />
     <Content Include="Views\Shared\Student\_SearchResultsPartial.cshtml" />
     <Content Include="Views\Shared\Student\_EditFormStudent.cshtml" />
+    <Content Include="Views\Shared\Student\_GetStudentList.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\Student\_StudentInformation.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\Student\_ViewStudentInformation.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Student\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

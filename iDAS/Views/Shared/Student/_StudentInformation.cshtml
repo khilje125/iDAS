@@ -38,8 +38,8 @@
 
 
     </script>
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
+
+
         <div class="x_panel">
 
             <div class="x_content">
@@ -91,22 +91,21 @@
                             @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
                         </div>
                     </div>  
-                    <div class="from-group">
-
-<p>
-M:
-<div class="iradio_flat-green checked" style="position: relative;">
-<input id="genderM" class="flat" type="radio" required="" checked="" value="M" name="gender" data-parsley-multiple="gender" style="position: absolute; opacity: 0;">
-    @Html.RadioButtonFor(mbox => mbox.Sex, "Male", new {@class="data_parsley_multiple"})
-<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins>
+                     <div class="form-group">
+<label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+<div class="col-md-6 col-sm-6 col-xs-12">
+<div id="gender" class="btn-group" data-toggle="buttons">
+<label class="btn btn-default" data-toggle-passive-class="btn-default" data-toggle-class="btn-primary">
+<input type="radio" value="Male" name="Sex" data-parsley-multiple="gender">
+  Male  
+</label>
+<label class="btn btn-primary" data-toggle-passive-class="btn-default" data-toggle-class="btn-primary">
+<input type="radio" value="Female" name="Sex" data-parsley-multiple="gender">
+Female
+</label>
 </div>
-F:
-<div class="iradio_flat-green" style="position: relative;">
- @Html.RadioButtonFor(mbox => mbox.Sex, "FeMale", new {@class="data_parsley_multiple"})
-<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;"></ins>
 </div>
-</p>
-                    </div>           
+              </div>      
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Class <span class="required">*</span>
@@ -270,8 +269,6 @@ F:
                 }
             </div>
         </div>
-    </div>
-</div>
 <div id="divCategoriesList">
 
 </div>

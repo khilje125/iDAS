@@ -8,6 +8,7 @@
 @System.Web.Optimization.Scripts.Render("~/js/DataTable")
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#editStudentForm").submit();
         var handleDataTableButtons = function () {
             if ($("#datatable-responsive-transactionHistory").length) {
                 $("#datatable-responsive-transactionHistory").DataTable({
@@ -147,9 +148,9 @@
                                                 <i class=" glyphicon glyphicon-zoom-in white"></i>
                                             </a>*@
 
-                                        <a class="btn btn-success" href="#">
+@*                                        <a class="btn btn-success" href="#">
                                             <i class=" glyphicon glyphicon-zoom-in white"></i>
-                                        </a>
+                                        </a>*@
                                         @Ajax.ActionLink("Edit", "EditStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
                                             {
                                                 InsertionMode = InsertionMode.Replace,
