@@ -19,7 +19,7 @@
     @* favicons and touch icons go here *@
 
     <!-- start: Favicon -->
-    <link rel="shortcut icon" href="@Url.Content("~/Content/images/favicon.ico")">
+    <link rel="shortcut icon" href=@Url.Content("~/Content/images/favicon.ico")>
     <!-- end: Favicon -->
     @Scripts.Render("~/js")
     @RenderSection("Scripts", required: false)
@@ -61,10 +61,16 @@
                                     <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="../../User/Home">Dashboard</a></li>
+<<<<<<< HEAD
                                          <li>@Html.ActionLink("Add Student","Index","Student")</li>
                                          <li>@Html.ActionLink("Search Student","Search","Student")</li>
 
 
+=======
+                                        <li><a href="@Url.Action("Search","Student")">Search Student</a></li>
+                                        <li><a href="@Url.Action("SearchStudentFee", "StudentFee")">Search Student Fee</a></li>
+                                        <li><a href="../../User/TransactionHistory">Transaction History</a></li>
+>>>>>>> bc95dfe471603825b16695d409858798a0544ea3
                                     </ul>
                                 </li>
                                 <!-- sidebar menu reder from JS Dynamically -->
@@ -130,7 +136,7 @@
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    <a href="https://codemader.com">CM Technologies </a> CM Technologies &copy; Company @System.DateTime.Now.ToString("yyyy")
+                    <a href="https://codemader.com">CM Technologies </a> CM Technologies (Payment Service) &copy; Company @System.DateTime.Now.ToString("yyyy")
                 </div>
                 <div class="clearfix"></div>
             </footer>
