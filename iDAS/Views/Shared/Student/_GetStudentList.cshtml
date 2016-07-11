@@ -1,14 +1,13 @@
-﻿@using iDAS.DAL;
-@model IEnumerable<iDAS.Models.ModelStudent>
-@{
-    int _resultCount = Model.Count();
-
-}
+﻿ @using iDAS.DAL;
+ @model IEnumerable<iDAS.Models.ModelStudent>
+           @{
+               int _resultCount = Model.Count();
+               
+           }
 <!-- end: Favicon -->
 @System.Web.Optimization.Scripts.Render("~/js/DataTable")
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#editStudentForm").submit();
         var handleDataTableButtons = function () {
             if ($("#datatable-responsive-transactionHistory").length) {
                 $("#datatable-responsive-transactionHistory").DataTable({
@@ -78,13 +77,21 @@
                 $confirm.modal("hide");
             });
         };
+
+      
     });
 
+
+   
     function OpenRecordBox() {
-        var $confirm = $("#ShowEditStudentInfoModal");
+        var $confirm = $("#editStudentForm123");
         $confirm.modal("show");
     };
 
+    function OpenRecordBoxForView() {
+        var $confirm = $("#ViewStudentForm");
+        $confirm.modal("show");
+    };
 </script>
 <div class="clearfix"></div>
 <div class="row">
@@ -112,6 +119,7 @@
                                 <th>Computer Code</th>
                                 <th>Reg No</th>
                                 <th>Date Of Birth</th>
+                                <th>Date Of Admission</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -129,6 +137,8 @@
                                     <td>@item.ComputerCode</td>
                                     <td>@item.RegNo</td>
                                     <td>@item.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                                      <td>@item.DateOfAdmission.ToString("dd/MM/yyyy")</td>
+
                                     @if (item.Status == 1)
                                     {
                                         <td class="btn btn-success">@item.StatusText</td>
@@ -145,28 +155,34 @@
                                     }
                                     <td>
                                         @*<a class="btn btn-success" onclick='confirmDiaglogBox'>
-                                                <i class=" glyphicon glyphicon-zoom-in white"></i>
-                                            </a>*@
-
-@*                                        <a class="btn btn-success" href="#">
                                             <i class=" glyphicon glyphicon-zoom-in white"></i>
                                         </a>*@
-                                        @Ajax.ActionLink("Edit", "EditStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
+
+                                        <a  href="#"  onclick="$('#editStudentForm123').modal('show')">
+                                          
+                                        </a>
+                                         @Ajax.ActionLink("Edit", "EditStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
                                             {
                                                 InsertionMode = InsertionMode.Replace,
                                                 HttpMethod = "POST",
                                                 UpdateTargetId = "editStudentForm",
                                                 OnSuccess = "OpenRecordBox();"
                                             }, new { @class = "btn btn-success glyphicon glyphicon-edit white" })
-                                        @*<a href="@Url.Action("EditStudent", "Student", new { id = EncryptDecrypt.Encrypt(item.StudentId.ToString()) })" class="btn btn-info"><i class="glyphicon glyphicon-edit white"></i></a>*@
-
-                                        @*@Html.Bootstrap().Button().Class("btn btn-danger").Id("confirmDelete").LoadingText("deleting").PrependIcon(Icons.trash, true)*@
-                                        <a class="btn btn-danger" id="btnDelete" onclick="OpenRecordBox()">
-                                            <i class="glyphicon glyphicon-trash white"></i>
+                                       
+                                         <a  href="#"  onclick="$('#ViewStudentForm').modal('show')">
+                                         
                                         </a>
-                                        <a href="@Url.Action("PrintStudentList", "StudentReport")" class="btn btn-info"><i class="glyphicon glyphicon-print white"></i></a>
+                                         @Ajax.ActionLink("View", "ViewStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "viewStudentForm",
+                                                OnSuccess = "OpenRecordBoxForView();"
+                                            }, new { @class = "btn btn-success glyphicon glyphicon white" })
+                                       
 
-
+                                     
+                                        
                                     </td>
                                 </tr>
                             }
@@ -185,38 +201,62 @@
         </div>
     </div>
 
-    <!-- PopUp Success -->
-    <!-- Button trigger modal -->
-    <button id="btnShowSuccess" type="button" class="btn" data-toggle="modal" style="visibility: hidden;"
-            data-target="#ShowEditStudentInfoModal"></button>
-    <!-- Modal -->
-    <div class="modal fade" id="ShowEditStudentInfoModal" tabindex="-1" role="dialog" aria-labelledby="ShowEditStudentInfoModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title text-success" id="ShowEditStudentInfoModalLabel">
-                        Edit Student Information
-                    </h4>
-                </div>
-                <div id="editStudentForm" class="modal-body">
+   
+</div>
 
-
-                </div>
-                <div class="modal-footer">
-                    <button id="btnModelOK" type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#frmEditStudentInfo').submit();">
-                        Submit
-                    </button>
-                    <button id="btnModelCancel" type="button" class="btn btn-default" data-dismiss="modal">
-                        Close
-                    </button>
+<div class="modal fade" id="editStudentForm123" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title text-success" id="ShowForgotPasswordModalLabel">
+                            Edit Student Record
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div id="editStudentForm"></div>
+                    </div>
+                   
                 </div>
             </div>
         </div>
+
+<div class="modal fade" id="ViewStudentForm" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title text-success" id="ShowForgotPasswordModalLabel">
+                            View Student Record
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div id="viewStudentForm"></div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+<div class="modal hide fade" id="countryDelete">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-header">Delete Parmanently</h4>
     </div>
-    <!-- PopUp Success -->
+    <div class="modal-body">
+        <p>Are you sure about delete this ?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn " data-dismiss="modal">Close</a>
+        <a class="btn btn-success" href="#">
+            <i class="glyphicon glyphicon-trash white"></i>
+        </a>
+        @*<button type="button" class="btn btn-danger" id="btnConfirm"><i class="halflings-icon white trash">Delete</i></button>*@
 
-</div>
+    </div>
 
+    </div>

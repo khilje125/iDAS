@@ -25,7 +25,7 @@ namespace iDAS.Models
         public string Profession { get; set; }
         public string P { get; set; }
         public string Reference { get; set; }
-        public int Sex { get; set; }
+        public string Sex { get; set; }
         public DateTime DateOfAdmission { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
