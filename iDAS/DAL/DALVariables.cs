@@ -16,5 +16,6 @@ namespace iDAS.DAL
         public static string ProfileImage = "ProfileImage";
         //Account Type : 1 Admin ; 2 Merchant
         public static string AccountType = "AccountType";
+        public static string SearchCriteria = "SearchCriteria";
     }
 }

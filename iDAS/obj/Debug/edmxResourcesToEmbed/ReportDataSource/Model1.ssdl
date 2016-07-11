@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DASModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ClassSection">
+    <Key>
+      <PropertyRef Name="SectionId" />
+    </Key>
+    <Property Name="SectionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SectionName" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="AddedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StudentClasses">
+    <Key>
+      <PropertyRef Name="ClassId" />
+    </Key>
+    <Property Name="ClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClassName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AddedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ComputerCode" Type="bigint" />
+    <Property Name="RegNo" Type="bigint" />
+    <Property Name="StudentName" Type="nvarchar" MaxLength="100" />
+    <Property Name="FatherName" Type="nvarchar" MaxLength="100" />
+    <Property Name="ClassId" Type="int" />
+    <Property Name="SectionId" Type="int" />
+    <Property Name="MonthlyFee" Type="int" />
+    <Property Name="Profession" Type="nvarchar" MaxLength="50" />
+    <Property Name="P" Type="nvarchar" MaxLength="50" />
+    <Property Name="Reference" Type="nvarchar" MaxLength="500" />
+    <Property Name="Sex" Type="nvarchar" MaxLength="50" />
+    <Property Name="DateOfAdmission" Type="date" />
+    <Property Name="DateOfBirth" Type="date" />
+    <Property Name="Address" Type="nvarchar" MaxLength="250" />
+    <Property Name="HomeNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="OfficeNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="MoblieNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="AdmissionClass" Type="nvarchar" MaxLength="50" />
+    <Property Name="LeaveDate" Type="date" />
+    <Property Name="Dues" Type="int" />
+    <Property Name="LeaveClass" Type="nvarchar" MaxLength="50" />
+    <Property Name="Reason" Type="nvarchar" MaxLength="250" />
+    <Property Name="LeaveDues" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="tinyint" />
+  </EntityType>
+  <Association Name="FK_Students_ClassSection">
+    <End Role="ClassSection" Type="Self.ClassSection" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClassSection">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_StudentClasses">
+    <End Role="StudentClasses" Type="Self.StudentClasses" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentClasses">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DASModelStoreContainer">
+    <EntitySet Name="ClassSection" EntityType="Self.ClassSection" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StudentClasses" EntityType="Self.StudentClasses" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Students_ClassSection" Association="Self.FK_Students_ClassSection">
+      <End Role="ClassSection" EntitySet="ClassSection" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_StudentClasses" Association="Self.FK_Students_StudentClasses">
+      <End Role="StudentClasses" EntitySet="StudentClasses" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

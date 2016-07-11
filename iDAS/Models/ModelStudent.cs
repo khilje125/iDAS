@@ -11,6 +11,7 @@ namespace iDAS.Models
         {
             StudentClass = new ModelStudentClass();
             StudentSection = new ModelStudentSection();
+            StudentMonthlyFeeList = new List<ModelStudentFee>();
         }
 
         public int StudentId { get; set; }
@@ -40,8 +41,13 @@ namespace iDAS.Models
         public int Status { get; set; }
         public string StatusText { get; set; }
 
-        public ModelStudentClass StudentClass { get; set; }
-        public ModelStudentSection StudentSection { get; set; }
+        public string ClassNameText { get; set; }
+        public string SectionNameText { get; set; }
+
+        public virtual ModelStudentClass StudentClass { get; set; }
+        public virtual ModelStudentSection StudentSection { get; set; }
+
+        public List<ModelStudentFee> StudentMonthlyFeeList { get; set; }
 
     }
 }

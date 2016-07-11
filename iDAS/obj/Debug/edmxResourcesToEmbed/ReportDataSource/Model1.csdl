@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DASModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ClassSection">
+    <Key>
+      <PropertyRef Name="SectionId" />
+    </Key>
+    <Property Name="SectionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SectionName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AddedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_Students_ClassSection" FromRole="ClassSection" ToRole="Students" />
+  </EntityType>
+  <EntityType Name="StudentClass">
+    <Key>
+      <PropertyRef Name="ClassId" />
+    </Key>
+    <Property Name="ClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AddedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_Students_StudentClasses" FromRole="StudentClasses" ToRole="Students" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ComputerCode" Type="Int64" />
+    <Property Name="RegNo" Type="Int64" />
+    <Property Name="StudentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FatherName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ClassId" Type="Int32" />
+    <Property Name="SectionId" Type="Int32" />
+    <Property Name="MonthlyFee" Type="Int32" />
+    <Property Name="Profession" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="P" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Reference" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Sex" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfAdmission" Type="DateTime" Precision="0" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="HomeNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="OfficeNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MoblieNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AdmissionClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LeaveDate" Type="DateTime" Precision="0" />
+    <Property Name="Dues" Type="Int32" />
+    <Property Name="LeaveClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Reason" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="LeaveDues" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Byte" />
+    <NavigationProperty Name="ClassSection" Relationship="Self.FK_Students_ClassSection" FromRole="Students" ToRole="ClassSection" />
+    <NavigationProperty Name="StudentClass" Relationship="Self.FK_Students_StudentClasses" FromRole="Students" ToRole="StudentClasses" />
+  </EntityType>
+  <Association Name="FK_Students_ClassSection">
+    <End Role="ClassSection" Type="Self.ClassSection" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClassSection">
+        <PropertyRef Name="SectionId" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="SectionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Students_StudentClasses">
+    <End Role="StudentClasses" Type="Self.StudentClass" Multiplicity="0..1" />
+    <End Role="Students" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StudentClasses">
+        <PropertyRef Name="ClassId" />
+      </Principal>
+      <Dependent Role="Students">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DASEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ClassSections" EntityType="Self.ClassSection" />
+    <EntitySet Name="StudentClasses" EntityType="Self.StudentClass" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <AssociationSet Name="FK_Students_ClassSection" Association="Self.FK_Students_ClassSection">
+      <End Role="ClassSection" EntitySet="ClassSections" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Students_StudentClasses" Association="Self.FK_Students_StudentClasses">
+      <End Role="StudentClasses" EntitySet="StudentClasses" />
+      <End Role="Students" EntitySet="Students" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

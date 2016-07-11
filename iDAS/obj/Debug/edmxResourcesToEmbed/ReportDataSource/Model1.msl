@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DASModelStoreContainer" CdmEntityContainer="DASEntities">
+    <EntitySetMapping Name="ClassSections">
+      <EntityTypeMapping TypeName="DASModel.ClassSection">
+        <MappingFragment StoreEntitySet="ClassSection">
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentClasses">
+      <EntityTypeMapping TypeName="DASModel.StudentClass">
+        <MappingFragment StoreEntitySet="StudentClasses">
+          <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+          <ScalarProperty Name="AddedDate" ColumnName="AddedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="DASModel.Student">
+        <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="ComputerCode" ColumnName="ComputerCode" />
+          <ScalarProperty Name="RegNo" ColumnName="RegNo" />
+          <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+          <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+          <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+          <ScalarProperty Name="MonthlyFee" ColumnName="MonthlyFee" />
+          <ScalarProperty Name="Profession" ColumnName="Profession" />
+          <ScalarProperty Name="P" ColumnName="P" />
+          <ScalarProperty Name="Reference" ColumnName="Reference" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="DateOfAdmission" ColumnName="DateOfAdmission" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="HomeNumber" ColumnName="HomeNumber" />
+          <ScalarProperty Name="OfficeNumber" ColumnName="OfficeNumber" />
+          <ScalarProperty Name="MoblieNumber" ColumnName="MoblieNumber" />
+          <ScalarProperty Name="AdmissionClass" ColumnName="AdmissionClass" />
+          <ScalarProperty Name="LeaveDate" ColumnName="LeaveDate" />
+          <ScalarProperty Name="Dues" ColumnName="Dues" />
+          <ScalarProperty Name="LeaveClass" ColumnName="LeaveClass" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="LeaveDues" ColumnName="LeaveDues" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
