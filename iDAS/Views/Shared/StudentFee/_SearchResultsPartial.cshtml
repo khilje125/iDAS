@@ -56,6 +56,10 @@
         $confirm.modal("show");
     };
 
+    function OpenRecordBoxForView() {
+        var $confirm = $("#ViewStudentForm");
+        $confirm.modal("show");
+    };
 </script>
 <style type="text/css">
     .modal-dialog {
@@ -129,9 +133,21 @@
                                                 <i class=" glyphicon glyphicon-zoom-in white"></i>
                                             </a>*@
 
-                                        <a class="btn btn-success" href="#">
-                                            <i class=" glyphicon glyphicon-zoom-in white"></i>
+                                        
+                                     
+                                         <a  href="#"  onclick="$('#ViewStudentForm').modal('show')">
+                                         
                                         </a>
+                                         @Ajax.ActionLink("View", "ViewStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "viewStudentForm",
+                                                OnSuccess = "OpenRecordBoxForView();"
+                                            }, new { @class = "glyphicon glyphicon-zoom-in white" })
+                                       
+
+
                                         @Ajax.ActionLink(" FeeInfo", "GetStudentFeeRecord", "StudentFee", new { studentID = item.StudentId }, new AjaxOptions
                                             {
                                                 InsertionMode = InsertionMode.Replace,
@@ -157,7 +173,24 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="ViewStudentForm" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title text-success" id="ShowForgotPasswordModalLabel">
+                            View Student Record
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div id="viewStudentForm"></div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
     <!-- PopUp Success -->
     <!-- Button trigger modal -->
     <button id="btnShowSuccess" type="button" class="btn" data-toggle="modal" style="visibility: hidden;"

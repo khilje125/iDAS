@@ -13,15 +13,143 @@ namespace iDAS.Controllers
     public class StudentFeeController : BootstrapBaseController
     {
         BLLStudentFee objBLLStudentFee = new BLLStudentFee();
-                        
+
         // GET: /Search/
         [HttpGet]
         public ActionResult SearchStudentFee()
         {
+            if (Session[DAL.DALVariables.SchoolAccountId] == null)
+            {
+                return RedirectToAction("Login", "User");
+
+            }
             return View();
         }
 
         //
+        // GET: /Search1/
+        //[HttpGet]
+        //public ActionResult BulkFeeInsertionPartial()
+        //{
+        //    BindDropdownlist();
+
+        //    return PartialView(customview("_BulkFeesPartialForm", "StudentFee"));
+        //}
+
+
+        public ActionResult SaveBulkFeeInsertion()
+        {
+            BindDropdownlist();
+            return View();
+        }
+
+        public void BindDropdownlist()
+        {
+            BLLStudent objBLLStudent = new BLLStudent();
+
+            ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+           
+            ViewBag.dpSection = objBLLStudent.GetClassSectionDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+            ViewBag.dpFeeMonths = objBLLStudent.GetFeeMonthDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+        
+        }
+        // bulk fee
+        [HttpPost]
+        public ActionResult SaveBulkFeeInsertion(string dropDownClass, string dropDownSection, string dropDownMonthFee, string RegistrationFee, string Addmission, string AddmissionFee, string ReAdmission, string ComputerFee, string Fine, string ExamFee, string GeneratorFee)
+        {
+            if (Session[DAL.DALVariables.SchoolAccountId] == null)
+            {
+                return RedirectToAction("Login","User");
+                
+            }
+            try
+            {
+                BindDropdownlist();
+                BLLStudentFee objBLLStudentFee = new BLLStudentFee();
+                int ClassId  = CheckObjNull(dropDownClass);
+                int SectionId = CheckObjNull(dropDownSection);
+                int dpSelectFeeMonth = CheckObjNull(dropDownMonthFee);
+                int insertResult = 0;
+                StringBuilder strSearchCriteria = new StringBuilder();
+                string searchCriteria = "";
+
+                if (dpSelectFeeMonth <= 0)
+                {
+                    Error("Fee month not selected. Please select proper fee month then again try to insert bulk fee record");
+
+                    return View();
+                }
+                if (ClassId <= 0 && SectionId >0)
+                {
+                    Error("Must Select Class. Please select proper class before selecting section then again try to insert bulk fee record");
+
+                    return View();
+                }
+                //If Selected Class Is Not Empty
+                if ((!string.IsNullOrEmpty(dropDownClass.Trim())))
+                {
+                    int _selectedClass = Convert.ToInt32(dropDownClass.Trim());
+                    if (_selectedClass > 0)
+                    {
+                        strSearchCriteria.Append(" Students.ClassId = " + _selectedClass + " AND ");
+                    }
+                }
+
+            //If Class Section Is Not Empty
+                if ((!string.IsNullOrEmpty(dropDownSection.Trim())))
+                {
+                    int _selectedSection = Convert.ToInt32(dropDownSection.Trim());
+                    if (_selectedSection > 0)
+                    {
+                        strSearchCriteria.Append(" Students.SectionId = " + _selectedSection + " AND ");
+                    }
+                }
+
+                 //If Filter Expression Is Not Null Or Empty
+                if ((!string.IsNullOrEmpty(strSearchCriteria.ToString())))
+                {
+                //Set Filter Expression
+                searchCriteria = strSearchCriteria.ToString().Remove(strSearchCriteria.ToString().Length - 4, 4);
+
+                }
+
+                ModelStudentFee objModelStudentFee = new ModelStudentFee();
+                objModelStudentFee.RegistrationFee = CheckObjNull(RegistrationFee);
+                objModelStudentFee.Admission = CheckObjNull(Addmission);
+                objModelStudentFee.AdmissionFee = CheckObjNull(AddmissionFee);
+                objModelStudentFee.ReAdmissionFee = CheckObjNull(ReAdmission);
+                objModelStudentFee.GeneratorFee = CheckObjNull(GeneratorFee);
+                objModelStudentFee.Fine = CheckObjNull(Fine);
+                objModelStudentFee.ExamFee = CheckObjNull(ExamFee);
+                objModelStudentFee.ComputerFee = CheckObjNull(ComputerFee);
+
+               insertResult = objBLLStudentFee.InsertBulkStudentMonthlyFee(objModelStudentFee, searchCriteria, dpSelectFeeMonth);
+               if (insertResult > 0)
+               {
+                   Success("Total Record :" + insertResult + " was Successfully Inserted for the Selected Month");
+                  // return RedirectToAction("SaveBulkFeeInsertion");
+                   return View();
+               }
+
+            }
+            catch (Exception ex)
+            {
+                DALUtility.ErrorLog(ex.Message, "StudentFeeController, BulkFeeInsertion");
+            }
+
+            return View();
+           // return PartialView(customview("_BulkFeesPartialForm","StudentFee"));
+        }
+
+        private int CheckObjNull(string value)
+        {
+            int result = 0;
+            if (!String.IsNullOrEmpty(value.Trim()))
+            {
+                result = Convert.ToInt32(value.ToString());
+            }
+            return result;
+        }
         // GET: /Search1/
         [HttpGet]
         public ActionResult SearchFeeReordPartial()
@@ -200,7 +328,7 @@ namespace iDAS.Controllers
                         else
                         {
                             Error("Error occured while updating your fee record");
-                            return PartialView(customview("_EditStudentMonthlyFeeInfo", "StudentFee"), objModelStudentFee); 
+                            return PartialView(customview("_EditStudentMonthlyFeeInfo", "StudentFee"), objModelStudentFee);
                         }
                     }
                     catch (Exception ex)

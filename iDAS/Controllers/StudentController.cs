@@ -16,13 +16,21 @@ namespace iDAS.Controllers
         //
         // GET: /Add/
 
+        public void BindDropdownlist()
+        {
+            BLLStudent objBLLStudent = new BLLStudent();
+
+            ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+
+            ViewBag.dpSection = objBLLStudent.GetClassSectionDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+            ViewBag.dpFeeMonths = objBLLStudent.GetFeeMonthDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+
+        }
         public ActionResult Index()
         {
             try
             {
-                BLLStudent objBLLStudent = new BLLStudent();
-                ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
-                ViewBag.dpSection = objBLLStudent.GetClassSectionDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+                BindDropdownlist();
                 var objStudentModel = new ModelStudent();
                 GetAllStudentData();
                 return PartialView(customview("_StudentInformation", "Student"), objStudentModel);
@@ -75,6 +83,9 @@ namespace iDAS.Controllers
 
             return PartialView(customview("_SearchFormPartial", "Student"));
         }
+
+        //bulk fees
+       
 
         [HttpPost]
         public ActionResult Search1(string ComputerCode, string RegNo, string StudentName, string FatherName, string StudentStatus, string dropDownClass, string dropDownSection)

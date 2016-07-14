@@ -5,13 +5,14 @@ using System.Web;
 
 namespace iDAS.Models
 {
-    public class ModelStudentFee
+    public class ModelBankFeeChallanReport
     {
         public decimal FeeId { get; set; }
         public decimal StudentId { get; set; }
+        public string StudentName { get; set; }
+        public string ClassName { get; set; }
+        public string SectionName { get; set; }
         public int ComputerCode { get; set; }
-        public int SerialNo { get; set; }
-        public DateTime FeeDate { get; set; }
         public int AdmissionFee { get; set; }
         public int Admission { get; set; }
         public int ReAdmissionFee { get; set; }
@@ -23,9 +24,5 @@ namespace iDAS.Models
         public int GeneratorFee { get; set; }
         public string FeeMonth { get; set; }
         public int Total { get; set; }
-        public int FeePaidStatus { get; set; }
-        public ModelStudentClass ModelStudentClass { get; set; }
-        public ModelStudentSection ModelStudentSection { get; set; }
-        
     }
 }

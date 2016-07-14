@@ -225,6 +225,7 @@ namespace iDAS.BLL
             return objlstModelStudentFee;
         }
 
+<<<<<<< HEAD
         public int StudentBulkMonthlyFeeInsertion(decimal StudentID)
         {
             ModelStudent objModelStudent = new ModelStudent();
@@ -237,5 +238,32 @@ namespace iDAS.BLL
             return 0;
         }
 
+=======
+        //for bulk Fee Insertion
+
+        public int InsertBulkStudentMonthlyFee(ModelStudentFee objModelStudentFee,string SearchCriteria,int FeeMonth)
+        {
+            ModelStudent objModelStudent = new ModelStudent();
+            DataTable tblStudents = new DataTable();
+            int _result = 0;
+            decimal _UserAccountId = Convert.ToDecimal(HttpContext.Current.Session[DAL.DALVariables.UserAccountId].ToString());
+            decimal _SchoolAccountId = Convert.ToDecimal(HttpContext.Current.Session[DAL.DALVariables.SchoolAccountId].ToString());
+            
+            SqlParameter[] param = new SqlParameter[2];
+
+            param[0] = new SqlParameter("@SearchCriteria", SearchCriteria);
+            param[1] = new SqlParameter("@SchoolAccountId", _SchoolAccountId);
+
+            tblStudents = DALCommon.GetDataUsingDataTable("[sp_Admin_GetStudentListForBulkFeeInsertion]", param);
+
+            BulkFeeInsertionTransaction objBulkFeeInsertionTransaction = new BulkFeeInsertionTransaction();
+            if (tblStudents.Rows.Count > 0)
+            {
+
+                _result = objBulkFeeInsertionTransaction.InsertStudentMonthlyFeeInsertTransaction(tblStudents, objModelStudentFee, FeeMonth, _UserAccountId);
+            }
+            return _result;
+        }
+>>>>>>> c466499924de2141b8ce9fba88b9349e6d130ab6
     }
 }
