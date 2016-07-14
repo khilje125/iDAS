@@ -39,6 +39,11 @@ namespace iDAS.BLL
                     objModelStudent.StatusText = Convert.ToString(aStudent["StatusText"]);
                     objModelStudent.ClassNameText = Convert.ToString(aStudent["ClassName"]);
                     objModelStudent.SectionNameText = Convert.ToString(aStudent["SectionName"]);
+
+                    objModelStudent.Address = Convert.ToString(aStudent["Address"]);
+                    objModelStudent.HomeNumber = Convert.ToString(aStudent["HomeNumber"]);
+                    objModelStudent.OfficeNumber = Convert.ToString(aStudent["OfficeNumber"]);
+                    objModelStudent.MoblieNumber = Convert.ToString(aStudent["MoblieNumber"]);
                     lstModelStudent.Add(objModelStudent);
                 }
             }
@@ -220,6 +225,20 @@ namespace iDAS.BLL
             return objlstModelStudentFee;
         }
 
+<<<<<<< HEAD
+        public int StudentBulkMonthlyFeeInsertion(decimal StudentID)
+        {
+            ModelStudent objModelStudent = new ModelStudent();
+            DataTable tblStudentList= new DataTable();
+            tblStudentList = DALCommon.GetDataByStoredProcedure("ABC");
+            if (tblStudentList.Rows.Count > 0)
+            {
+                
+            }
+            return 0;
+        }
+
+=======
         //for bulk Fee Insertion
 
         public int InsertBulkStudentMonthlyFee(ModelStudentFee objModelStudentFee,string SearchCriteria,int FeeMonth)
@@ -245,5 +264,6 @@ namespace iDAS.BLL
             }
             return _result;
         }
+>>>>>>> c466499924de2141b8ce9fba88b9349e6d130ab6
     }
 }

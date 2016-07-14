@@ -5,14 +5,21 @@
     ViewBag.Title = "Edit Student Monthly Fee";
     Layout = null;
 }
+<script type="text/javascript">
 
+    function SetData() {
+        $("#dvMEssageAlert").html(); // HTML DOM replace
+    }
+</script>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
 
             <div class="x_content">
-                @Html.Partial("_alerts")
-                @Html.Partial("_validationSummary")
+                <div id="dvMEssageAlert">
+                    @Html.Partial("_alerts")
+                    @Html.Partial("_validationSummary")
+                </div>
                 <br />
                 @*@using (Html.BeginForm("UpdateStudentInfo", "StudentData", FormMethod.Post, new { @class = "form-horizontal", id = "frmEditStudentMonthlyFee" }))*@
                 @using (Ajax.BeginForm("UpdateStudentMonthlyFeeRecord", "StudentFee", new AjaxOptions

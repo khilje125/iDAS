@@ -38,13 +38,12 @@ namespace iDAS.Models
         public int MonthlyFee { get; set; }
       //  [Required(ErrorMessage = "Please Enter Profession")]
 
-       
-        
         public string Profession { get; set; }
       //  [Required(ErrorMessage = "Please Enter Name")]
         public string P { get; set; }
        // [Required(ErrorMessage = "Please Enter Reference")]
         public string Reference { get; set; }
+        public int Sex { get; set; }
        [Display(Name = "Gender")]
         public int Sex { get; set; }
         //[Required(ErrorMessage = "Please Enter DateOfAdmission")]

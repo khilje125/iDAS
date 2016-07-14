@@ -31,35 +31,5 @@ E:\Projects\C#\DAS\iDAS\iDAS\bin\System.Web.WebPages.Razor.xml
 E:\Projects\C#\DAS\iDAS\iDAS\obj\Debug\iDAS.dll
 E:\Projects\C#\DAS\iDAS\iDAS\obj\Debug\iDAS.pdb
 E:\Projects\C#\DAS\iDAS\iDAS\obj\Debug\iDAS.csprojResolveAssemblyReference.cache
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\iDAS.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\iDAS.pdb
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\Antlr3.Runtime.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\Microsoft.Web.Infrastructure.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\Newtonsoft.Json.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Net.Http.Formatting.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Helpers.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Http.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Http.WebHost.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Mvc.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Optimization.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Razor.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.WebPages.Deployment.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.WebPages.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.WebPages.Razor.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\WebGrease.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\Antlr3.Runtime.pdb
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\Newtonsoft.Json.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Optimization.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Net.Http.Formatting.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Helpers.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Http.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Http.WebHost.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Mvc.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.Razor.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.WebPages.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.WebPages.Deployment.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\bin\System.Web.WebPages.Razor.xml
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\obj\Debug\iDAS.csprojResolveAssemblyReference.cache
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\obj\Debug\iDAS.dll
-E:\Dare -e- Arqam Project\iDAS-Khilje\iDAS\iDAS\obj\Debug\iDAS.pdb
+E:\Projects\C#\DAS\iDAS\iDAS\bin\EntityFramework.dll
+E:\Projects\C#\DAS\iDAS\iDAS\bin\EntityFramework.xml

@@ -322,6 +322,7 @@ namespace iDAS.Controllers
 
                             objBLLStudentFee = new BLLStudentFee();
                             objModelStudent = objBLLStudentFee.GetStudentFeeInfoById(Convert.ToDecimal(objModelStudentFee.StudentId));
+                            Success("Fee Record Successfully Updated");
                             return PartialView(customview("_GetFormStudentFeeInfo", "StudentFee"), objModelStudent);
                         }
                         else

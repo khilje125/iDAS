@@ -18,7 +18,7 @@ namespace iDAS.Controllers
         List<ModelStudent> lstModelStudent = new List<ModelStudent>();
         //
         // GET: /StudentReport/
-
+        //Test Report PDF Download
         public ActionResult PrintStudentList()
         {
             objBLLStudent = new BLLStudent();
@@ -41,9 +41,9 @@ namespace iDAS.Controllers
         //
         // GET: /StudentFeeReport/
         [HttpGet]
-        public void StudentFeeReport()
+        public void StudentFeeReport(string reportID)
         {
-            Response.Redirect("~/ASPXReport/StudentListClassWise.aspx");
+            Response.Redirect("~/ASPXReport/StudentListClassWise.aspx?rptID=" + HttpUtility.UrlEncode(reportID));
         }
     }
 }
