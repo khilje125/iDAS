@@ -33,7 +33,7 @@ namespace iDAS.BLL
                     objModelStudent.StudentName = Convert.ToString(aStudent["StudentName"]);
                     objModelStudent.FatherName = Convert.ToString(aStudent["FatherName"]);
                     objModelStudent.MonthlyFee = Convert.ToInt32(aStudent["MonthlyFee"]);
-                    objModelStudent.Sex = Convert.ToString(aStudent["Sex"]);
+                    objModelStudent.Sex = Convert.ToInt32(aStudent["Sex"]);
                     objModelStudent.DateOfBirth = Convert.ToDateTime(aStudent["DateOfBirth"]);
                     objModelStudent.Status = Convert.ToInt32(aStudent["Status"]);
                     objModelStudent.StatusText = Convert.ToString(aStudent["StatusText"]);
@@ -60,7 +60,6 @@ namespace iDAS.BLL
             {
                 foreach (DataRow aStudent in tblStudentList.Rows)
                 {
-                  
                     ModelStudent objModelStudent = new ModelStudent();
                     objModelStudent.StudentId = Convert.ToInt32(aStudent["StudentId"]);
                     objModelStudent.ComputerCode = Convert.ToInt32(aStudent["ComputerCode"]);
@@ -68,7 +67,7 @@ namespace iDAS.BLL
                     objModelStudent.StudentName = Convert.ToString(aStudent["StudentName"]);
                     objModelStudent.FatherName = Convert.ToString(aStudent["FatherName"]);
                     objModelStudent.MonthlyFee = Convert.ToInt32(aStudent["MonthlyFee"]);
-                    objModelStudent.Sex = Convert.ToString(aStudent["Gender"]);
+                    objModelStudent.Sex = Convert.ToInt32(aStudent["Gender"]);
                     objModelStudent.DateOfBirth = Convert.ToDateTime(aStudent["DateOfBirth"]);
                     objModelStudent.StudentClass.ClassName = Convert.ToString(aStudent["ClassName"]);
                     objModelStudent.StudentSection.SectionName = Convert.ToString(aStudent["SectionName"]);

@@ -9,11 +9,14 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CrystalDecisions.CrystalReports.Engine;
 
 namespace iDAS.ASPXReport
 {
     public partial class StudentListClassWise : System.Web.UI.Page
     {
+        ReportDocument crystalReportDocument = new ReportDocument();
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -22,25 +25,35 @@ namespace iDAS.ASPXReport
         {
             try
             {
-                CrystalDecisions.CrystalReports.Engine.ReportDocument crystalReport = new CrystalDecisions.CrystalReports.Engine.ReportDocument();
-                string strRptPath = Server.MapPath("~/") + "Reports//" + "StudentClassReport.rpt";
+                crystalReportDocument = new ReportDocument();
+                //crystalReport.SummaryInfo.ReportTitle = "StudentCClassInfo-" + DateTime.Now.ToString();//ToString("MM-DD-YYYY hh-mm-ss");
+                //WORKING REPORT//string strRptPath = Server.MapPath("~/") + "Reports//" + "StudentClassReport.rpt";
+                //WORKING REPORT//string strRptPath = Server.MapPath("~/") + "Reports//" + "BankChallanPrintReport.rpt";
+                string strRptPath = Server.MapPath("~/") + "Reports//" + "ChallanForm.rpt";
+
+                
                 //crystalReport.Load(Server.MapPath("~/Reports/ReportStudentsInfo.rpt"));
-                crystalReport.Load(strRptPath);
+                crystalReportDocument.Load(strRptPath);
                 if (!IsPostBack)
                 {
                     //DSStudentClassInfo dsStudentClass = new DSStudentClassInfo();
                     //dsStudentClass.Tables.Add(getStudentInfoByDataTable());
-                    crystalReport.SetDataSource(getStudentReportClassWise());
+                   //Working// crystalReport.SetDataSource(getStudentReportClassWise());
+
+                    crystalReportDocument.SetDataSource(getStudentInfoByDataTable());
                     //crystalReport.SetDataSource(dsStudentClass);
-                    CrystalReportViewer1.ReportSource = crystalReport;
+                    CrystalReportViewer1.Dispose();
+                    CrystalReportViewer1.ReportSource = crystalReportDocument;
                 }
                 else
                 {
                     //DSStudentClassInfo dsStudentClass = new DSStudentClassInfo();
                     //dsStudentClass.Tables.Add(getStudentInfoByDataTable());
-                    crystalReport.SetDataSource(getStudentReportClassWise());
+                    //DATA BLL for StudentClassReport.rpt
+                    //crystalReport.SetDataSource(getStudentReportClassWise());
+                    crystalReportDocument.SetDataSource(getStudentFeeBankChallanReport());
                     CrystalReportViewer1.Dispose();
-                    CrystalReportViewer1.ReportSource = crystalReport;
+                    CrystalReportViewer1.ReportSource = crystalReportDocument;
                 }
             }
             catch (Exception ex)
@@ -48,6 +61,12 @@ namespace iDAS.ASPXReport
                 
                 throw ex;
             }
+        }
+
+        protected void CrystalReportViewer1_Unload(object sender, EventArgs e) 
+        {
+            crystalReportDocument.Close();
+            crystalReportDocument.Dispose();
         }
 
         private DataSet CreateDataSet()
@@ -77,6 +96,16 @@ namespace iDAS.ASPXReport
 
             lstModelStudent = objBLLStudentFee.GetStudentListReport(SearchCriteria, Convert.ToInt32(Session[iDAS.DAL.DALVariables.SchoolAccountId].ToString()));
             return lstModelStudent;
+        }
+
+        private List<ModelBankFeeChallanReport> getStudentFeeBankChallanReport()
+        {
+
+            iDAS.BLL.BLLStudentReports objBLLStudentReports = new iDAS.BLL.BLLStudentReports();
+            List<ModelBankFeeChallanReport> lstModelBankFeeChallanReport = new List<ModelBankFeeChallanReport>();
+
+            lstModelBankFeeChallanReport = objBLLStudentReports.GetStudentListReport();
+            return lstModelBankFeeChallanReport;
         }
 
         private DataTable getStudentInfoByDataTable()
