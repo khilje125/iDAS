@@ -153,15 +153,18 @@
     <Compile Include="BLL\BLLPaymentService.cs" />
     <Compile Include="BLL\BLLStudentFee.cs" />
     <Compile Include="BLL\BLLStudent.cs" />
+    <Compile Include="BLL\BLLStudentReports.cs" />
     <Compile Include="Common\Alerts.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BootstrapBaseController.cs" />
     <Compile Include="Controllers\DashBoardMerchantController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\StudentDataController.cs" />
     <Compile Include="Controllers\StudentFeeController.cs" />
     <Compile Include="Controllers\StudentReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAL\BulkFeeInsertionTransaction.cs" />
     <Compile Include="DAL\DALCommon.cs" />
     <Compile Include="DAL\DALUtility.cs" />
     <Compile Include="DAL\DALVariables.cs" />
@@ -176,6 +179,7 @@
       <DependentUpon>MerchantMenu.ashx</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelAdminUser.cs" />
+    <Compile Include="Models\ModelBankFeeChallanReport.cs" />
     <Compile Include="Models\ModelCity.cs" />
     <Compile Include="Models\ModelCountry.cs" />
     <Compile Include="Models\ModelLandingURL.cs" />
@@ -190,6 +194,29 @@
     <Compile Include="Models\ModelSchoolUserAccount.cs" />
     <Compile Include="Models\ModelStudent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\BankChallanPrintReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BankChallanPrintReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\BankFeeChallanReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BankFeeChallanReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\BankRec.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BankRec.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\ChallanForm.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChallanForm.rpt</DependentUpon>
+    </Compile>
     <Compile Include="Reports\CrystalReport1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3782,6 +3809,10 @@
     <Content Include="Views\Shared\StudentFee\_GetFormStudentFeeInfo - Copy.cshtml" />
     <Content Include="Views\Shared\StudentFee\_EditStudentMonthlyFeeInfo.cshtml" />
     <Content Include="Views\StudentFee\ASPReportTest.cshtml" />
+    <Content Include="Views\Shared\Student\_GetStudentList.cshtml" />
+    <Content Include="Views\Shared\Student\_StudentInformation.cshtml" />
+    <Content Include="Views\Shared\Student\_ViewStudentInformation.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4630,6 +4661,22 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\BankChallanPrintReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>BankChallanPrintReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BankFeeChallanReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>BankFeeChallanReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BankRec.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>BankRec.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ChallanForm.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ChallanForm.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\CrystalReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReport1.cs</LastGenOutput>
