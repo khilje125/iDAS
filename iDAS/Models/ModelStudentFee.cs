@@ -24,6 +24,8 @@ namespace iDAS.Models
         public string FeeMonth { get; set; }
         public int Total { get; set; }
         public int FeePaidStatus { get; set; }
+        public ModelStudentClass ModelStudentClass { get; set; }
+        public ModelStudentSection ModelStudentSection { get; set; }
         
     }
 }

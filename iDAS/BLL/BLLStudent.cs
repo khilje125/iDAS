@@ -33,7 +33,7 @@ namespace iDAS.BLL
                     objModelStudent.StudentName = Convert.ToString(aStudent["StudentName"]);
                     objModelStudent.FatherName = Convert.ToString(aStudent["FatherName"]);
                     objModelStudent.MonthlyFee = Convert.ToInt32(aStudent["MonthlyFee"]);
-                    objModelStudent.Sex = Convert.ToString(aStudent["Sex"]);
+                    objModelStudent.Sex = Convert.ToInt32(aStudent["Sex"]);
                     objModelStudent.DateOfBirth = Convert.ToDateTime(aStudent["DateOfBirth"]);
                     objModelStudent.Status = Convert.ToInt32(aStudent["Status"]);
                     objModelStudent.StatusText = Convert.ToString(aStudent["StatusText"]);
@@ -68,7 +68,7 @@ namespace iDAS.BLL
                     objModelStudent.StudentName = Convert.ToString(aStudent["StudentName"]);
                     objModelStudent.FatherName = Convert.ToString(aStudent["FatherName"]);
                     objModelStudent.MonthlyFee = Convert.ToInt32(aStudent["MonthlyFee"]);
-                    objModelStudent.Sex = Convert.ToString(aStudent["Gender"]);
+                    objModelStudent.Sex = Convert.ToInt32(aStudent["Sex"]);
                     objModelStudent.DateOfBirth = Convert.ToDateTime(aStudent["DateOfBirth"]);
                     objModelStudent.StudentClass.ClassName = Convert.ToString(aStudent["ClassName"]);
                     objModelStudent.StudentSection.SectionName = Convert.ToString(aStudent["SectionName"]);
@@ -160,6 +160,29 @@ namespace iDAS.BLL
             return lstClassSection;
         }
 
+        //for bind feemonth
+
+        public List<SelectListItem> GetFeeMonthDropdown(decimal SchoolAccountId)
+        {
+            List<SelectListItem> lstFeeMonth = new List<SelectListItem>();
+            lstFeeMonth.Add(new SelectListItem { Text = "--- Select Month --- ", Value = "0" });
+
+            DataTable tblMonth = new DataTable();
+            SqlParameter[] param = new SqlParameter[1];
+
+            param[0] = new SqlParameter("@SchoolAccountId", SchoolAccountId);
+
+            tblMonth = DALCommon.GetDataUsingDataTable("[sp_GetAllFeeMonth]", param);
+            if (tblMonth.Rows.Count > 0)
+            {
+                foreach (DataRow aClass in tblMonth.Rows)
+                {
+                    lstFeeMonth.Add(new SelectListItem { Text = Convert.ToString(aClass["FeeMonth"]), Value = Convert.ToString(aClass["FeeMonthId"]) });
+                }
+            }
+            return lstFeeMonth;
+        }
+     
         public ModelStudent GetStudentInfoById(decimal StudentID)
         {
             ModelStudent objModelStudent = new ModelStudent();
@@ -185,7 +208,6 @@ namespace iDAS.BLL
             }
             return objModelStudent;
         }
-
 
 
     }

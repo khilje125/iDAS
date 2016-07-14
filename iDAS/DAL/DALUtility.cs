@@ -61,6 +61,54 @@ namespace iDAS.DAL
         }
         #endregion
 
+        #region "Bulk Fee Insertion Log"
+
+        public static void ErrorLogBulkFeeInsertion(string StudentId, string FeeMonth, string ErrorDesc,string AddedBy, bool WillRedirectErrorPage = false)
+        {
+            int recCount = 0;
+            // SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings("RabtAdminDbCon").ConnectionString);
+            string DbCon = Convert.ToString(ConfigurationManager.ConnectionStrings["DASAdminDbCon"]);
+
+            SqlConnection cn = new SqlConnection(DbCon);
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = cn;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_Admin_InsertBulkFeeInsertionErrorLog";
+
+            cmd.Parameters.AddWithValue("@StudentId", StudentId);
+            cmd.Parameters.AddWithValue("@FeeMonth", FeeMonth);
+            //cmd.Parameters.AddWithValue("@ErrorPageName", HttpContext.Current.Request.Url.AbsoluteUri + "," + ErrorPageName);
+            cmd.Parameters.AddWithValue("@ErrorDesc", ErrorDesc);
+
+            cmd.Parameters.AddWithValue("@AddedBy", AddedBy);
+
+            try
+            {
+                if ((cn.State == ConnectionState.Closed))
+                {
+                    cn.Open();
+                }
+
+                recCount = cmd.ExecuteNonQuery();
+
+
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                cmd = null;
+                if ((cn.State == ConnectionState.Open))
+                {
+                    cn.Close();
+                }
+            }
+
+            //  HttpContext.Current.Response.Redirect("frmError.asp", False)
+        }
+        #endregion
+
         #region "User Log"
         public static int InsertUserLog(string CodeBlock, string ActivityOnPage, decimal UserAccountNo)
         {
