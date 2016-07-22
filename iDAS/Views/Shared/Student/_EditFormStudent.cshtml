@@ -1,10 +1,10 @@
 ﻿@using System.Web.Optimization
 @*@using NavigationRoutes*@
-@model iDAS.Models.ModelStudent
+@model iDAS.Models.ViewModelStudent
 @{
     ViewBag.Title = "Edit Student Information";
     Layout = null;
-}
+    }
 
  <!-- bootstrap-daterangepicker -->
 <script type="text/javascript">
@@ -28,51 +28,50 @@
         <div class="x_panel">
 
             <div class="x_content">
-                @Html.Partial("_alerts")
-                @Html.Partial("_validationSummary")
-                <br />
+         
                 @using (Html.BeginForm("UpdateStudentInfo", "StudentData", FormMethod.Post, new { @class = "form-horizontal", id = "frmEditStudentInfo" }))
                 {
-
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="first-name">
-                            Registrtion # <span class="required">*</span>
-                        </label>
-                        <div class="col-md-3 col-sm-3 col-md-3">
-                            @Html.TextBoxFor(m => m.RegNo, new { @class = "form-control col-md-3 col-md-3", @type = "number", })
-
-                        </div>
-                    
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3" for="first-name">
-                            Computer Code<span class="required">*</span>
-                        </label>
-                        <div class="col-md-3 col-sm-3 col-md-3">
-                            @Html.TextBoxFor(m => m.ComputerCode, new { @class = "form-control col-md-3 col-md-3", @type = "number", })
-
-                        </div>
-                    </div>
-
+                     @Html.ValidationSummary(true)
+                    @Html.HiddenFor(m => m.StudentId);
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
                             Student Name <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control col-md-7 col-xs-12" })
-
-                        </div>
-                    </div>
+                              @Html.ValidationMessageFor(m => m.StudentName, string.Empty, new { @class = "help-block error" })
+                        </div></div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
                             Father Name<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.FatherName, string.Empty, new { @class = "help-block error" })
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                            Email<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.Email, string.Empty, new { @class = "help-block error" })
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
+                        Monthly Fee<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.MonthlyFee, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.MonthlyFee, string.Empty, new { @class = "help-block error" })
+                        </div>  </div>
                     <div class="form-group">
                         <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @class = "help-block error" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -82,8 +81,8 @@
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.DropDownListFor(x => x.ClassId, new SelectList(ViewBag.dpClass, "Value", "Text", Model.ClassId), new { @class = "select2_single form-control" })
                         </div>
-                    </div>
-                    <div class="form-group">
+                 </div>
+                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Section <span class="required">*</span>
                         </label>
@@ -91,22 +90,16 @@
                             @Html.DropDownListFor(x => x.SectionId, new SelectList(ViewBag.dpSection, "Value", "Text", Model.SectionId), new { @class = "select2_single form-control" })
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Fee <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(m => m.MonthlyFee, new { @class = "form-control col-md-7 col-xs-12" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
+                   
+                        <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Date of Birth</label>
                         <div class="col-md-6 col-sm-6 col-xs-12 xdisplay_inputx form-group has-feedback">
-                            <input type="text" class="form-control has-feedback-left" id="single_cal2" placeholder="Date of Birth" aria-describedby="inputSuccess2Status2">
+                            <input type="text" class="form-control has-feedback-left" id="single_cal2" name="DateOfBirth" placeholder="Date of Birth" aria-describedby="inputSuccess2Status2">
                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                             <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                              @Html.ValidationMessageFor(m => m.DateOfBirth, string.Empty, new { @class = "help-block error" })
                         </div>
+
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
@@ -114,14 +107,16 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @class = "help-block error" })
                         </div>
-                    </div>
+                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Home Phone <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(m => m.HomeNumber, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.HomeNumber, string.Empty, new { @class = "help-block error" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -130,73 +125,51 @@
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(m => m.MoblieNumber, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.MoblieNumber, string.Empty, new { @class = "help-block error" })
                         </div>
-                    </div>
-                    <div class="form-group">
+                        </div>
+                   <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Date Of Birth <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(m => m.OfficeNumber, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.OfficeNumber, string.Empty, new { @class = "help-block error" })
                         </div>
                     </div>
                     <div class="form-group">
+
+
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Admission Date <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextBoxFor(m => m.DateOfAdmission, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.DateOfAdmission, string.Empty, new { @class = "help-block error" })
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Dues <span class="required">*</span>
+                        </div>
+                     <div class="form-group">
+                   <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                          Father CNIC <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(m => m.Dues, new { @class = "form-control col-md-7 col-xs-12" })
+                            @Html.TextBoxFor(m => m.FatherCNIC, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.FatherCNIC, string.Empty, new { @class = "help-block error" })
                         </div>
+                        
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Leave Class <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(m => m.LeaveClass, new { @class = "form-control col-md-7 col-xs-12" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Leave Date <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control col-md-7 col-xs-12" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Leave Dues<span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(m => m.LeaveDues, new { @class = "form-control col-md-7 col-xs-12" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Reason<span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            @Html.TextBoxFor(m => m.Reason, new { @class = "form-control col-md-7 col-xs-12" })
-                        </div>
-                    </div>
+                   
+                 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                             Reference<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             @Html.TextAreaFor(m => m.Reference, new { @class = "form-control col-md-7 col-xs-12" })
+                              @Html.ValidationMessageFor(m => m.Reference, string.Empty, new { @class = "help-block error" })
                         </div>
                     </div>
+                   
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

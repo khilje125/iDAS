@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace iDAS.Controllers
 {
-    public class StudentController : Controller
+    public class StudentController : BootstrapBaseController
     {
         ModelStudent objModelStudent = new ModelStudent();
         //
@@ -31,7 +31,7 @@ namespace iDAS.Controllers
             try
             {
                 BindDropdownlist();
-                var objStudentModel = new ModelStudent();
+                var objStudentModel = new ViewModelStudent();
                 GetAllStudentData();
                 return PartialView(customview("_StudentInformation", "Student"), objStudentModel);
                
@@ -184,7 +184,7 @@ namespace iDAS.Controllers
         [HttpPost]
         public ActionResult ViewStudent(string studentID)
         {
-            ModelStudent objModelStudent = new ModelStudent();
+            ViewModelStudent objModelStudent = new ViewModelStudent();
             if (!String.IsNullOrEmpty(studentID.Trim()))
             {
                 BLLStudent objBLLStudent = new BLLStudent();
@@ -203,7 +203,7 @@ namespace iDAS.Controllers
         [HttpPost]
         public ActionResult EditStudent(string studentID)
         {
-            ModelStudent objModelStudent = new ModelStudent();
+            ViewModelStudent objModelStudent = new ViewModelStudent();
             if (!String.IsNullOrEmpty(studentID.Trim()))
             {
                 BLLStudent objBLLStudent = new BLLStudent();

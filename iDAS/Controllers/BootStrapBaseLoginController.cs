@@ -1,17 +1,17 @@
 ﻿using iDAS.Common;
-using iDAS.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
 using System.Web.Mvc;
-
 
 namespace iDAS.Controllers
 {
-    public class BootstrapBaseController : Controller 
+    public class BootStrapBaseLoginController : Controller
     {
+        //
+        // GET: /BootStrapBaseLogin/
+
         public void Attention(string message)
         {
             TempData.Add(Alerts.ATTENTION, message);
@@ -32,13 +32,5 @@ namespace iDAS.Controllers
             TempData.Add(Alerts.ERROR, message);
         }
 
-        public void SessionCheck(object session)
-        {
-             if (session == null)
-            
-               RedirectToAction("Login", "User");
-
-            }
-        }
     }
-
+}

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace iDAS.Controllers
 {
-    public class UserController : BootstrapBaseController
+    public class UserController : BootStrapBaseLoginController
     {
         BLLSchoolUser objBLLSchoolUser = new BLLSchoolUser();
         ModelSchoolUserAccount objModelSchoolUserAccount = new ModelSchoolUserAccount();

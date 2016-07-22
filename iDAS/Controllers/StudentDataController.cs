@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using iDAS.Models;
 using iDAS.BLL;
 using iDAS.DAL;
+using System.Text;
 
 namespace iDAS.Controllers
 {
@@ -25,32 +26,113 @@ namespace iDAS.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateStudentInfo(ModelStudent objModelStudent)
+        public ActionResult CreateStudentInfo(ViewModelStudent objModelStudent)
         {
             try
             {
                 BindDropdownlist();
-                BLLStudent objBLLStudent = new BLLStudent();               
+                BLLStudent objBLLStudent = new BLLStudent();
                 if (ModelState.IsValid)
                 {
-                   // aModelStu.Status = 1;
-                   
+                    objModelStudent.Status = 1;
+
+                    objModelStudent.P = "N/A";
+
+                    if (Request.Files.Count > 0)
+                    {
+                        if (Request.Files["Simage"].ContentLength > 0)
+                        {
+                            var image = System.Drawing.Image.FromStream(Request.Files["Simage"].InputStream);
+                            var rName = SecureRandomString(15) + System.IO.Path.GetExtension(Request.Files["Simage"].FileName);
+                            image.Save(Server.MapPath("/StudentImage/" + rName + ""));
+                            objModelStudent.Simage = rName;
+                        }
+                    }
+                    else
+                    {
+
+                        Error("Student Image not found");
+                        return PartialView(customview("_StudentInformation", "Student"), objModelStudent);
+                    }
                     decimal result = objBLLStudent.AddStudentInfo(objModelStudent);
                     if (result > 0)
                     {
                         Success("Record Added at" + DateTime.Now);
+                        return PartialView(customview("_StudentInformation", "Student"), objModelStudent);
                     }
                     else
                     {
                         Error("Data Submition Error, Plz Correct All Fields and Try Again");
                     }
-                }
+
+                   
+                } 
                 Error("Plz Fill out All Fields");
-                return PartialView(customview("_StudentInformation", "Student"), objModelStudent);
+                    return PartialView(customview("_StudentInformation", "Student"), objModelStudent);
             }
             catch
             {
                 return View();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateStudentInfo(ViewModelStudent objModelStudent)
+        {
+            try
+            {
+                BindDropdownlist();
+                BLLStudent objBLLStudent = new BLLStudent();
+                if (ModelState.IsValid)
+                {
+                    objModelStudent.Status = 1;
+
+                    decimal result = objBLLStudent.UpdateStudent(objModelStudent);
+                    if (result > 0)
+                    {
+                        Success("Update Record at" + DateTime.Now);
+                        ModelState.Clear();
+                        return View();
+                    }
+                    else
+                    {
+                        Error("Data Submition Error, Plz Correct All Fields and Try Again");
+                    }
+
+
+                }
+                Error("Plz Fill out All Fields");
+                return PartialView(customview("_EditFormStudent", "Student"), objModelStudent);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public static string SecureRandomString(int length, string allowedChars = "abcdefghij2323klmnoxcasdasdpqrszxct232323uvwxyzABCD23232323EFGHIJKLMNOPQRSTUVWXYZ0123456789")
+        {
+            if (length < 0) throw new ArgumentOutOfRangeException("length", "length cannot be less than zero.");
+            if (string.IsNullOrEmpty(allowedChars)) throw new ArgumentException("allowedChars may not be empty.");
+
+            const int byteSize = 0x100;
+            var allowedCharSet = new HashSet<char>(allowedChars).ToArray();
+            if (byteSize < allowedCharSet.Length) throw new ArgumentException(String.Format("allowedChars may contain no more than {0} characters.", byteSize));
+
+            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+            {
+                var result = new StringBuilder();
+                var buf = new byte[128];
+                while (result.Length < length)
+                {
+                    rng.GetBytes(buf);
+                    for (var i = 0; i < buf.Length && result.Length < length; ++i)
+                    {
+                        var outOfRangeStart = byteSize - (byteSize % allowedCharSet.Length);
+                        if (outOfRangeStart <= buf[i]) continue;
+                        result.Append(allowedCharSet[buf[i] % allowedCharSet.Length]);
+                    }
+                }
+                return result.ToString();
             }
         }
         private int CheckObjNull(string value)

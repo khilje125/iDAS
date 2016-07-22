@@ -1,4 +1,5 @@
-﻿using iDAS.DAL;
+﻿using iDAS.Controllers;
+using iDAS.DAL;
 using iDAS.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace iDAS.BLL
 {
-    public class BLLStudentFee
+    public class BLLStudentFee 
     {
         public List<ModelStudent> GetStudentListReport(string SearchCriteria, decimal SchoolAccountId)
         {
@@ -50,6 +51,16 @@ namespace iDAS.BLL
             return lstModelStudent;
         }
 
+        public DataTable getFeeMonthsByYearDP()
+        {
+            
+                 DataTable adataSetTable = new DataTable();
+
+                 adataSetTable = DALCommon.GetDataByStoredProcedure("[sp_Admin_GetFeeMothByYear]");
+                 return adataSetTable;
+           
+        
+        }
         public DataTable GetStudentDataTableForReport(string SearchCriteria, decimal SchoolAccountId)
         {
             List<ModelStudent> lstModelStudent = new List<ModelStudent>();
@@ -225,20 +236,6 @@ namespace iDAS.BLL
             return objlstModelStudentFee;
         }
 
-<<<<<<< HEAD
-        public int StudentBulkMonthlyFeeInsertion(decimal StudentID)
-        {
-            ModelStudent objModelStudent = new ModelStudent();
-            DataTable tblStudentList= new DataTable();
-            tblStudentList = DALCommon.GetDataByStoredProcedure("ABC");
-            if (tblStudentList.Rows.Count > 0)
-            {
-                
-            }
-            return 0;
-        }
-
-=======
         //for bulk Fee Insertion
 
         public int InsertBulkStudentMonthlyFee(ModelStudentFee objModelStudentFee,string SearchCriteria,int FeeMonth)
@@ -264,6 +261,5 @@ namespace iDAS.BLL
             }
             return _result;
         }
->>>>>>> c466499924de2141b8ce9fba88b9349e6d130ab6
     }
 }
