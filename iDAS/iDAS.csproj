@@ -139,12 +139,48 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BootstrapBundleConfig.cs" />
+    <Compile Include="ASPXReport\StudentFeeReport.aspx.cs">
+      <DependentUpon>StudentFeeReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ASPXReport\StudentFeeReport.aspx.designer.cs">
+      <DependentUpon>StudentFeeReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\StudentFeeVoucherPaidMark.cs" />
+    <Compile Include="Models\ModelStudentFeeFollowUpMonthCountReport.cs" />
+    <Compile Include="Reports\StudentAdminReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StudentAdminReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ASPXReport\StudentBankChallanReport.aspx.cs">
+      <DependentUpon>StudentBankChallanReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ASPXReport\StudentBankChallanReport.aspx.designer.cs">
+      <DependentUpon>StudentBankChallanReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ASPXReport\StudentListClassWise.aspx.cs">
       <DependentUpon>StudentListClassWise.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ASPXReport\StudentListClassWise.aspx.designer.cs">
       <DependentUpon>StudentListClassWise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ASPXReport\StudentListWithParameterReport.aspx.cs">
+      <DependentUpon>StudentListWithParameterReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ASPXReport\StudentListWithParameterReport.aspx.designer.cs">
+      <DependentUpon>StudentListWithParameterReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ASPXReport\StudentReport.aspx.cs">
+      <DependentUpon>StudentReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ASPXReport\StudentReport.aspx.designer.cs">
+      <DependentUpon>StudentReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="BLL\BLLAdminPages.cs" />
     <Compile Include="BLL\BLLAdminUser.cs" />
@@ -153,15 +189,20 @@
     <Compile Include="BLL\BLLPaymentService.cs" />
     <Compile Include="BLL\BLLStudentFee.cs" />
     <Compile Include="BLL\BLLStudent.cs" />
+    <Compile Include="BLL\BLLStudentReports.cs" />
     <Compile Include="Common\Alerts.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BootstrapBaseController.cs" />
     <Compile Include="Controllers\DashBoardMerchantController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\StudentDataController.cs" />
     <Compile Include="Controllers\StudentFeeController.cs" />
     <Compile Include="Controllers\StudentReportController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAL\DALCommonFormData.cs" />
+    <Compile Include="DAL\StudentFeeVoucherTransaction.cs" />
+    <Compile Include="DAL\BulkFeeInsertionTransaction.cs" />
     <Compile Include="DAL\DALCommon.cs" />
     <Compile Include="DAL\DALUtility.cs" />
     <Compile Include="DAL\DALVariables.cs" />
@@ -176,42 +217,99 @@
       <DependentUpon>MerchantMenu.ashx</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelAdminUser.cs" />
+    <Compile Include="Models\ModelBankFeeChallanReport.cs" />
     <Compile Include="Models\ModelCity.cs" />
     <Compile Include="Models\ModelCountry.cs" />
     <Compile Include="Models\ModelLandingURL.cs" />
     <Compile Include="Models\ModelLeftMenu.cs" />
     <Compile Include="Models\ModelMerchantUser.cs" />
     <Compile Include="Models\ModelPaymentService.cs" />
+    <Compile Include="Models\ModelReportInfo.cs" />
     <Compile Include="Models\ModelSchoolAccount.cs" />
+    <Compile Include="Models\ModelStudentBankChallan.cs" />
     <Compile Include="Models\ModelStudentClass.cs" />
+    <Compile Include="Models\ModelStudentDynamicReport.cs" />
     <Compile Include="Models\ModelStudentFee.cs" />
     <Compile Include="Models\ModelStudentSection.cs" />
     <Compile Include="Models\ModelTransactionByCreditCard.cs" />
     <Compile Include="Models\ModelSchoolUserAccount.cs" />
     <Compile Include="Models\ModelStudent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportDataSource\StudentListDynamicParameter.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StudentListDynamicParameter.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\BankChallanFeeList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BankChallanFeeList.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\BankChallanForm.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BankChallanForm.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\BankChallanStudentInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BankChallanStudentInfo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\BankRec.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BankRec.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\CrystalReport1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CrystalReport1.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reports\FeeStudentReport.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FeeStudentReport.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Reports\rptStudentClassInfo.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rptStudentClassInfo.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Reports\StudentClassReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>StudentClassReport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\StudentFeeDefaulterList.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StudentFeeDefaulterList.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\StudentFeeFollowUpMonthCount.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StudentFeeFollowUpMonthCount.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\ParentTeacherMeeting.cs">
+      <DependentUpon>ParentTeacherMeeting.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Reports\StudentListForTeacher.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StudentListForTeacher.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\StudentListWithParameter.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StudentListWithParameter.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\StudentTeacherReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StudentTeacherReport.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
@@ -932,7 +1030,11 @@
     <Content Include="aspnet_client\system_web\4_0_30319\crystalreportviewers13\prompting\js\promptengine_strings_zh_TW.js" />
     <Content Include="aspnet_client\system_web\4_0_30319\crystalreportviewers13\urlreporting\activexviewer.js" />
     <Content Include="aspnet_client\system_web\4_0_30319\crystalreportviewers13\urlreporting\appletviewer.js" />
+    <Content Include="ASPXReport\StudentBankChallanReport.aspx" />
+    <Content Include="ASPXReport\StudentFeeReport.aspx" />
     <Content Include="ASPXReport\StudentListClassWise.aspx" />
+    <Content Include="ASPXReport\StudentListWithParameterReport.aspx" />
+    <Content Include="ASPXReport\StudentReport.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -949,6 +1051,7 @@
     <Content Include="Content\font\glyphicons-halflings-regular.svg" />
     <Content Include="Content\font\glyphicons-regular.svg" />
     <Content Include="Content\font\glyphiconshalflings-regular.svg" />
+    <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\arrows-active.png" />
     <Content Include="Content\images\arrows-normal.png" />
     <Content Include="Content\images\avatar.jpg" />
@@ -987,6 +1090,7 @@
     <Content Include="Content\images\gallery\photo7.jpg" />
     <Content Include="Content\images\gallery\photo8.jpg" />
     <Content Include="Content\images\gallery\photo9.jpg" />
+    <Content Include="Content\images\gears.gif" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\glyphicons-white.png" />
@@ -1033,11 +1137,11 @@
     <Content Include="Content\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\images\uploadify-cancel.png" />
-    <Content Include="Content\MerchantLogo\pakistan_glossy_square_icon_64.png" />
-    <Content Include="Content\MerchantLogo\qatar_glossy_square_icon_64.png" />
-    <Content Include="Content\MerchantLogo\saudi_arabia_glossy_square_icon_64.png" />
-    <Content Include="Content\MerchantLogo\singapore_glossy_square_icon_64.png" />
-    <Content Include="Content\MerchantLogo\worldnews.png" />
+    <Content Include="Content\SchoolUserLogo\pakistan_glossy_square_icon_64.png" />
+    <Content Include="Content\SchoolUserLogo\qatar_glossy_square_icon_64.png" />
+    <Content Include="Content\SchoolUserLogo\saudi_arabia_glossy_square_icon_64.png" />
+    <Content Include="Content\SchoolUserLogo\singapore_glossy_square_icon_64.png" />
+    <Content Include="Content\SchoolUserLogo\1.jpg" />
     <Content Include="Content\PaymentServiceLogo\american-express.png" />
     <Content Include="Content\PaymentServiceLogo\mastercard.png" />
     <Content Include="Content\PaymentServiceLogo\payfort.png" />
@@ -1081,6 +1185,7 @@
     <Content Include="Content\Scripts\retina.js" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\AjaxAlerts.js" />
     <Content Include="Scripts\DataTableInitialise.js" />
     <Content Include="Scripts\datepicker\daterangepicker.js" />
     <Content Include="Scripts\DynamicLeftMenu.js" />
@@ -1156,7 +1261,17 @@
     <Content Include="Content\font\glyphiconshalflings-regular.woff" />
     <Content Include="Content\Scripts\jquery-2.2.3.min.map" />
     <Content Include="Content\Scripts\maps\us-unemployment.json" />
-    <Content Include="Reports\ReportStudentsInfo.rpt" />
+    <Content Include="ReportDataSource\StudentListDynamicParameter.xsc">
+      <DependentUpon>StudentListDynamicParameter.xsd</DependentUpon>
+    </Content>
+    <None Include="ReportDataSource\StudentListDynamicParameter.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>StudentListDynamicParameter.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="ReportDataSource\StudentListDynamicParameter.xss">
+      <DependentUpon>StudentListDynamicParameter.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.3.js" />
@@ -3779,15 +3894,28 @@
     <Content Include="Views\Shared\StudentFee\_SearchFormPartial.cshtml" />
     <Content Include="Views\Shared\StudentFee\_SearchResultsPartial.cshtml" />
     <Content Include="Views\Shared\StudentFee\_GetFormStudentFeeInfo.cshtml" />
-    <Content Include="Views\Shared\StudentFee\_GetFormStudentFeeInfo - Copy.cshtml" />
     <Content Include="Views\Shared\StudentFee\_EditStudentMonthlyFeeInfo.cshtml" />
     <Content Include="Views\StudentFee\ASPReportTest.cshtml" />
+    <Content Include="Views\Shared\Student\_GetStudentList.cshtml" />
+    <Content Include="Views\Shared\Student\_StudentInformation.cshtml" />
+    <Content Include="Views\Shared\Student\_ViewStudentInformation.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\StudentFee\SaveBulkFeeInsertion.cshtml" />
+    <Content Include="Views\Shared\StudentFee\_BulkFeesPartialForm.cshtml" />
+    <Content Include="Views\StudentFee\BarCodeFeeInsertion.cshtml" />
+    <Content Include="Views\StudentReport\DataReports.cshtml" />
+    <Content Include="Views\Shared\StudentReport\_BankChallanGetReport.cshtml" />
+    <Content Include="Views\StudentFee\GenerateBulkFeeVouchers.cshtml" />
+    <Content Include="Views\StudentReport\GetBankChallanVoucher.cshtml" />
+    <Content Include="Views\Shared\_AjaxPageLoading.cshtml" />
+    <Content Include="Views\Shared\_ViewStudentForm.cshtml" />
+    <Content Include="Views\StudentReport\StudentClassReport.cshtml" />
+    <Content Include="Views\StudentReport\StudentFeeFollowUpReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\AdminLogo\" />
     <Folder Include="Content\UserLogo\" />
-    <Folder Include="ReportDataSource\" />
     <Folder Include="Views\Merchant\" />
   </ItemGroup>
   <ItemGroup>
@@ -4630,21 +4758,57 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\StudentAdminReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>StudentAdminReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BankChallanFeeList.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>BankChallanFeeList.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BankChallanForm.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>BankChallanForm.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BankChallanStudentInfo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>BankChallanStudentInfo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BankRec.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>BankRec.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\CrystalReport1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CrystalReport1.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reports\FeeStudentReport.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>FeeStudentReport.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reports\rptStudentClassInfo.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptStudentClassInfo.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Reports\StudentClassReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>StudentClassReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\StudentFeeDefaulterList.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>StudentFeeDefaulterList.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\StudentFeeFollowUpMonthCount.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>StudentFeeFollowUpMonthCount.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ParentTeacherMeeting.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ParentTeacherMeeting.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\StudentListForTeacher.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>StudentListForTeacher.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\StudentListWithParameter.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>StudentListWithParameter.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\StudentTeacherReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>StudentTeacherReport.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

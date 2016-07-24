@@ -1,0 +1,194 @@
+﻿@using System.Web.Optimization
+@*@using NavigationRoutes*@
+@model iDAS.Models.ViewModelStudent
+@{
+    ViewBag.Title = "Edit Student Information";
+    Layout = null;
+}
+
+ <!-- bootstrap-daterangepick
+<!-- /bootstrap-daterangepicker -->
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+
+            <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12" for="first-name">
+                    Registrtion # <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DisplayFor(m => m.RegNo, new { @class = "form-control col-md-7 col-xs-12", @type = "number", })
+
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12" for="first-name">
+                    Computer Code<span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DisplayFor(m => m.ComputerCode, new { @class = "form-control col-md-7 col-xs-12", @type = "number", })
+
+                </div>
+            </div>
+            <br />
+                    <div class="form-group">
+
+                <label class="control-label col-md-6 col-sm-6 col-xs-12" for="first-name">
+                            Student Name <span class="required">*</span>
+                        </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DisplayFor(m => m.StudentName, new { @class = "form-control col-md-7 col-xs-12" })
+                        
+                    </div>
+                
+            </div>
+            <br />
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                            Father Name<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DisplayFor(m => m.FatherName, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+            <br/>
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">Address<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DisplayFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+            <br />
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                            Class <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          
+                            @Html.DisplayFor(x => x.StudentClass.ClassName, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+            <br/>
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                            Section <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                           @Html.DisplayFor(x => x.StudentSection.SectionName, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+            <br />
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                            Fee <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DisplayFor(m => m.MonthlyFee, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+            <br/>
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">Date of Birth  <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Model.DateOfBirth.ToString("dd/MM/yyyy")
+                    @*@Html.DisplayFor(c => c.DateOfBirth, new { @class = "form-control col-md-7 col-xs-12" })*@
+                        </div>
+                    </div>
+            <br />
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                            Address: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DisplayFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+            <br />
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                            Home Phone <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DisplayFor(m => m.HomeNumber, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+            <br />
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                            Mobile No <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DisplayFor(m => m.MoblieNumber, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+            <br />
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                            Admission Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Model.DateOfAdmission.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                    Dues <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DisplayFor(m => m.Dues, new { @class = "form-control col-md-7 col-xs-12" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                    Leave Class <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DisplayFor(m => m.LeaveClass, new { @class = "form-control col-md-7 col-xs-12" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                    Leave Date <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Model.LeaveDate.ToString("dd/MM/yyyy")
+                    @*@Html.DisplayFor(m => m.LeaveDate, new { @class = "form-control col-md-7 col-xs-12" })*@
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                    Leave Dues<span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DisplayFor(m => m.LeaveDues, new { @class = "form-control col-md-7 col-xs-12" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                    Reason<span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    @Html.DisplayFor(m => m.Reason, new { @class = "form-control col-md-7 col-xs-12" })
+                </div>
+            </div>
+            <br />
+                    <div class="form-group">
+                <label class="control-label col-md-6 col-sm-6 col-xs-12">
+                            Reference<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DisplayFor(m => m.Reference, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                  
+                
+            </div>
+        </div>
+    </div>

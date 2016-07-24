@@ -27,7 +27,11 @@
         {
             InsertionMode = InsertionMode.Replace,
             HttpMethod = "POST",
-            UpdateTargetId = "search-results"
+            UpdateTargetId = "search-results",
+            OnBegin = "ShowAjaxProcessing",
+            OnSuccess = "ShowAjaxSuccess",
+            OnFailure = "ShowAjaxFailure",
+            OnComplete = "ShowAjaxComplete"
         }, new { @class = "form-horizontal form-label-left" }))
         {
             <div class="form-group">
@@ -98,7 +102,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Section</label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Student Status</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
 
                     <select class="select2_single form-control" id="StudentStatus" name="StudentStatus">
@@ -130,3 +134,4 @@
         }
     </div>
 </div>
+@Html.Partial("_AjaxPageLoading")

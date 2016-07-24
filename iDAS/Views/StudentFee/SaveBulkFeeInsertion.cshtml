@@ -1,0 +1,199 @@
+﻿@{
+    ViewBag.Title = "Bulk Fee Insertion";
+
+    Layout = "~/Views/Shared/_MerchantLayout.cshtml";
+}
+
+<script type="text/javascript">
+ 
+    function ShowAjaxSuccess(data) {
+        //alert(data.code + " " + data.message);
+        if (data.code = 1) {
+            $("#dvMessaheAlert").html("<div class='alert alert-" + data.css + " alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button>" + data.message + "</div>");
+        }
+    }
+    function ShowAjaxFailure(data) {
+        $("#dvMessaheAlert").html("<div class='alert alert-" + data.css + " alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button>" + data.message + "</div>");
+    }
+    function ShowAjaxComplete() {
+        var $confirm = $("#ShowProcessingModel");
+        $confirm.modal('hide');
+    }
+    function ShowAjaxProcessing() {
+        var $confirm = $("#ShowProcessingModel");
+        $confirm.modal('show');
+    }
+</script>
+
+
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Bulk Fee Insertion <small>add bulk fee in selected classes</small></h3>
+        </div>
+        @*<div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Bulk Fee Insertion</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="search-form">
+                        <div class="row">
+                            @Html.Partial("_alerts")
+                            @Html.Partial("_validationSummary")
+                            <div id="dvMessaheAlert"></div>
+                            <div class="x_panel">
+
+                                <div class="x_title">
+                                    <h2>Bulk Fee Insertion<small>Bulk Fee Insertion</small></h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+
+                                    <br />
+                                         @using (Ajax.BeginForm("SaveBulkFeeInsertion", "StudentFee", FormMethod.Post,
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            Confirm = "Are you sure ! Want to insert fee in bulk ? ",
+                                            OnBegin = "ShowAjaxProcessing",
+                                            OnSuccess = "ShowAjaxSuccess",
+                                            OnFailure = "ShowAjaxFailure",
+                                            OnComplete = "ShowAjaxComplete"
+
+                                        }, new { @class = "form-horizontal form-label-left", id = "frmInsertBulkStudentMonthlyFee" }))
+                                            {
+
+
+                                    
+                                    @*@using (Html.BeginForm("SaveBulkFeeInsertion", "StudentFee", FormMethod.Post, new { @class = "form-horizontal", id = "frmsubmit" }))
+                                    {*@
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Class</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.DropDownList("dropDownClass", new SelectList(ViewBag.dpClass, "Value", "Text", "0"), new { @class = "select2_single form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Section</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.DropDownList("dropDownSection", new SelectList(ViewBag.dpSection, "Value", "Text", "0"), new { @class = "select2_single form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Fee Month</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.DropDownList("dropDownMonthFee", new SelectList(ViewBag.dpFeeMonths, "Value", "Text", "0"), new { @class = "select2_single form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="StudentName">
+                                                Registration Fee
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.TextBox("RegistrationFee", "", new { @class = "form-control col-md-7 col-xs-12", type = "number" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="StudentName">
+                                                Admission
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.TextBox("Addmission", "", new { @class = "form-control col-md-7 col-xs-12", type = "number" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="StudentName">
+                                                Re-AdmissionFee
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.TextBox("ReAdmission", "", new { @class = "form-control col-md-7 col-xs-12", type = "number" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="StudentName">
+                                                Addmission  Fee
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.TextBox("AddmissionFee", "", new { @class = "form-control col-md-7 col-xs-12", type = "number" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="StudentName">
+                                                Computer Fee
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.TextBox("ComputerFee", "", new { @class = "form-control col-md-7 col-xs-12", type = "number" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="StudentName">
+                                                Fine
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.TextBox("Fine", "", new { @class = "form-control col-md-7 col-xs-12", type = "number" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="StudentName">
+                                                ExamFee
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.TextBox("ExamFee", "", new { @class = "form-control col-md-7 col-xs-12", type = "number" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="StudentName">
+                                                GeneratorFee
+                                            </label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                @Html.TextBox("GeneratorFee", "", new { @class = "form-control col-md-7 col-xs-12", type = "number" })
+                                            </div>
+                                        </div>
+
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-md-offset-3">
+
+                                                @* <a href="@Url.Action("Search", "Student")" class="btn btn-primary">Reset</a>*@
+                                                @*<button type="submit" class="btn btn-primary">Reset</button>*@
+                                                <button id="send" type="submit" class="btn btn-success">Save</button>
+                                            </div>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

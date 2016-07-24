@@ -1,0 +1,262 @@
+﻿ @using iDAS.DAL;
+ @model IEnumerable<iDAS.Models.ModelStudent>
+           @{
+               int _resultCount = Model.Count();
+               
+           }
+<!-- end: Favicon -->
+@System.Web.Optimization.Scripts.Render("~/js/DataTable")
+<script type="text/javascript">
+    $(document).ready(function () {
+        var handleDataTableButtons = function () {
+            if ($("#datatable-responsive-transactionHistory").length) {
+                $("#datatable-responsive-transactionHistory").DataTable({
+                    dom: "Bfrtip",
+                    buttons: [
+                      {
+                          extend: "copy",
+                          className: "btn-sm"
+                      },
+                      {
+                          extend: "csv",
+                          className: "btn-sm"
+                      },
+                      {
+                          extend: "excel",
+                          className: "btn-sm"
+                      },
+                      //{
+                      //    extend: "pdfHtml5",
+                      //    className: "btn-sm"
+                      //},
+                      {
+                          extend: "print",
+                          className: "btn-sm"
+                      },
+                    ],
+                    responsive: true
+                });
+            }
+        };
+
+        TableManageButtons = function () {
+            "use strict";
+            return {
+                init: function () {
+                    handleDataTableButtons();
+                }
+            };
+        }();
+
+
+        //$('#datatable-responsive-transactionHistory').DataTable();
+        TableManageButtons.init();
+
+        function confirmDiaglogBox(id) {
+            AsyncConfirmYesNo(id);
+        };
+
+        function AsyncConfirmYesNo(controlId) {
+            alert(controlId);
+            var $confirm = $("#countryDelete");
+            $confirm.modal('show');
+            $("#btnConfirm").off('click').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Delete", "Country")',
+                    data: JSON.stringify({ id: controlId }),
+                    success: function (result) {
+                        // debugger;
+                        window.location.reload();
+                        //  window.location.href = result.Url;
+                    },
+                    dataType: "text",
+                    contentType: "application/json; charset=utf-8",
+                    processData: false
+                });
+                $confirm.modal("hide");
+            });
+        };
+
+      
+    });
+
+
+   
+    function OpenRecordBox() {
+        var $confirm = $("#editStudentForm123");
+        $confirm.modal("show");
+    };
+
+    function OpenRecordBoxForView() {
+        var $confirm = $("#ViewStudentForm");
+        $confirm.modal("show");
+    };
+</script>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Student (@_resultCount)</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                @if (Model.Count() > 0)
+                {
+                    @*<p class="text-muted font-13 m-b-30">
+                            User transction history
+                        </p>*@
+                    <table id="datatable-responsive-transactionHistory" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Student Id</th>
+                                <th>Student Name</th>
+                                <th>Father Name</th>
+                                <th>Class Name</th>
+                                <th>Section Name</th>
+                                <th>Computer Code</th>
+                                <th>Reg No</th>
+                                <th>Date Of Birth</th>
+                                <th>Date Of Admission</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.StudentId</td>
+                                    <td>@item.StudentName</td>
+                                    <td>@item.FatherName</td>
+                                    <td>@item.StudentClass.ClassName</td>
+                                    <td>@item.StudentSection.SectionName</td>
+                                    <td>@item.ComputerCode</td>
+                                    <td>@item.RegNo</td>
+                                    <td>@item.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                                      <td>@item.DateOfAdmission.ToString("dd/MM/yyyy")</td>
+
+                                    @if (item.Status == 1)
+                                    {
+                                        <td class="btn btn-success">@item.StatusText</td>
+                                    }
+                                    else if (item.Status == 2)
+                                    {
+                                        <td class="btn btn-warning"><i class="ok-sign">@item.StatusText</i></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="btn btn-default">
+                                            <i class="remove-sign">@item.StatusText</i>
+                                        </td>
+                                    }
+                                    <td>
+                                        @*<a class="btn btn-success" onclick='confirmDiaglogBox'>
+                                            <i class=" glyphicon glyphicon-zoom-in white"></i>
+                                        </a>*@
+
+                                        <a  href="#"  onclick="$('#editStudentForm123').modal('show')">
+                                          
+                                        </a>
+                                         @Ajax.ActionLink("Edit", "EditStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "editStudentForm",
+                                                OnSuccess = "OpenRecordBox();"
+                                            }, new { @class = "btn btn-success glyphicon glyphicon-edit white" })
+                                       
+                                         <a  href="#"  onclick="$('#ViewStudentForm').modal('show')">
+                                         
+                                        </a>
+                                         @Ajax.ActionLink("View", "ViewStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "viewStudentForm",
+                                                OnSuccess = "OpenRecordBoxForView();"
+                                            }, new { @class = "btn btn-success glyphicon glyphicon white" })
+                                       
+
+                                     
+                                        
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <h4 class="alert-heading">Attention!</h4>
+                        <p>No Record Found.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+   
+</div>
+
+<div class="modal fade" id="editStudentForm123" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title text-success" id="ShowForgotPasswordModalLabel">
+                            Edit Student Record
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div id="editStudentForm"></div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+<div class="modal fade" id="ViewStudentForm" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title text-success" id="ShowForgotPasswordModalLabel">
+                            View Student Record
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                     <div id="viewStudentForm"></div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+<div class="modal hide fade" id="countryDelete">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-header">Delete Parmanently</h4>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure about delete this ?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn " data-dismiss="modal">Close</a>
+        <a class="btn btn-success" href="#">
+            <i class="glyphicon glyphicon-trash white"></i>
+        </a>
+        @*<button type="button" class="btn btn-danger" id="btnConfirm"><i class="halflings-icon white trash">Delete</i></button>*@
+
+    </div>
+
+    </div>

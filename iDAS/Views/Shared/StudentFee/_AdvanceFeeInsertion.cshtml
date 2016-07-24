@@ -1,0 +1,449 @@
+﻿@using System.Web.Optimization
+@model iDAS.Models.ModelStudent
+@{
+    //int _resultCount = Model.StudentMonthlyFeeList.Count();
+    Layout = "";
+
+}
+<!-- end: Favicon -->
+
+@System.Web.Optimization.Scripts.Render("~/js/DataTable")
+
+<!-- bootstrap-daterangepicker -->
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        GetAllPeriortyForDeployment();
+    });
+    function GetAllPeriortyForDeployment() {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetFeeMonthByYear", "StudentFee")',
+            data: '{' +
+
+               + '}',
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function () {
+                //  $("#dlltickettype").empty();
+            },
+            dataType: "json",
+            beforeSend: function () {
+            
+            },
+            success: function (msg) {
+              
+                var result = msg.split('~');
+                if ((result == null || result.length == 1)) {
+
+                }
+                else {
+                    console.log('else');
+                }
+                console.log('result.length ' + result.length);
+                $('.ddlFeeMonthAjax').append('<option value="' + "0" + '"  >' + "-- Select One --" + '</option>');
+                for (i = 0; i < result.length - 1; i++) {
+                    var arr = result[i].split(',');
+                    $('.ddlFeeMonthAjax').append('<option value="' + arr[0] + '" >' + arr[1] + '</option>');
+                }
+
+            },
+            error: function (x, e) {
+
+                alert("The call to the server side failed. " + x.responseText);
+            }
+        });
+    }
+
+</script>
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        $('#popFeeDatePicker').daterangepicker({
+            singleDatePicker: true,
+            calender_style: "picker_2"
+        }, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+      
+
+
+    });
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    function CsStudentFeeInsertion() {
+        this.studentId = null;
+
+
+        this.FeeMonth = null;
+        this.AdmissionFee = null;
+
+        this.ReAdmissin = null;
+        this.RegistrationFee = null
+        this.ComputerFee = null;
+        this.Fine = null;
+        this.ExamFee = null;
+       
+        this.GenatorFee = null;
+        this.FeeDate = null;
+
+    }
+
+    
+    
+    function GenerateCsDepTicketDetail(studentId, FeeMonth, AdmissionFee, ReAdmissin, RegistrationFee, ComputerFee, Fine, ExamFee, GenatorFee, FeeDate) {
+        var studentFeeObje = new CsStudentFeeInsertion();
+        studentFeeObje.studentId = studentId;
+
+        studentFeeObje.FeeMonth = FeeMonth;
+        studentFeeObje.AdmissionFee = AdmissionFee;
+        studentFeeObje.ReAdmissin = ReAdmissin;
+        studentFeeObje.RegistrationFee = RegistrationFee;
+     
+        studentFeeObje.ComputerFee = ComputerFee;
+        studentFeeObje.Fine = Fine;
+        studentFeeObje.ExamFee = ExamFee;
+        studentFeeObje.GenatorFee = GenatorFee;
+        studentFeeObje.FeeDate = FeeDate;
+        return studentFeeObje;
+    }
+
+    StartAdvanceFeeProcess = function () {
+      
+      
+        var studenid = $("#StudentId").val();
+        var FeeDate = $("#popFeeDatePicker").val();
+        var StudentIndividualFeesInsertion = [];
+      
+        if ($("#popFeeDatePicker").val() != "") {
+            $("#popFeeDatePicker").css("border", "1px solid green");
+
+            if ($('#Feemonthchk_1').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_1").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_1").val(), $("#txtreadmission_1").val(),
+                    $("#RegFee_1").val(),
+                  
+                    $("#ComputerFee_1").val(), $("#Fine_1").val(), $("#ExamFee_1").val(), $("#GenFee_1").val(), FeeDate))
+            }
+
+            if ($('#Feemonthchk_2').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_2").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_2").val(), $("#txtreadmission_2").val(),
+                    $("#RegFee_2").val(),
+                
+                    $("#ComputerFee_2").val(), $("#Fine_2").val(), $("#ExamFee_2").val(), $("#GenFee_2").val(), FeeDate))
+            }
+
+            if ($('#Feemonthchk_3').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_3").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_3").val(), $("#txtreadmission_3").val(),
+                    $("#RegFee_3").val(),
+             
+                  $("#ComputerFee_3").val(), $("#Fine_3").val(), $("#ExamFee_3").val(), $("#GenFee_3").val(), FeeDate))
+            }
+
+            if ($('#Feemonthchk_4').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_4").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_4").val(), $("#txtreadmission_4").val(),
+                    $("#RegFee_4").val(),
+               
+                    $("#ComputerFee_4").val(), $("#Fine_4").val(), $("#ExamFee_4").val(), $("#GenFee_4").val(), FeeDate))
+            }
+
+            if ($('#Feemonthchk_5').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_5").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_5").val(), $("#txtreadmission_5").val(),
+                    $("#RegFee_5").val(),
+                
+                    $("#ComputerFee_5").val(), $("#Fine_5").val(), $("#ExamFee_5").val(), $("#GenFee_5").val(), FeeDate))
+            }
+            if ($('#Feemonthchk_6').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_6").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_6").val(), $("#txtreadmission_6").val(),
+                    $("#RegFee_6").val(),
+                  
+                    $("#ComputerFee_6").val(), $("#Fine_6").val(), $("#ExamFee_6").val(), $("#GenFee_6").val(), FeeDate))
+            }
+            if ($('#Feemonthchk_7').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_7").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_7").val(), $("#txtreadmission_7").val(),
+                    $("#RegFee_7").val(),
+                
+                    $("#ComputerFee_7").val(), $("#Fine_7").val(), $("#ExamFee_7").val(), $("#GenFee_7").val(), FeeDate))
+            }
+            if ($('#Feemonthchk_8').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_8").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_8").val(), $("#txtreadmission_8").val(),
+                    $("#RegFee_8").val(),
+               
+                    $("#ComputerFee_8").val(), $("#Fine_8").val(), $("#ExamFee_8").val(), $("#GenFee_8").val(), FeeDate))
+            }
+            if ($('#Feemonthchk_9').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_9").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_9").val(), $("#txtreadmission_9").val(),
+                    $("#RegFee_9").val(),
+                  
+                    $("#ComputerFee_9").val(), $("#Fine_9").val(), $("#ExamFee_9").val(), $("#GenFee_9").val(), FeeDate))
+            }
+            if ($('#Feemonthchk_10').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_10").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_10").val(), $("#txtreadmission_10").val(),
+                    $("#RegFee_10").val(),
+              
+                    $("#ComputerFee_10").val(), $("#Fine_10").val(), $("#ExamFee_10").val(), $("#GenFee_10").val(), FeeDate))
+            }
+            if ($('#Feemonthchk_11').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_11").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_11").val(), $("#txtreadmission_11").val(),
+                    $("#RegFee_11").val(),
+                  
+                    $("#ComputerFee_11").val(), $("#Fine_11").val(), $("#ExamFee_11").val(), $("#GenFee_11").val(), FeeDate))
+            }
+            if ($('#Feemonthchk_12').is(":checked")) {
+                var ddlFeeMonth1 = $("#ddlFeeMonth_12").val();
+                StudentIndividualFeesInsertion.push(GenerateCsDepTicketDetail(studenid, ddlFeeMonth1, $("#txtadmissionFee_12").val(), $("#txtreadmission_12").val(),
+                    $("#RegFee_12").val(),
+                   
+                    $("#ComputerFee_12").val(), $("#Fine_12").val(), $("#ExamFee_12").val(), $("#GenFee_12").val(), FeeDate))
+            }
+
+            if ($('.checkboxSelected input[type=checkbox]:checked').length > 0) {
+
+               // $.blockUI({ css: { backgroundColor: '#f00', color: '#fff' } });
+                var serviceURL = '@Url.Action("AdvanceFeeInserTion", "StudentFee")'
+                $.ajax({
+                    type: "POST",
+                    url: serviceURL,
+                    data: JSON.stringify({ StudentIndividualFeesInsertion: StudentIndividualFeesInsertion }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    beforeSend: function () {
+                      
+                    },
+                    success: function (msg) {
+                        debugger;
+                      
+                        var result = msg;
+                        if (result == "Success") {
+                            $(".reset").val('');
+                            alert("Record Added");
+                        }
+                        else if(result == "Error1")
+                        {
+                            alert("Plz Select FeeMonth First");
+                        }
+                        else {
+                            alert("Error");
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+            } else {
+            
+                alert("Plz Select Atleast One Checkbox");           
+            }
+        }
+
+        else {
+            alert("Must Select FeeDate");
+      
+            $("#popFeeDatePicker").css("border", "1px solid red");
+            $("#popFeeDatePicker").focus();
+        }
+
+
+        //$(".checkboxSelected").on("click", function () {
+        //    checkBoxEvent();
+        //});
+
+        //function checkBoxEvent() {
+
+
+        //    $(".checkboxSelected").each(function () {
+        //        if ($(this).attr("checked")) {
+        //            var currentRow = $(this).parent().parent();
+        //            var textBox1 = $(currentRow).find("#txtadmissionFee");
+        //            var textBox2 = $(currentRow).find("#txtreadmission");
+        //            var textBox3 = $(currentRow).find("#MonthlyFee");
+        //            var textBox1 = $(currentRow).find("#txtadmissionFee");
+        //            var textBox2 = $(currentRow).find("#txtreadmission");
+        //            var textBox3 = $(currentRow).find("#MonthlyFee");
+        //            var textBox1 = $(currentRow).find("#txtadmissionFee");
+        //            var textBox2 = $(currentRow).find("#txtreadmission");
+        //            var textBox3 = $(currentRow).find("#MonthlyFee");
+        //            var textBox1 = $(currentRow).find("#txtadmissionFee");
+        //            var textBox2 = $(currentRow).find("#txtreadmission");
+        //            var textBox3 = $(currentRow).find("#MonthlyFee");
+        //            alert("Select Row Admin Fee " + $(textBox1).val() + " Re Admin : " + $(textBox2).val() + " Monthly Fee : " + $(textBox3).val());
+
+        //        }
+        //    });
+
+    }
+</script>
+
+
+<!-- /bootstrap-daterangepicker -->
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-3" for="StudentName">
+                    Student Name :
+                </label>
+                <div class="col-md-3 col-sm-3 col-md-3">
+                    @Html.HiddenFor(m => m.StudentId)
+                    @Html.HiddenFor(m => m.ComputerCode)
+                  
+                    @Html.DisplayTextFor(m => m.StudentName)
+                </div>
+
+                <label class="control-label col-md-3 col-sm-3 col-xs-3" for="first-name">
+                    Father Name :
+                </label>
+                <div class="col-md-3 col-sm-3 col-md-3">
+                    @Html.DisplayTextFor(m => m.FatherName)
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-3" for="StudentName">
+                    Class Name :
+                </label>
+                <div class="col-md-3 col-sm-3 col-md-3">
+                    @Html.DisplayTextFor(m => m.StudentClass.ClassName)
+                </div>
+
+                <label class="control-label col-md-3 col-sm-3 col-xs-3" for="first-name">
+                    Section :
+                </label>
+                <div class="col-md-3 col-sm-3 col-md-3">
+                    @Html.DisplayTextFor(m => m.StudentSection.SectionName)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Insert Advance Monthly Fee</h2>
+                <div class="title_">
+                    <div class="form-horizontal form-label-left">
+
+                        <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-right">
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="popFeeDatePicker">
+                                    Due Date <span class="required">*</span>
+                                </label>
+                                <input class="form-control col-md-4 col-xs-12" name="FeeDate" type="text" id="popFeeDatePicker" placeholder="Due Date">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @for (int i = 1; i < 13; i++)
+                {
+                    <div class="row dataGridRow">
+                        <div class="col-md-1 col-sm-12 col-xs-12 form-group checkboxSelected">
+                            
+                          
+                        </div>
+                        <div class="col-md-1 col-sm-12 col-xs-12 form-group checkboxSelected">
+                            
+                            <input class="form-control "  type="checkbox"  id="Feemonthchk_@i" />
+                        </div>
+                        <div class="col-md-2 col-sm-12 col-xs-12 form-group">
+
+                            <select id='ddlFeeMonth_@i' class="form-control ddlFeeMonthAjax">
+                            </select>
+                        </div>
+                        <div class="col-md-1 col-sm-12 col-xs-12 form-group">
+                            <input class="form-control reset" type="text" id="txtadmissionFee_@i" placeholder="Admission Fee" onkeypress="return isNumberKey(event)"maxlength="3"/>
+                        </div>
+                        <div class="col-md-1 col-sm-12 col-xs-12 form-group">
+                            <input class="form-control reset" type="text" id="txtreadmission_@i" placeholder="Re-Admission" onkeypress="return isNumberKey(event)"maxlength="3"/>
+                        </div>
+                        <div class="col-md-1 col-sm-12 col-xs-12 form-group">
+                            <input class="form-control reset"  type="text"  id="RegFee_@i" placeholder="Reg Fee" onkeypress="return isNumberKey(event)"maxlength="3"/>
+                        </div>
+                       
+                        <div class="col-md-1 col-sm-12 col-xs-12 form-group">
+                            <input class="form-control reset"  type="text"  id="ComputerFee_@i" placeholder="Campus Fee" onkeypress="return isNumberKey(event)"maxlength="3"/>
+                        </div>
+                        <div class="col-md-1 col-sm-12 col-xs-12 form-group">
+                            <input class="form-control reset" type="text" id="Fine_@i" placeholder="Fine" onkeypress="return isNumberKey(event)" maxlength="3"/>
+                        </div>
+                        <div class="col-md-1 col-sm-12 col-xs-12 form-group">
+                            <input class="form-control reset" type="text" id="ExamFee_@i" placeholder="Exam Fee" onkeypress="return isNumberKey(event)"maxlength="3"/>
+                        </div>
+                        <div class="col-md-1 col-sm-12 col-xs-12 form-group">
+                            <input class="form-control reset" type="text" id="GenFee_@i" placeholder="Gen Fee" onkeypress="return isNumberKey(event)"maxlength="3"/>
+                        </div>
+                    </div>
+
+                }
+
+                <div class="buttonAlign">
+
+                    <input type="submit" class="btn btn-success" value="Submit" onclick="StartAdvanceFeeProcess()">
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .buttonAlign {
+    float:right;
+    }
+</style>
+
+<!-- PopUp Success -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

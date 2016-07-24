@@ -28,7 +28,16 @@
 
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var $objSchoolAccountid = $("#SchoolAccountId");
+        $objSchoolAccountid.val('');
+        $objSchoolAccountid.focus();
+    });
+
+</script>
 </head>
+
 <body class="login">
     <div>
         <a class="hiddenanchor" id="signup"></a>

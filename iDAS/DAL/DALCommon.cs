@@ -249,7 +249,7 @@ namespace iDAS.DAL
             }
 
             return dt;
-        }
+        } 
 
         public static DataTable GetDataByStoredProcedure(string spName)
         {

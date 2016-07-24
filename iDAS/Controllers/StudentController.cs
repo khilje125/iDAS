@@ -10,17 +10,59 @@ using System.Web.Mvc;
 
 namespace iDAS.Controllers
 {
-    public class StudentController : Controller
+    public class StudentController : BootstrapBaseController
     {
         ModelStudent objModelStudent = new ModelStudent();
         //
         // GET: /Add/
 
-        public ActionResult Add()
+        public void BindDropdownlist()
         {
-            return View();
-        }
+            BLLStudent objBLLStudent = new BLLStudent();
 
+            ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+
+            ViewBag.dpSection = objBLLStudent.GetClassSectionDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+            ViewBag.dpFeeMonths = objBLLStudent.GetFeeMonthDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+
+        }
+        public ActionResult Index()
+        {
+            try
+            {
+                BindDropdownlist();
+                var objStudentModel = new ViewModelStudent();
+                GetAllStudentData();
+                return PartialView(customview("_StudentInformation", "Student"), objStudentModel);
+               
+
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+        [HttpPost]
+        public ActionResult GetAllStudentData()
+        {
+            try
+            {
+                List<ModelStudent> lstModelStudent = new List<ModelStudent>();
+
+                BLLStudent objBLLStudent = new BLLStudent();
+
+                lstModelStudent = objBLLStudent.GetStudentList();
+                return PartialView(customview("_GetStudentList", "Student"), lstModelStudent);
+
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+       
         //
         // GET: /Search/
         [HttpGet]
@@ -42,6 +84,8 @@ namespace iDAS.Controllers
             return PartialView(customview("_SearchFormPartial", "Student"));
         }
 
+        //bulk fees
+       
         [HttpPost]
         public ActionResult Search1(string ComputerCode, string RegNo, string StudentName, string FatherName, string StudentStatus, string dropDownClass, string dropDownSection)
         {
@@ -135,12 +179,30 @@ namespace iDAS.Controllers
             return PartialView("Error");
         }
 
+        //Get Student info by Studentid
+        [HttpPost]
+        public ActionResult ViewStudent(string studentID)
+        {
+            ViewModelStudent objModelStudent = new ViewModelStudent();
+            if (!String.IsNullOrEmpty(studentID.Trim()))
+            {
+                BLLStudent objBLLStudent = new BLLStudent();
+
+                objModelStudent = objBLLStudent.GetStudentInfoById(Convert.ToDecimal(studentID));
+
+                ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+                ViewBag.dpSection = objBLLStudent.GetClassSectionDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
+
+            }
+            return PartialView(customview("_ViewStudentInformation", "Student"), objModelStudent);
+        }
+      
         //
         // POST: /EditStudent/
         [HttpPost]
         public ActionResult EditStudent(string studentID)
         {
-            ModelStudent objModelStudent = new ModelStudent();
+            ViewModelStudent objModelStudent = new ViewModelStudent();
             if (!String.IsNullOrEmpty(studentID.Trim()))
             {
                 BLLStudent objBLLStudent = new BLLStudent();
