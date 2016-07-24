@@ -80,11 +80,15 @@
         };
     });
 
-    function OpenRecordBox() {
+    function OpenRecordBoxEditStudent() {
         var $confirm = $("#ShowEditStudentInfoModal");
         $confirm.modal("show");
     };
 
+    function OpenRecordBoxForView() {
+        var $confirm = $("#ViewStudentForm");
+        $confirm.modal("show");
+    };
 </script>
 <div class="clearfix"></div>
 <div class="row">
@@ -144,28 +148,32 @@
                                         </td>
                                     }
                                     <td>
-                                        @*<a class="btn btn-success" onclick='confirmDiaglogBox'>
-                                                <i class=" glyphicon glyphicon-zoom-in white"></i>
-                                            </a>*@
+                                        @Ajax.ActionLink("View", "ViewStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "viewStudentForm",
+                                                OnSuccess = "OpenRecordBoxForView();"
+                                            }, new { @class = "btn btn-dark glyphicon glyphicon-zoom-in white" })
 
-@*                                        <a class="btn btn-success" href="#">
-                                            <i class=" glyphicon glyphicon-zoom-in white"></i>
-                                        </a>*@
                                         @Ajax.ActionLink("Edit", "EditStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
                                             {
                                                 InsertionMode = InsertionMode.Replace,
                                                 HttpMethod = "POST",
                                                 UpdateTargetId = "editStudentForm",
-                                                OnSuccess = "OpenRecordBox();"
+                                                OnSuccess = "OpenRecordBoxEditStudent();"
                                             }, new { @class = "btn btn-success glyphicon glyphicon-edit white" })
+
                                         @*<a href="@Url.Action("EditStudent", "Student", new { id = EncryptDecrypt.Encrypt(item.StudentId.ToString()) })" class="btn btn-info"><i class="glyphicon glyphicon-edit white"></i></a>*@
 
                                         @*@Html.Bootstrap().Button().Class("btn btn-danger").Id("confirmDelete").LoadingText("deleting").PrependIcon(Icons.trash, true)*@
+
                                         <a class="btn btn-danger" id="btnDelete" onclick="OpenRecordBox()">
                                             <i class="glyphicon glyphicon-trash white"></i>
                                         </a>
-                                        <a href="@Url.Action("PrintStudentList", "StudentReport")" class="btn btn-info"><i class="glyphicon glyphicon-print white"></i></a>
+                                        
 
+                                        @*<a href="@Url.Action("PrintStudentList", "StudentReport")" class="btn btn-info"><i class="glyphicon glyphicon-print white"></i></a>*@
 
                                     </td>
                                 </tr>
@@ -185,12 +193,15 @@
         </div>
     </div>
 
-    <!-- PopUp Success -->
+    <!-- PopUp Student Info View Model -->
+    @Html.Partial("_ViewStudentForm")
+    <!-- PopUp Student Info View Model -->
+
     <!-- Button trigger modal -->
     <button id="btnShowSuccess" type="button" class="btn" data-toggle="modal" style="visibility: hidden;"
             data-target="#ShowEditStudentInfoModal"></button>
     <!-- Modal -->
-    <div class="modal fade" id="ShowEditStudentInfoModal" tabindex="-1" role="dialog" aria-labelledby="ShowEditStudentInfoModalLabel">
+    <div class="modal fade" id="ShowEditStudentInfoModal" tabindex="-1" role="dialog" aria-labelledby="ShowEditStudentInfoModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -206,9 +217,9 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button id="btnModelOK" type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#frmEditStudentInfo').submit();">
+                    @*<button id="btnModelOK" type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#frmEditStudentInfo').submit();">
                         Submit
-                    </button>
+                    </button>*@
                     <button id="btnModelCancel" type="button" class="btn btn-default" data-dismiss="modal">
                         Close
                     </button>

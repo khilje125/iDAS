@@ -29,7 +29,8 @@ namespace iDAS.ASPXReport
                 //crystalReport.SummaryInfo.ReportTitle = "StudentCClassInfo-" + DateTime.Now.ToString();//ToString("MM-DD-YYYY hh-mm-ss");
                 //WORKING REPORT//string strRptPath = Server.MapPath("~/") + "Reports//" + "StudentClassReport.rpt";
                 //WORKING REPORT//string strRptPath = Server.MapPath("~/") + "Reports//" + "BankChallanPrintReport.rpt";
-                string strRptPath = Server.MapPath("~/") + "Reports//" + "ChallanForm.rpt";
+                string strRptPath = Server.MapPath("~/") + "Reports//" + "BankChallanStudentInfo.rpt";
+                //WORKING REPORT//string strRptPath = Server.MapPath("~/") + "Reports//" + "ChallanForm.rpt";
 
                 
                 //crystalReport.Load(Server.MapPath("~/Reports/ReportStudentsInfo.rpt"));
@@ -40,7 +41,10 @@ namespace iDAS.ASPXReport
                     //dsStudentClass.Tables.Add(getStudentInfoByDataTable());
                    //Working// crystalReport.SetDataSource(getStudentReportClassWise());
 
-                    crystalReportDocument.SetDataSource(getStudentInfoByDataTable());
+                    //crystalReportDocument.SetDataSource(getStudentInfoByDataTable());
+                    crystalReportDocument.SetDataSource(getStudentBankChallanStudentInfo());
+                    crystalReportDocument.Subreports[0].SetDataSource(getStudentBankChallanFeeList());
+                    crystalReportDocument.Subreports[1].SetDataSource(getStudentBankChallanFeeList());
                     //crystalReport.SetDataSource(dsStudentClass);
                     CrystalReportViewer1.Dispose();
                     CrystalReportViewer1.ReportSource = crystalReportDocument;
@@ -51,7 +55,11 @@ namespace iDAS.ASPXReport
                     //dsStudentClass.Tables.Add(getStudentInfoByDataTable());
                     //DATA BLL for StudentClassReport.rpt
                     //crystalReport.SetDataSource(getStudentReportClassWise());
-                    crystalReportDocument.SetDataSource(getStudentFeeBankChallanReport());
+                    //crystalReportDocument.SetDataSource(getStudentFeeBankChallanReport());
+                    crystalReportDocument.SetDataSource(getStudentBankChallanStudentInfo());
+                    crystalReportDocument.Subreports[0].SetDataSource(getStudentBankChallanFeeList());
+                    crystalReportDocument.Subreports[1].SetDataSource(getStudentBankChallanFeeList());
+                    //getStudentBankChallanFeeList()
                     CrystalReportViewer1.Dispose();
                     CrystalReportViewer1.ReportSource = crystalReportDocument;
                 }
@@ -96,6 +104,42 @@ namespace iDAS.ASPXReport
 
             lstModelStudent = objBLLStudentFee.GetStudentListReport(SearchCriteria, Convert.ToInt32(Session[iDAS.DAL.DALVariables.SchoolAccountId].ToString()));
             return lstModelStudent;
+        }
+
+        private List<ModelStudent> getStudentBankChallanStudentInfo()
+        {
+
+            iDAS.BLL.BLLStudentFee objBLLStudentFee = new iDAS.BLL.BLLStudentFee();
+            List<ModelStudent> lstModelStudent = new List<ModelStudent>();
+            //Testing
+            //string SearchCriteria = "Students.ClassId = 1 AND Students.SectionId = 1";
+            string SearchCriteria = String.Empty;
+            if (Session[DALVariables.SearchCriteria] != null)
+            {
+                SearchCriteria = Session[DALVariables.SearchCriteria].ToString();
+            }
+
+
+            lstModelStudent = objBLLStudentFee.GetUnPaidFeeStudentListReport(SearchCriteria, Convert.ToInt32(Session[iDAS.DAL.DALVariables.SchoolAccountId].ToString()));
+            return lstModelStudent;
+        }
+
+        private List<ModelStudentFee> getStudentBankChallanFeeList()
+        {
+
+            iDAS.BLL.BLLStudentFee objBLLStudentFee = new iDAS.BLL.BLLStudentFee();
+            List<ModelStudentFee> lstModelStudentFee = new List<ModelStudentFee>();
+            //Testing
+            //string SearchCriteria = "Students.ClassId = 1 AND Students.SectionId = 1";
+            string SearchCriteria = String.Empty;
+            if (Session[DALVariables.SearchCriteria] != null)
+            {
+                SearchCriteria = Session[DALVariables.SearchCriteria].ToString();
+            }
+
+
+            lstModelStudentFee = objBLLStudentFee.GetUnPaidFeeListByStudentId(SearchCriteria, Convert.ToInt32(Session[iDAS.DAL.DALVariables.SchoolAccountId].ToString()));
+            return lstModelStudentFee;
         }
 
         private List<ModelBankFeeChallanReport> getStudentFeeBankChallanReport()

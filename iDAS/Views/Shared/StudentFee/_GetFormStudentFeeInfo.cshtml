@@ -1,7 +1,7 @@
 ﻿@using System.Web.Optimization
 @model iDAS.Models.ModelStudent
 @{
-    int _resultCount = Model.StudentMonthlyFeeList.Count();
+    int _resultCount = Model.ModelStudentFee.Count();
 
 }
 <!-- end: Favicon -->
@@ -60,18 +60,80 @@
 <!-- bootstrap-daterangepicker -->
 <script type="text/javascript">
 
-
     $(document).ready(function () {
 
-        $('#popFeeDatePicker').daterangepicker({
-            singleDatePicker: true,
-            calender_style: "picker_2"
-        }, function (start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
+        $('.txtBoxPOPCalendarFee').each(function () {
+            $(this).daterangepicker({
+                singleDatePicker: true,
+                calender_style: "picker_2"
+            }, function (start, end, label) {
+                console.log(start.toISOString(), end.toISOString(), label);
+            });
         });
 
+        //$('#popFeeDatePicker').daterangepicker({
+        //    singleDatePicker: true,
+        //    calender_style: "picker_2"
+        //}, function (start, end, label) {
+        //    console.log(start.toISOString(), end.toISOString(), label);
+        //});
+        
     });
+    function ShowVoucherModel(FeeIdValue) {
+        alert(FeeIdValue);
+        //$('#voucherFeeId').val(FeeIdValue);
+        var $confirm = $("#showmanualvouchermodal");
+        alert($confirm);
+        $confirm.modal("show");
+    }
+    function showFeeManualVoucherModal(strFeeId)
+    {
+        $("#voucherFeeId").val(strFeeId);
+        var $testModelObj = $("#ShowManualVoucherModal");
+        $testModelObj.modal("show");
+    }
 
+    function closeFeeManualVoucherModal() {
+        $("#voucherFeeId").val('0');
+        var $modelIdObj = $("#ShowManualVoucherModal");
+        $modelIdObj.modal("hide");
+    }
+
+    function showManualFeeVoucherEntryModal() {
+        var $testModelObj = $("#ShowManualFeeVoucherEntryModal");
+        $testModelObj.modal("show");
+    }
+
+    function closeManualFeeVoucherEntryModal() {
+        $("#voucherFeeId").val('0');
+        var $modelIdObj = $("#ShowManualFeeVoucherEntryModal");
+        $modelIdObj.modal("hide");
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    function ShowSuccess(data) {
+        //alert(data.code + " " + data.message);
+        if (data.code == 1) {
+            $("#dvMessaheAlert").html("<div class='alert alert-" + data.css + " alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button>" + data.message + "</div>");
+        }
+        if (data.code == 3) {
+            window.open(data.linkUrl)
+        }
+    }
+    function ShowFailure(data) {
+        $("#dvMessaheAlert").html("<div class='alert alert-" + data.css + " alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button>" + data.message + "</div>");
+    }
+    function ShowComplete() {
+        var $confirm = $("#ShowProcessingModel");
+        $confirm.modal('hide');
+    }
+    function ShowProcessing() {
+        var $confirm = $("#ShowProcessingModel");
+        $confirm.modal('show');
+    }
 </script>
 <!-- /bootstrap-daterangepicker -->
 <div class="clearfix"></div>
@@ -121,7 +183,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                @if (Model.StudentMonthlyFeeList.Count() > 0)
+                @if (Model.ModelStudentFee.Count() > 0)
                 {
                     @*<p class="text-muted font-13 m-b-30">
                             User transction history
@@ -148,7 +210,7 @@
                         </thead>
                         <tbody>
 
-                            @foreach (var item in Model.StudentMonthlyFeeList.OrderByDescending(m => m.SerialNo))
+                            @foreach (var item in Model.ModelStudentFee.OrderByDescending(m => m.SerialNo))
                             {
                                 <tr>
                                     
@@ -176,14 +238,14 @@
                                         <td>@item.SerialNo</td>
                                     <td>
                                         <div>
-                                            <input type="text" value='@item.FeeDate.ToString("dd/MM/yyyy")' class="form-control has-feedback-left" id="popFeeDatePicker" placeholder="Date of Fee Received" aria-describedby="inputSuccess2Status2">
+                                            <input type="text" value='@item.FeeDate.ToString("dd/MM/yyyy")' class="form-control has-feedback-left txtBoxPOPCalendarFee" id="popFeeDatePicker" placeholder="Date of Fee Received" aria-describedby="inputSuccess2Status2">
                                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                             <span id="inputSuccess2Status2" class="sr-only">(success)</span>
                                         </div>
                                     </td>
                                     <td>@item.FeeMonth</td>
                                     <td>@item.AdmissionFee</td>
-                                        <td>@item.Admission</td>
+                                    <td>@item.Admission</td>
                                     <td>@item.ReAdmissionFee</td>
                                     <td>@item.RegistrationFee</td>
                                     <td>@item.MonthlyFee</td>
@@ -208,12 +270,13 @@
                                     else if (item.FeePaidStatus == 0)
                                     {
                                         <td>
-                                            <a class="btn btn-success" href="#">
-                                                <i class=" glyphicon glyphicon-print white"></i>&nbsp;Print
-                                            </a>
-                                            <a class="btn btn-primary" href="#">
-                                                <i class=" glyphicon glyphicon-ok white"></i>&nbsp; Paid
-                                            </a>
+                                            @*@Ajax.ActionLink("Print", "GetStudentSingleFeeRecord", "StudentFee", new { feeID = item.FeeId, studentId = item.StudentId }, new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "dvUpdateStudentMonthlyFeeForm",
+                                                OnSuccess = "ShowUpdateStudentFeeModel();"
+                                            }, new { @class = "btn btn-success glyphicon glyphicon-print white" })*@
                                             @Ajax.ActionLink("Edit", "GetStudentSingleFeeRecord", "StudentFee", new { feeID = item.FeeId }, new AjaxOptions
                                             {
                                                 InsertionMode = InsertionMode.Replace,
@@ -221,6 +284,17 @@
                                                 UpdateTargetId = "dvUpdateStudentMonthlyFeeForm",
                                                 OnSuccess = "ShowUpdateStudentFeeModel();"
                                             }, new { @class = "btn btn-info glyphicon glyphicon glyphicon-pencil white" })
+                                            <a class="btn btn-success" onclick="showFeeManualVoucherModal(@item.FeeId);">
+                                                <i class=" glyphicon glyphicon-open white"></i>Get Voucher
+                                            </a>
+
+                                            @*<a class="btn btn-success" href="#">
+                                                <i class=" glyphicon glyphicon-print white"></i>&nbsp;Print
+                                            </a>*@
+                                            <a class="btn btn-primary" onclick="showManualFeeVoucherEntryModal();">
+                                                <i class=" glyphicon glyphicon-ok white"></i>&nbsp; Paid
+                                            </a>
+                                            
                                         </td>
                                     }
                                     else
@@ -272,7 +346,7 @@
 <button id="btnShowSuccessUpdateStudentFee" type="button" class="btn" data-toggle="modal" style="visibility: hidden;"
         data-target="#ShowUpdateStudentMonthlyFeeModal"></button>
 <!-- Modal -->
-<div class="modal fade" id="ShowUpdateStudentMonthlyFeeModal" tabindex="-1" role="dialog" aria-labelledby="ShowUpdateStudentMonthlyFeeLabel">
+<div class="modal fade" id="ShowUpdateStudentMonthlyFeeModal" tabindex="-1" role="dialog" aria-labelledby="ShowUpdateStudentMonthlyFeeLabel" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -292,6 +366,130 @@
                     Update
                 </button>
                 <button id="btnModelUpdateStudentCancel" type="button" class="btn btn-default updateStudentFeeModelHide">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PopUp Success -->
+
+<!-- Button trigger modal -->
+<button id="btnManualVoucherFee" type="button" class="btn" data-toggle="modal" style="visibility: hidden;"
+        data-target="#ShowManualVoucherModal"></button>
+<!-- Modal -->
+<div class="modal fade" id="ShowManualVoucherModal" tabindex="-1" role="dialog" aria-labelledby="ShowManualVoucherLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" onclick="closeFeeManualVoucherModal();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-success" id="ShowManualVoucherLabel">
+                    Generate Fee Voucher
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="dvMessaheAlert"></div>
+                <div class="modal-body">
+                    @using (Ajax.BeginForm("GetBankChallanVoucher", "StudentReport", FormMethod.Post,
+                                new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "search-results",
+                                    Confirm = "Are you sure to want generate this voucher ?",
+                                    OnBegin = "ShowProcessing",
+                                    OnSuccess = "ShowSuccess",
+                                    OnFailure = "ShowFailure",
+                                    OnComplete = "ShowComplete"
+
+                                }, new { @class = "form-horizontal form-label-left" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" id="voucherFeeId" name="voucherFeeId" value="0" />
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                            <input type="text" class="form-control has-feedback-left txtBoxPOPCalendarFee" id="txtVourcherDueDate" name="txtVourcherDueDate" placeholder="Voucher Due Date" aria-describedby="inputSuccess2Status2">
+                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                            <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button id="send" type="submit" class="btn btn-success"><i class="glyphicon glyphicon-record white"></i> Get Fee Vouchers</button>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnTestCancel" type="button" class="btn btn-default" onclick="closeFeeManualVoucherModal();">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PopUp Success -->
+
+<!-- Button trigger modal -->
+<button id="btnManualFeeVoucherEntry" type="button" class="btn" data-toggle="modal" style="visibility: hidden;"
+        data-target="#ShowManualFeeVoucherEntryModal"></button>
+<!-- Modal -->
+<div class="modal fade" id="ShowManualFeeVoucherEntryModal" tabindex="-1" role="dialog" aria-labelledby="ShowManualFeeVoucherEntryLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" onclick="closeManualFeeVoucherEntryModal();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title text-success" id="ShowManualFeeVoucherEntryLabel">
+                    Enter Fee Voucher Information
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="dvMessaheAlert"></div>
+                <div class="modal-body">
+                    @using (Ajax.BeginForm("FeeVoucherPaidMark", "StudentFee", FormMethod.Post,
+                                new AjaxOptions
+                                {
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "POST",
+                                    UpdateTargetId = "search-results",
+                                    Confirm = "Are you sure to want fee paid mark ?",
+                                    OnBegin = "ShowProcessing",
+                                    OnSuccess = "ShowSuccess",
+                                    OnFailure = "ShowFailure",
+                                    OnComplete = "ShowComplete"
+
+                                }, new { @class = "form-horizontal form-label-left" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" id="voucherFeeId" name="voucherFeeId" value="0" />
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Voucher Paid Date : </label>
+                            <input type="text" class="form-control has-feedback-left txtBoxPOPCalendarFee" id="txtVourcherPaidDate" name="txtVourcherPaidDate" placeholder="Voucher Paid Date" aria-describedby="inputSuccess2Status2">
+                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                            <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Voucher ID : </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" value="" id="strVoucherID" name="strVoucherID" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <button id="send" type="submit" class="btn btn-success"><i class="glyphicon glyphicon-record white"></i> Submit</button>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnTestCancel" type="button" class="btn btn-default" onclick="closeManualFeeVoucherEntryModal();">
                     Close
                 </button>
             </div>

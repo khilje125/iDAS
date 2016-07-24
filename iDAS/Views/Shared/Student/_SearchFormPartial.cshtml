@@ -27,7 +27,11 @@
         {
             InsertionMode = InsertionMode.Replace,
             HttpMethod = "POST",
-            UpdateTargetId = "search-results"
+            UpdateTargetId = "search-results",
+            OnBegin = "ShowAjaxProcessing",
+            OnSuccess = "ShowAjaxSuccess",
+            OnFailure = "ShowAjaxFailure",
+            OnComplete = "ShowAjaxComplete"
         }, new { @class = "form-horizontal form-label-left" }))
         {
             <div class="form-group">
@@ -130,3 +134,4 @@
         }
     </div>
 </div>
+@Html.Partial("_AjaxPageLoading")

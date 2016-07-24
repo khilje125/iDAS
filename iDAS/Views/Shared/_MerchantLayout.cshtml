@@ -26,7 +26,7 @@
 
     @*<script src="../Scripts/DynamicMerchantLeftMenu.js"></script>*@
 
-    
+
 </head>
 <body class="nav-md">
     <div class="container body">
@@ -34,13 +34,13 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="@Url.Action("Home","User")" class="site_title"><i class="fa fa-paw"></i> <span>User Panel!</span></a>
+                        <a href="@Url.Action("Home","User")" class="site_title"><i class="fa fa-book"></i> <span>User Panel!</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu profile quick info -->
                     <div class="profile">
                         <div class="profile_pic">
-                                <img class="img-circle profile_img" src='@Url.Content("~/Content/UserLogo/" + @Session[DALVariables.ProfileImage].ToString())' alt='@Session[DALVariables.UserName].ToString()' />
+                            <img class="img-circle profile_img" src='@Url.Content("~/Content/SchoolUserLogo/" + @Session[DALVariables.ProfileImage].ToString())' alt='@Session[DALVariables.UserName].ToString()' />
                             @*<img src='@Url.Content("~/Content/MerchantLogo/" + @Session[DALVariables.ProfileImage].ToString())' alt="..." class="img-circle profile_img">*@
                         </div>
                         <div class="profile_info">
@@ -51,7 +51,7 @@
                     <!-- /menu profile quick info -->
                     <br />
                     @*-------------------------------------------*@
-                   
+
                     @*--------------------------------------------*@
                     <!-- sidebar menu -->
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -62,17 +62,33 @@
                                     <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="../../User/Home">Dashboard</a></li>
-
-                                         <li>@Html.ActionLink("Add Student","Index","Student")</li>
-                                         <li>@Html.ActionLink("Search Student","Search","Student")</li>
-
-
-
-                                        <li><a href="@Url.Action("Search","Student")">Search Student</a></li>
+                                        <li>@Html.ActionLink("Search Student", "Search", "Student")</li>
                                         <li><a href="@Url.Action("SearchStudentFee", "StudentFee")">Search Student Fee</a></li>
-                                        <li><a href="@Url.Action("SaveBulkFeeInsertion", "StudentFee")">Add Bulk Fees</a></li>
-                                        <li><a href="../../User/TransactionHistory">Transaction History</a></li>
+                                        @*<li><a href="../../User/TransactionHistory">Transaction History</a></li>*@
 
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-upload"></i> Add New Record <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+
+                                        <li>@Html.ActionLink("Add Student", "Index", "Student")</li>
+                                        <li>@Html.ActionLink("Add Bulk Fees", "SaveBulkFeeInsertion", "StudentFee")</li>
+                                        <li>@Html.ActionLink("Generate Bank Challan", "GenerateBulkFeeVouchers", "StudentFee")</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-file"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>@Html.ActionLink("Student Report", "StudentClassReport", "StudentReport")</li>
+                                        <li>@Html.ActionLink("Bank Challan Report", "GetBankChallanVoucher", "StudentReport")</li>
+                                        <li>@Html.ActionLink("Student Fee Follow Up", "StudentFeeFollowUpReport", "StudentReport")</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-barcode"></i> Barcode <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>@Html.ActionLink("Barcode Fee Insertion", "BarCodeFeeInsertion", "StudentFee")</li>
                                     </ul>
                                 </li>
                                 <!-- sidebar menu reder from JS Dynamically -->
@@ -108,8 +124,8 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                   
-                                        <img src='@Url.Content("~/Content/MerchantLogo/" + @Session[DALVariables.ProfileImage].ToString())' alt='@Session[DALVariables.UserName].ToString()' /> @Session[DALVariables.UserName].ToString()
+
+                                    <img src='@Url.Content("~/Content/SchoolUserLogo/" + @Session[DALVariables.ProfileImage].ToString())' alt='@Session[DALVariables.UserName].ToString()' /> @Session[DALVariables.UserName].ToString()
 
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
@@ -138,7 +154,7 @@
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    <a href="https://codemader.com">CM Technologies </a> CM Technologies (Payment Service) &copy; Company @System.DateTime.Now.ToString("yyyy")
+                    <a href="https://codemader.com">CM Technologies &nbsp;</a><i class="fa fa-book"></i>&nbsp;(Student Management) &copy; Company @System.DateTime.Now.ToString("yyyy")
                 </div>
                 <div class="clearfix"></div>
             </footer>

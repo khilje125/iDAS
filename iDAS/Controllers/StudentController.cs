@@ -86,7 +86,6 @@ namespace iDAS.Controllers
 
         //bulk fees
        
-
         [HttpPost]
         public ActionResult Search1(string ComputerCode, string RegNo, string StudentName, string FatherName, string StudentStatus, string dropDownClass, string dropDownSection)
         {

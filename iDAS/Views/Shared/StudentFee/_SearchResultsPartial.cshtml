@@ -60,9 +60,14 @@
         var $confirm = $("#ViewStudentForm");
         $confirm.modal("show");
     };
+
+    function CloseStudentFeeInfoModel() {
+        var $confirm = $("#ShowStudentMonthlyFeeInfoModal");
+        $confirm.modal("hide");
+    };
 </script>
 <style type="text/css">
-    .modal-dialog {
+    #ShowStudentMonthlyFeeInfoModal .modal-dialog {
         position: relative;
         display: table;
         /*This is important overflow-y: auto;*/
@@ -131,31 +136,32 @@
                                     <td>
                                         @*<a class="btn btn-success" onclick='confirmDiaglogBox'>
                                                 <i class=" glyphicon glyphicon-zoom-in white"></i>
-                                            </a>*@
-
-                                        
-                                     
-                                         <a  href="#"  onclick="$('#ViewStudentForm').modal('show')">
-                                         
-                                        </a>
+                                            </a>
+                                         <input class="btn btn-primary" value="Print" type="button" />*@
                                          @Ajax.ActionLink("View", "ViewStudent", "Student", new { studentID = item.StudentId }, new AjaxOptions
                                             {
                                                 InsertionMode = InsertionMode.Replace,
                                                 HttpMethod = "POST",
                                                 UpdateTargetId = "viewStudentForm",
                                                 OnSuccess = "OpenRecordBoxForView();"
-                                            }, new { @class = "glyphicon glyphicon-zoom-in white" })
+                                            }, new { @class = "btn btn-dark glyphicon glyphicon-zoom-in white" })
                                        
-
+                                        @*<input class="btn btn-primary" value="primary" type="button" />
+                                        <input class="btn btn-danger" value="danger" type="button" />
+                                        <input class="btn btn-dark" value="dark" type="button" />
+                                        <input class="btn btn-default" value="defaul" type="button" />
+                                        <input class="btn btn-info" value="info" type="button" />
+                                        <input class="btn btn-success" value="success" type="button" />
+                                        <input class="btn btn-warning" value="warning" type="button" />*@
 
                                         @Ajax.ActionLink(" FeeInfo", "GetStudentFeeRecord", "StudentFee", new { studentID = item.StudentId }, new AjaxOptions
                                             {
                                                 InsertionMode = InsertionMode.Replace,
                                                 HttpMethod = "POST",
                                                 UpdateTargetId = "dvStudentMonthlyFeeInfoForm",
-                                                OnSuccess = "ShowStudentFeeInfoModel();",
-                                            }, new { @class = "btn btn-success glyphicon glyphicon-eye-open white" })
-                                        <a href="@Url.Action("PrintStudentList", "StudentReport")" class="btn btn-info"><i class="glyphicon glyphicon-print white"></i></a>
+                                                OnSuccess = "ShowStudentFeeInfoModel();"
+                                            }, new { @class = "btn btn-primary glyphicon glyphicon-eye-open white" })
+                                        @*<a href="@Url.Action("PrintStudentList", "StudentReport")" class="btn btn-info"><i class="glyphicon glyphicon-print white"></i></a>*@
                                     </td>
                                 </tr>
                             }
@@ -173,34 +179,20 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="ViewStudentForm" tabindex="-1" role="dialog" aria-labelledby="ShowForgotPasswordModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title text-success" id="ShowForgotPasswordModalLabel">
-                            View Student Record
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                     <div id="viewStudentForm"></div>
-                    </div>
-                   
-                </div>
-            </div>
-        </div>
-    <!-- PopUp Success -->
+
+    <!-- PopUp Student Info View Model -->
+    @Html.Partial("_ViewStudentForm")
+    <!-- PopUp Student Info View Model -->
+
     <!-- Button trigger modal -->
     <button id="btnShowSuccess" type="button" class="btn" data-toggle="modal" style="visibility: hidden;"
             data-target="#ShowStudentMonthlyFeeInfoModal"></button>
     <!-- Modal -->
-    <div class="modal fade" id="ShowStudentMonthlyFeeInfoModal" tabindex="-1" role="dialog" aria-labelledby="ShowStudentMonthlyFeeInfoModalLabel">
+    <div class="modal fade" id="ShowStudentMonthlyFeeInfoModal" tabindex="-1" role="dialog" aria-labelledby="ShowStudentMonthlyFeeInfoModalLabel" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" onclick="CloseStudentFeeInfoModel();" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title text-success" id="ShowStudentMonthlyFeeInfoModalLabel">
@@ -213,9 +205,9 @@
                 </div>
                 <div class="modal-footer">
                     @*<button id="btnModelOK" type="button" class="btn btn-primary" data-dismiss="modal" onclick="$('#frmEditStudentInfo').submit();">
-                        Submit
-                    </button>*@
-                    <button id="btnModelCancel" type="button" class="btn btn-default" data-dismiss="modal">
+                            Submit
+                        </button>*@
+                    <button id="btnModelCancel" type="button" class="btn btn-default" onclick="CloseStudentFeeInfoModel();">
                         Close
                     </button>
                 </div>
@@ -224,5 +216,6 @@
     </div>
     <!-- PopUp Success -->
 
+   
 </div>
 

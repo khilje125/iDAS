@@ -12,7 +12,7 @@ namespace iDAS.Models
         {
             StudentClass = new ModelStudentClass();
             StudentSection = new ModelStudentSection();
-            StudentMonthlyFeeList = new List<ModelStudentFee>();
+            ModelStudentFee = new List<ModelStudentFee>();
         }
         [Key]
         public int StudentId { get; set; }
@@ -43,7 +43,6 @@ namespace iDAS.Models
         public string P { get; set; }
        // [Required(ErrorMessage = "Please Enter Reference")]
         public string Reference { get; set; }
-        public int Sex { get; set; }
        [Display(Name = "Gender")]
         public int Sex { get; set; }
         //[Required(ErrorMessage = "Please Enter DateOfAdmission")]
@@ -85,7 +84,7 @@ namespace iDAS.Models
         public virtual ModelStudentClass StudentClass { get; set; }
         public virtual ModelStudentSection StudentSection { get; set; }
 
-        public List<ModelStudentFee> StudentMonthlyFeeList { get; set; }
+        public List<ModelStudentFee> ModelStudentFee { get; set; }
 
     }
 }

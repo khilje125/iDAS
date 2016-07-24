@@ -1,0 +1,87 @@
+﻿@using iDAS.DAL;
+@{
+    ViewBag.Title = "BarCodeFeeInsertion";
+    Layout = "~/Views/Shared/_MerchantLayout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        $('#txtBoxStudentID').change(function () {
+            var doc_val_check = $.trim($(this).val()); // take value of text
+            if (doc_val_check.length > 0) {
+                var _studentIdPost = {
+                    strStudentId: $.trim($(this).val())
+                };
+                $.ajax({
+                    url: '/StudentFee/GetStudentInfoWithBarCode',
+                    type: 'POST',
+                    data: JSON.stringify(_studentIdPost),
+                    //data: {
+                    //    Address1: "423 Judy Road",
+                    //    Address2: "1001",
+                    //    City: "New York",
+                    //    State: "NY",
+                    //    ZipCode: "10301",
+                    //    Country: "USA"
+                    //},
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        //alert(data.success);
+                        addRow(data.studentName);
+                        $('#txtBoxStudentID').val('');
+                        $('#txtBoxStudentID').focus();
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+            else {
+                alert(" Null Value ");
+            }
+        });
+
+        function addRow(studentName) {
+            //var bulkFeeTable = $("#bulkFeeInsertion");
+            //alert(bulkFeeTable.)
+            var html = '<tr>' +
+                        '<td>Name: <input type="text" readonly="readonly" id="txtName" value="'+studentName+'"></td>' +
+                        '<td><input type="button" class="BtnPlus" value="+" /></td>' +
+                        '<td><input type="button" class="BtnMinus" value="-" /></td>' +
+                        '</tr>'
+            $(html).appendTo("#bulkFeeInsertion")
+        };
+        
+    });
+
+</script>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Bulk Fee Inserion</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                    @*<p class="text-muted font-13 m-b-30">
+                            User transction history
+                        </p>*@
+                <input type="text" id="txtBoxStudentID" value=""/>
+                    <table id="bulkFeeInsertion" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Father Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             
+                        </tbody>
+                    </table>
+
+            </div>
+        </div>
+    </div>
+</div>

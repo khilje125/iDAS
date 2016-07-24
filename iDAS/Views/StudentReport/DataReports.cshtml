@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "DataReports";
+    Layout = "~/Views/Shared/_MerchantLayout.cshtml";
+}
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Data Reports</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id="search-form">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Students <small>saerch student by info.</small></h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    @Ajax.ActionLink("View", "ViewStudent", "Student", new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "viewStudentForm",
+                                                OnSuccess = "OpenRecordBoxForView();"
+                                            }, new { @class = "glyphicon glyphicon-zoom-in white" })
+
+                                    <a href="@Url.Action("SearchStudentFee", "StudentFee")" class="btn btn-primary">Reset</a>
+                                    @*<button type="submit" class="btn btn-primary">Reset</button>*@
+                                    <button id="send" type="submit" class="btn btn-success">Search</button>
+                                    <a href="@Url.Action("StudentFeeReport", "StudentReport")" class="btn btn-info"><i class="glyphicon glyphicon-print white"></i></a>
+                                    <a href="@Url.Action("StudentFeeReport", "StudentReport")" class="btn btn-info"><i class="glyphicon glyphicon-print white"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
