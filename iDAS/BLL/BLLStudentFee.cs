@@ -1,4 +1,5 @@
-﻿using iDAS.DAL;
+﻿using iDAS.Controllers;
+using iDAS.DAL;
 using iDAS.Models;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,16 @@ namespace iDAS.BLL
             return lstModelStudent;
         }
 
+        public DataTable getFeeMonthsByYearDP()
+        {
+
+            DataTable adataSetTable = new DataTable();
+
+            adataSetTable = DALCommon.GetDataByStoredProcedure("[sp_Admin_GetFeeMothByYear]");
+            return adataSetTable;
+
+
+        }
         public DataTable GetStudentDataTableForReport(string SearchCriteria, decimal SchoolAccountId)
         {
             List<ModelStudent> lstModelStudent = new List<ModelStudent>();
@@ -62,6 +73,36 @@ namespace iDAS.BLL
             return DALCommon.GetDataUsingDataTable("[sp_Admin_GetStudentListBySchoolId]", param);
         }
 
+
+
+
+        public  decimal InsertStudentMonthlyAdvanceFeeByStudentId(decimal StudentId, int Feemonth, int AdmissionFee, int ReAdmissionFee,
+         int RegistrationFee,  int ComputerFee, int Fine, int ExamFee, int GenatorFee, string FeeDate,int SchoolAccountId)
+          {
+            try
+            {
+                SqlParameter[] paramStudentFee = new SqlParameter[11];
+                paramStudentFee[0] = new SqlParameter("@StudentId", Convert.ToDecimal(StudentId));
+                paramStudentFee[1] = new SqlParameter("@FeeMonth",Feemonth);
+                paramStudentFee[2] = new SqlParameter("@AdmissionFee", AdmissionFee);
+               
+                paramStudentFee[3] = new SqlParameter("@ReAdmissionFee", ReAdmissionFee);
+                paramStudentFee[4] = new SqlParameter("@RegistrationFee", RegistrationFee);
+                paramStudentFee[5] = new SqlParameter("@ComputerFee", ComputerFee);
+                paramStudentFee[6] = new SqlParameter("@Fine", Fine);
+                paramStudentFee[7] = new SqlParameter("@ExamFee", ExamFee);
+                paramStudentFee[8] = new SqlParameter("@GeneratorFee", GenatorFee);
+                paramStudentFee[9] = new SqlParameter("@FeeDate",Convert.ToString(FeeDate));
+                paramStudentFee[10] = new SqlParameter("@SchoolAccountId", SchoolAccountId);
+                return DALCommon.ExecuteNonQueryReturnIdentity("[sp_Admin_InsertStudentMonthlyFeeByStudentId]", paramStudentFee);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public ModelStudent GetStudentFeeInfoById(decimal StudentID)
         {
             ModelStudent objModelStudent = new ModelStudent();
@@ -109,7 +150,7 @@ namespace iDAS.BLL
                         {
                             objModelStudentFee.FeeDate = DateTime.Now;
                         }
-
+                        
                         objModelStudentFee.AdmissionFee = DALUtility.isNumericDBNULL(studentFeeRow["AdmissionFee"].ToString());
                         objModelStudentFee.Admission = DALUtility.isNumericDBNULL(studentFeeRow["Admission"].ToString());
                         objModelStudentFee.ReAdmissionFee = DALUtility.isNumericDBNULL(studentFeeRow["ReAdmissionFee"].ToString());
@@ -122,7 +163,7 @@ namespace iDAS.BLL
                         objModelStudentFee.FeeMonth = Convert.ToString(studentFeeRow["FeeMonth"]);
                         objModelStudentFee.Total = DALUtility.isNumericDBNULL(studentFeeRow["Total"].ToString());
                         objModelStudentFee.FeePaidStatus = Convert.ToInt32(studentFeeRow["FeePaidStatus"]);
-
+                        
                         objModelStudent.ModelStudentFee.Add(objModelStudentFee);
                     }
                 }
@@ -225,18 +266,20 @@ namespace iDAS.BLL
             return objlstModelStudentFee;
         }
 
+<<<<<<< HEAD
         public int StudentBulkMonthlyFeeInsertion(decimal StudentID)
         {
             ModelStudent objModelStudent = new ModelStudent();
-            DataTable tblStudentList = new DataTable();
+            DataTable tblStudentList= new DataTable();
             tblStudentList = DALCommon.GetDataByStoredProcedure("ABC");
             if (tblStudentList.Rows.Count > 0)
             {
-
+                
             }
             return 0;
         }
 
+=======
         //for bulk Fee Insertion
 
         public int InsertBulkStudentMonthlyFee(ModelStudentFee objModelStudentFee, string SearchCriteria, int FeeMonth)
@@ -246,7 +289,7 @@ namespace iDAS.BLL
             int _result = 0;
             decimal _UserAccountId = Convert.ToDecimal(HttpContext.Current.Session[DAL.DALVariables.UserAccountId].ToString());
             decimal _SchoolAccountId = Convert.ToDecimal(HttpContext.Current.Session[DAL.DALVariables.SchoolAccountId].ToString());
-
+            
             SqlParameter[] param = new SqlParameter[2];
 
             param[0] = new SqlParameter("@SearchCriteria", SearchCriteria);
@@ -262,191 +305,6 @@ namespace iDAS.BLL
             }
             return _result;
         }
-
-        //BankChallan Student Info with Nested Monthly Unpaid student list
-
-        public List<ModelStudent> GetUnPaidFeeStudentListReport(string SearchCriteria, decimal SchoolAccountId)
-        {
-            List<ModelStudent> lstModelStudent = new List<ModelStudent>();
-            DataTable tblStudentList = new DataTable();
-            SqlParameter[] param = new SqlParameter[2];
-
-            param[0] = new SqlParameter("@SearchCriteria", String.IsNullOrEmpty(SearchCriteria) ? "" : SearchCriteria);
-            param[1] = new SqlParameter("@SchoolAccountId", SchoolAccountId);
-
-            tblStudentList = DALCommon.GetDataUsingDataTable("[sp_Admin_GetFeeUnPainStudentsBySchoolId]", param);
-            if (tblStudentList.Rows.Count > 0)
-            {
-                foreach (DataRow aStudent in tblStudentList.Rows)
-                {
-                    //StudentId,ComputerCode, RegNo, StudentName, FatherName,DateOfBirth,Status,ClassName,SectionName
-                    ModelStudent objModelStudent = new ModelStudent();
-                    objModelStudent.StudentId = Convert.ToInt32(aStudent["StudentId"]);
-                    objModelStudent.ComputerCode = Convert.ToInt32(aStudent["ComputerCode"]);
-                    objModelStudent.RegNo = Convert.ToInt32(aStudent["RegNo"]);
-                    objModelStudent.StudentName = Convert.ToString(aStudent["StudentName"]);
-                    objModelStudent.FatherName = Convert.ToString(aStudent["FatherName"]);
-                    objModelStudent.DateOfBirth = Convert.ToDateTime(aStudent["DateOfBirth"]);
-                    objModelStudent.Status = Convert.ToInt32(aStudent["Status"]);
-                    objModelStudent.ClassNameText = Convert.ToString(aStudent["ClassName"]);
-                    objModelStudent.SectionNameText = Convert.ToString(aStudent["SectionName"]);
-
-                   // objModelStudent.ModelStudentFee = GetUnPaidFeeListByStudentId(objModelStudent.StudentId);
-                    lstModelStudent.Add(objModelStudent);
-                }
-            }
-            return lstModelStudent;
-        }
-
-        public List<ModelStudentFee> GetUnPaidFeeListByStudentId(string SearchCriteria, decimal SchoolAccountId)
-        {
-            List<ModelStudentFee> lstModelStudentFee = new List<ModelStudentFee>();
-
-            DataTable tblUnPaidFee = new DataTable();
-            SqlParameter[] param = new SqlParameter[2];
-
-            param[0] = new SqlParameter("@SearchCriteria", String.IsNullOrEmpty(SearchCriteria) ? "" : SearchCriteria);
-            param[1] = new SqlParameter("@SchoolAccountId", SchoolAccountId);
-
-            tblUnPaidFee = DALCommon.GetDataUsingDataTable("[sp_Admin_GetUnPaidFeeInfoByStudentId]", param);
-            if (tblUnPaidFee.Rows.Count > 0)
-            {
-                foreach (DataRow aStudent in tblUnPaidFee.Rows)
-                {
-                    //StudentId, AdmissionFee, Admission, ReAdmissionFee, RegistrationFee, 
-                    //MonthlyFee, ComputerFee, Fine, ExamFee, GeneratorFee, FeeMonth, ISNULL(Total,0)Total, FeePaidStatus
-                    ModelStudentFee objModelStudentFee = new ModelStudentFee();
-                    objModelStudentFee.StudentId = Convert.ToInt32(aStudent["StudentId"]);
-                    objModelStudentFee.AdmissionFee = Convert.ToInt32(aStudent["AdmissionFee"]);
-                    objModelStudentFee.Admission = Convert.ToInt32(aStudent["Admission"]);
-                    objModelStudentFee.ReAdmissionFee = Convert.ToInt32(aStudent["ReAdmissionFee"]);
-                    objModelStudentFee.RegistrationFee = Convert.ToInt32(aStudent["RegistrationFee"]);
-                    objModelStudentFee.MonthlyFee = Convert.ToInt32(aStudent["MonthlyFee"]);
-                    objModelStudentFee.ComputerFee = Convert.ToInt32(aStudent["ComputerFee"]);
-                    objModelStudentFee.Fine = Convert.ToInt32(aStudent["Fine"]);
-                    objModelStudentFee.ExamFee = Convert.ToInt32(aStudent["ExamFee"]);
-                    objModelStudentFee.GeneratorFee = Convert.ToInt32(aStudent["GeneratorFee"]);
-                    objModelStudentFee.FeeMonth = Convert.ToString(aStudent["FeeMonth"]);
-                    objModelStudentFee.Total = Convert.ToInt32(aStudent["Total"]);
-                    objModelStudentFee.FeePaidStatus = Convert.ToInt32(aStudent["FeePaidStatus"]);
-                    
-                    lstModelStudentFee.Add(objModelStudentFee);
-                }
-
-            }
-            return lstModelStudentFee;
-
-        }
-
-        //Generate Student Fee Voucher
-        public int GenerateMonthlyFeeVoucher(string SearchCriteria, decimal SchoolAccountId, string VoucherDueDate,decimal AddedBy)
-        {
-            DataTable tblFeeUnPaidStudentList = new DataTable();
-            SqlParameter[] param = new SqlParameter[2];
-            int _transResult = 0;
-            param[0] = new SqlParameter("@SearchCriteria", String.IsNullOrEmpty(SearchCriteria) ? "" : SearchCriteria);
-            param[1] = new SqlParameter("@SchoolAccountId", SchoolAccountId);
-
-            tblFeeUnPaidStudentList = DALCommon.GetDataUsingDataTable("[sp_Admin_GetFeeUnPaidStudentsBySchoolId]", param);
-            if (tblFeeUnPaidStudentList.Rows.Count > 0)
-            {
-                StudentFeeVoucherTransaction objStudentFeeVoucherTransaction = new StudentFeeVoucherTransaction();
-                _transResult = objStudentFeeVoucherTransaction.InsertUnPaidMonthlyFeeVoucherTransaction(VoucherDueDate, tblFeeUnPaidStudentList, AddedBy);
-            }
-            return _transResult;
-        }
-
-        //BankChallan Student Info with Nested Monthly Unpaid student list With Voucher
-
-        public List<ModelStudentBankChallan> GetUnPaidFeeStudentListWithVoucher(string SearchCriteria, string VoucherDueDate, double SchoolAccountId)
-        {
-            List<ModelStudentBankChallan> lstModelStudentBankChallan = new List<ModelStudentBankChallan>();
-            DataTable tblStudentList = new DataTable();
-            SqlParameter[] param = new SqlParameter[3];
-           
-            param[0] = new SqlParameter("@SearchCriteria", String.IsNullOrEmpty(SearchCriteria) ? "" : SearchCriteria);
-            param[1] = new SqlParameter("@VoucherDueDate", VoucherDueDate);
-            param[2] = new SqlParameter("@SchoolAccountId", SchoolAccountId);
-
-            tblStudentList = DALCommon.GetDataUsingDataTable("[sp_Admin_GetFeeUnPaidStudentsByVoucherDueDate]", param);
-            if (tblStudentList.Rows.Count > 0)
-            {
-                foreach (DataRow aStudent in tblStudentList.Rows)
-                {
-                    //StudentId,ComputerCode, RegNo, StudentName, FatherName,DateOfBirth,Status,ClassName,SectionName
-                    ModelStudentBankChallan objModelStudentBankChallan = new ModelStudentBankChallan();
-                    objModelStudentBankChallan.VoucherId = Convert.ToDouble(aStudent["VoucherId"]);
-                    objModelStudentBankChallan.StudentId = Convert.ToDouble(aStudent["StudentId"]);
-                    objModelStudentBankChallan.ComputerCode = Convert.ToInt32(aStudent["ComputerCode"]);
-                    objModelStudentBankChallan.RegNo = Convert.ToInt32(aStudent["RegNo"]);
-                    objModelStudentBankChallan.StudentName = Convert.ToString(aStudent["StudentName"]);
-                    objModelStudentBankChallan.FatherName = Convert.ToString(aStudent["FatherName"]);
-                    objModelStudentBankChallan.DateOfBirth = Convert.ToDateTime(aStudent["DateOfBirth"]);
-                    objModelStudentBankChallan.Status = Convert.ToInt32(aStudent["Status"]);
-                    objModelStudentBankChallan.ClassNameText = Convert.ToString(aStudent["ClassName"]);
-                    objModelStudentBankChallan.SectionNameText = Convert.ToString(aStudent["SectionName"]);
-                    objModelStudentBankChallan.VoucherDueDate = Convert.ToDateTime(aStudent["VoucherDueDate"]);
-                    // objModelStudent.ModelStudentFee = GetUnPaidFeeListByStudentId(objModelStudent.StudentId);
-                    lstModelStudentBankChallan.Add(objModelStudentBankChallan);
-                }
-            }
-            return lstModelStudentBankChallan;
-        }
-
-        public List<ModelStudentFee> GetUnPaidFeeMonthsByDuaDateVoucher(string VoucherDueDate, double SchoolAccountId)
-        {
-            List<ModelStudentFee> lstModelStudentFee = new List<ModelStudentFee>();
-
-            DataTable tblUnPaidFee = new DataTable();
-            SqlParameter[] param = new SqlParameter[2];
-            //param[0] = new SqlParameter("@SearchCriteria", String.IsNullOrEmpty(SearchCriteria) ? "" : SearchCriteria);
-            param[0] = new SqlParameter("@VoucherDueDate", VoucherDueDate);
-            param[1] = new SqlParameter("@SchoolAccountId", SchoolAccountId);
-
-            tblUnPaidFee = DALCommon.GetDataUsingDataTable("[sp_Admin_GetUnPaidFeeMonthsByDuaDateVoucher]", param);
-            if (tblUnPaidFee.Rows.Count > 0)
-            {
-                foreach (DataRow aStudent in tblUnPaidFee.Rows)
-                {
-                    //VoucherId,FeeId,StudentId, AdmissionFee, Admission, ReAdmissionFee, RegistrationFee, 
-                    //MonthlyFee, ComputerFee, Fine, ExamFee, GeneratorFee, FeeMonth,FeeMonthText, ISNULL(Total,0)Total, FeePaidStatus
-                    ModelStudentFee objModelStudentFee = new ModelStudentFee();
-
-                    objModelStudentFee.VoucherId = Convert.ToDouble(aStudent["VoucherId"]);
-                    objModelStudentFee.FeeId = Convert.ToDouble(aStudent["FeeId"]);
-                    objModelStudentFee.StudentId = Convert.ToDouble(aStudent["StudentId"]);
-                    objModelStudentFee.AdmissionFee = Convert.ToInt32(aStudent["AdmissionFee"]);
-                    objModelStudentFee.Admission = Convert.ToInt32(aStudent["Admission"]);
-                    objModelStudentFee.ReAdmissionFee = Convert.ToInt32(aStudent["ReAdmissionFee"]);
-                    objModelStudentFee.RegistrationFee = Convert.ToInt32(aStudent["RegistrationFee"]);
-                    objModelStudentFee.MonthlyFee = Convert.ToInt32(aStudent["MonthlyFee"]);
-                    objModelStudentFee.ComputerFee = Convert.ToInt32(aStudent["ComputerFee"]);
-                    objModelStudentFee.Fine = Convert.ToInt32(aStudent["Fine"]);
-                    objModelStudentFee.ExamFee = Convert.ToInt32(aStudent["ExamFee"]);
-                    objModelStudentFee.GeneratorFee = Convert.ToInt32(aStudent["GeneratorFee"]);
-                    objModelStudentFee.FeeMonth = Convert.ToString(aStudent["FeeMonth"]);
-                    objModelStudentFee.FeeMonthText = Convert.ToString(aStudent["FeeMonthText"]);
-                    objModelStudentFee.Total = Convert.ToInt32(aStudent["Total"]);
-                    objModelStudentFee.FeePaidStatus = Convert.ToInt32(aStudent["FeePaidStatus"]);
-
-                    lstModelStudentFee.Add(objModelStudentFee);
-                }
-
-            }
-            return lstModelStudentFee;
-
-        }
-
-        public int FeeVoucherFeePaidEntry(string FeeVoucherFeePaidDate, double FeeVoucherId,double AddedBy)
-        {
-            DataTable tblFeeData = new DataTable();
-            SqlParameter[] param = new SqlParameter[1];
-            param[0] = new SqlParameter("@VoucherId", FeeVoucherId);
-
-            tblFeeData = DALCommon.GetDataUsingDataTable("[sp_Admin_GetFeeIdDataByVoucherID]", param);
-
-            StudentFeeVoucherPaidMark objStudentFeeVoucherPaidMark = new StudentFeeVoucherPaidMark();
-            return objStudentFeeVoucherPaidMark.InsertFeeVoucherFeePaidTransaction(FeeVoucherFeePaidDate, FeeVoucherId, tblFeeData, AddedBy);
-        }
+>>>>>>> c466499924de2141b8ce9fba88b9349e6d130ab6
     }
 }

@@ -17,4 +17,6 @@ namespace iDAS.Common
             get { return new[] { SUCCESS, ATTENTION, INFORMATION, ERROR }; }
         }
     }
+
+
 }

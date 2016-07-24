@@ -14,24 +14,61 @@ namespace iDAS.Controllers
 {
     public class StudentFeeController : BootstrapBaseController
     {
-        BLLStudentFee objBLLStudentFee = new BLLStudentFee();
+        // BLLStudentFee objBLLStudentFee = new BLLStudentFee();
 
         // GET: /Search/
         [HttpGet]
         public ActionResult SearchStudentFee()
         {
-            if (Session[DAL.DALVariables.SchoolAccountId] == null)
-            {
-                return RedirectToAction("Login", "User");
-
-            }
+            SessionCheck(Session[DALVariables.SchoolAccountId]);
             return View();
+        }
+
+        //
+        // GET: /Search1/
+        //[HttpGet]
+        //public ActionResult BulkFeeInsertionPartial()
+        //{
+        //    BindDropdownlist();
+
+        //    return PartialView(customview("_BulkFeesPartialForm", "StudentFee"));
+        //}
+        [HttpPost]
+        public JsonResult GetFeeMonthByYear()
+        {
+            string strString = "";
+            try
+            {
+             
+                BLLStudentFee objBLLStudentFee = new BLLStudentFee();
+
+            
+                DataTable dtFeeMonth = objBLLStudentFee.getFeeMonthsByYearDP();
+                for (int j = 0; j < dtFeeMonth.Rows.Count; j++)
+                {
+
+                    strString += Convert.ToString(dtFeeMonth.Rows[j]["FeeMonthid"]) + "," + Convert.ToString(dtFeeMonth.Rows[j]["FeeMonth"]) + '~';
+                }
+               
+                
+            }
+
+            catch (Exception ex)
+            {
+                
+               DALUtility.ErrorLog(ex.Message, "StudentFeeController, BulkFeeInsertion");
+            }
+            return Json(strString, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SaveBulkFeeInsertion()
         {
             BindDropdownlist();
-            return View();
+            return PartialView(customview("_BulkFeesPartialForm", "StudentFee"));
+        }
+        public ActionResult AdvanceFeeInseration()
+        {
+            return PartialView(customview("_AdvanceFeeInsertion", "StudentFee"));
         }
 
         public void BindDropdownlist()
@@ -49,16 +86,12 @@ namespace iDAS.Controllers
         [HttpPost]
         public ActionResult SaveBulkFeeInsertion(string dropDownClass, string dropDownSection, string dropDownMonthFee, string RegistrationFee, string Addmission, string AddmissionFee, string ReAdmission, string ComputerFee, string Fine, string ExamFee, string GeneratorFee)
         {
-            if (Session[DAL.DALVariables.SchoolAccountId] == null)
-            {
-                return RedirectToAction("Login","User");
                 
-            }
             try
             {
                 BindDropdownlist();
                 BLLStudentFee objBLLStudentFee = new BLLStudentFee();
-                int ClassId  = CheckObjNull(dropDownClass);
+                int ClassId = CheckObjNull(dropDownClass);
                 int SectionId = CheckObjNull(dropDownSection);
                 int dpSelectFeeMonth = CheckObjNull(dropDownMonthFee);
                 int insertResult = 0;
@@ -71,7 +104,7 @@ namespace iDAS.Controllers
                     return Json(new { code = 1, css = "error", message = "Fee month not selected. Please select proper fee month then again try to insert bulk fee record" });
                     //return View();
                 }
-                if (ClassId <= 0 && SectionId >0)
+                if (ClassId <= 0 && SectionId > 0)
                 {
                     //Error("Must Select Class. Please select proper class before selecting section then again try to insert bulk fee record");
                     return Json(new { code = 1, css = "error", message = "Must Select Class. Please select proper class before selecting section then again try to insert bulk fee record" });
@@ -148,6 +181,8 @@ namespace iDAS.Controllers
         [HttpGet]
         public ActionResult SearchFeeReordPartial()
         {
+            SessionCheck(Session[DALVariables.SchoolAccountId]);
+
             BLLStudent objBLLStudent = new BLLStudent();
 
             ViewBag.dpClass = objBLLStudent.GetClassDropdown(Convert.ToInt32(Session[DALVariables.SchoolAccountId]));
@@ -155,11 +190,13 @@ namespace iDAS.Controllers
 
             return PartialView(customview("_SearchFormPartial", "StudentFee"));
         }
-        
+
         // POST: /SearchFeeReordPartial/
         [HttpPost]
         public ActionResult SearchFeeReordPartial(string ComputerCode, string RegNo, string StudentName, string FatherName, string StudentStatus, string dropDownClass, string dropDownSection)
         {
+            SessionCheck(Session[DALVariables.SchoolAccountId]);
+
             StringBuilder strSearchCriteria = new StringBuilder();
             string searchCriteria = "";
             //If Computer Code Is Not Empty
@@ -249,7 +286,7 @@ namespace iDAS.Controllers
             }
             return PartialView("Error");
         }
-        
+
         //
         // POST: /GetStudentFeeRecord/
         [HttpPost]
@@ -271,6 +308,69 @@ namespace iDAS.Controllers
                 }
             }
             return PartialView(customview("_GetFormStudentFeeInfo", "StudentFee"), objModelStudent);
+        }
+
+        public JsonResult AdvanceFeeInserTion(List<FeeViewModel> StudentIndividualFeesInsertion)
+        {
+
+           decimal  result;
+            string message = "";
+            BLLStudentFee objBLLStudentFee = new BLLStudentFee();
+            foreach (var item in StudentIndividualFeesInsertion)
+            {
+                if (item.studentId > 0 && item.FeeMonth >0)
+                {
+                    try
+                    {
+                        item.SchoolAccountId = Convert.ToInt32(Session[DALVariables.SchoolAccountId]);
+
+                        result = objBLLStudentFee.InsertStudentMonthlyAdvanceFeeByStudentId(item.studentId, item.FeeMonth, item.AdmissionFee, item.ReAdmissin, item.RegistrationFee, item.ComputerFee, item.Fine, item.ExamFee, item.GenatorFee, item.FeeDate, item.SchoolAccountId);
+                        if (result > 0)
+                        {
+                            message = "Success";
+
+                        }
+                        else
+                        {
+                            message = "Failed";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        DALUtility.ErrorLog(ex.Message, "StudentFeeController, GetStudentSingleFeeRecord");
+                    }
+                }
+                else
+                {
+                    message= "Error1";
+                }
+            }
+            
+            return Json(message, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        // POST: /GetStudentFeeRecord/
+        [HttpPost]
+        public ActionResult GetAdvanceStudentFeeRecord(string studentID)
+        {
+            ModelStudent objModelStudent = new ModelStudent();
+
+            if (!String.IsNullOrEmpty(studentID.Trim()))
+            {
+                try
+                {
+                    BLLStudentFee objBLLStudentFee = new BLLStudentFee();
+
+                    objModelStudent = objBLLStudentFee.GetStudentFeeInfoById(Convert.ToDecimal(studentID));
+                }
+                catch (Exception ex)
+                {
+                    DALUtility.ErrorLog(ex.Message, "StudentFeeController, GetStudentSingleFeeRecord");
+                }
+            }
+            return PartialView(customview("_AdvanceFeeInsertion", "StudentFee"), objModelStudent);
         }
 
         //
@@ -307,7 +407,8 @@ namespace iDAS.Controllers
                 {
                     try
                     {
-                        objBLLStudentFee = new BLLStudentFee();
+                        BLLStudentFee objBLLStudentFee = new BLLStudentFee();
+
                         int _updateResult = 0;
                         _updateResult = objBLLStudentFee.UpdateStudentSinngleFeeInfoByFeeId(objModelStudentFee);
 

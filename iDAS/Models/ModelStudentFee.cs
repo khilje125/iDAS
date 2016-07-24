@@ -30,4 +30,21 @@ namespace iDAS.Models
         public ModelStudentSection ModelStudentSection { get; set; }
         
     }
+
+    public class FeeViewModel
+    {
+      
+        public decimal studentId { get; set; }      
+         public int FeeMonth { get; set; }
+         public int AdmissionFee { get; set; }
+         public int ReAdmissin { get; set; }
+         public int RegistrationFee { get; set; }
+         public int ComputerFee { get; set; }
+         public int Fine { get; set; }
+         public int ExamFee { get; set; }
+         public int GenatorFee { get; set; }      
+         public string FeeDate { get; set; }
+         public int SchoolAccountId { get; set; }
+    
+    }
 }

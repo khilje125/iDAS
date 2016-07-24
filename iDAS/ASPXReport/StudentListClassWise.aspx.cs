@@ -29,8 +29,13 @@ namespace iDAS.ASPXReport
                 //crystalReport.SummaryInfo.ReportTitle = "StudentCClassInfo-" + DateTime.Now.ToString();//ToString("MM-DD-YYYY hh-mm-ss");
                 //WORKING REPORT//string strRptPath = Server.MapPath("~/") + "Reports//" + "StudentClassReport.rpt";
                 //WORKING REPORT//string strRptPath = Server.MapPath("~/") + "Reports//" + "BankChallanPrintReport.rpt";
+<<<<<<< .mine
                 string strRptPath = Server.MapPath("~/") + "Reports//" + "BankChallanStudentInfo.rpt";
                 //WORKING REPORT//string strRptPath = Server.MapPath("~/") + "Reports//" + "ChallanForm.rpt";
+=======
+                string strRptPath = String.Empty;//Server.MapPath("~/") + "Reports//" + "ChallanForm.rpt";
+
+>>>>>>> .theirs
 
                 
                 //crystalReport.Load(Server.MapPath("~/Reports/ReportStudentsInfo.rpt"));
