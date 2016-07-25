@@ -111,10 +111,8 @@ namespace iDAS.Models
         public string Profession { get; set; }
        
         public string P { get; set; }
-           [Required(ErrorMessage = "Please Enter MonthlyFee")]
+        [Required(ErrorMessage = "Please Enter MonthlyFee")]
         public int MonthlyFee { get; set; }
-
-     
         public string Reference { get; set; }
         [Display(Name = "Gender")]
         public int Sex { get; set; }
@@ -122,11 +120,11 @@ namespace iDAS.Models
         public DateTime DateOfAdmission { get; set; }
         public int Status { get; set; }
         [Required(ErrorMessage = "Must Select Email")]
+        [StringLength(16, ErrorMessage = "Must be between 5 and 50 characters", MinimumLength = 5)]
+        [RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", ErrorMessage = "Must be a valid email")]
         public string Email { get; set; }
        // [Required(ErrorMessage = "Must Select Religon")]
         public int Religon { get; set; }
-       
-
         public DateTime DateOfBirth { get; set; }
         [Required(ErrorMessage = "Please Enter Address")]
         public string Address { get; set; }
@@ -144,6 +142,7 @@ namespace iDAS.Models
    //   [Required(ErrorMessage = "Please Enter AdmissionClass")]
       
         [Required(ErrorMessage = "Please Enter CNIC")]
+        [StringLength(13, MinimumLength = 13, ErrorMessage = "CNIC Max or Min 13 Charcters")]
         public string FatherCNIC { get; set; }
 
         [Required(ErrorMessage = "Please Enter Name")]

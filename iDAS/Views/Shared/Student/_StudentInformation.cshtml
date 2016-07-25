@@ -9,30 +9,31 @@
 }
 
 <style type="text/css">
-    #blah {
-         height: 145px;
-    width: 192px;
-    border: 2px solid grey;
-    margin: 0 0 0 379px;
-    padding: 2px 4px 5px 3px;
-    border-radius: 3px;
-    }
-    .error {
-        color:red !important;
+    #preview {
+        height: 145px;
+        width: 192px;
+        border: 2px solid grey;
+        margin: 0 0 0 379px;
+        padding: 2px 4px 5px 3px;
+        border-radius: 3px;
     }
 
+    .error {
+        color: red !important;
+    }
 </style>
 <script type="text/javascript">
 
 
     $(document).ready(function () {
         debugger;
+        
         $('#preview').hide();
-  $("#studentImage").change(function () {
-        debugger;
-      
-        readURL(this);
-    });
+        $("#studentImage").change(function () {
+            debugger;
+
+            readURL(this);
+        });
         $("#fmGetproductGroupItem").submit();
 
         $('[id*=dateoF]').daterangepicker({
@@ -48,7 +49,12 @@
             console.log(start.toISOString(), end.toISOString(), label);
         });
     });
-
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
     function OngetproductGroupItem(response) {
         if (response > 0) {
 
@@ -69,30 +75,31 @@
         }
     }
 
-  
+
 
 </script>
 
 
 <div class="x_panel">
 
-    <div class="x_content">  
+    <div class="x_content">
         @Html.Partial("_alerts")
-      
+
         <br />
         @using (Html.BeginForm("CreateStudentInfo", "StudentData", FormMethod.Post, new { @class = "form-horizontal", id = "frmsubmit", enctype = "multipart/form-data" }))
         {
-               @Html.AntiForgeryToken()       
-              @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()       
+            @Html.ValidationSummary(true)
             
-                          <div class="form-group">
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Campus</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
 
                     @Html.DropDownList("CampusId", new List<SelectListItem>
                         {
-                          new SelectListItem{ Text = "Boys", Value = "0" },
-                          new SelectListItem{ Text = "Girls", Value = "1" } 
+                             new SelectListItem{ Text = "Girls", Value = "0" } ,
+                             new SelectListItem{ Text = "Boys", Value = "1" },
+                         
                         }, new { @class = "form-control valid" })
                 </div>
 
@@ -103,7 +110,7 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.StudentName, new { @class = "form-control col-md-7 col-xs-12" })
-                        @Html.ValidationMessageFor(m => m.StudentName, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.StudentName, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             <div class="form-group">
@@ -112,7 +119,7 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.FatherName, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.FatherName, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.FatherName, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             <div class="form-group">
@@ -120,17 +127,17 @@
                     Father CNIC<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(m => m.FatherCNIC, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.FatherCNIC, string.Empty, new { @class = "help-block error" })
+                    @Html.TextBoxFor(m => m.FatherCNIC, new { @class = "form-control col-md-7 col-xs-12",@maxlength="13",@placeholder="example 9999999999999", onkeypress="return isNumberKey(event)"})
+                    @Html.ValidationMessageFor(m => m.FatherCNIC, string.Empty,new { @class = "help-block error" })
                 </div>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
                     Email Address<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.Email, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.Email, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             <div class="form-group">
@@ -139,40 +146,35 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.HomeNumber, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.HomeNumber, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.HomeNumber, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
-            <div class="form-group">
-                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @class = "help-block error" })
-                </div>
-            </div>
+          
             <div class="form-group">
                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Profession</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.Profession, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.Profession, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.Profession, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Monthly Fee</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.MonthlyFee, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.MonthlyFee, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.MonthlyFee, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
 
-                
+
                     @Html.DropDownList("Sex", new List<SelectListItem>
-{
-  new SelectListItem{ Text = "Male", Value = "0" },
-  new SelectListItem{ Text = "female", Value = "1" } 
-}, new { @class = "form-control valid" })
+                    {
+                        new SelectListItem{ Text = "Female", Value = "0" } ,
+                      new SelectListItem{ Text = "Male", Value = "1" }
+  
+                    }, new { @class = "form-control valid" })
                 </div>
 
             </div>
@@ -184,7 +186,7 @@
                         {
                           new SelectListItem{ Text = "Muslim", Value = "0" },
                           new SelectListItem{ Text = "NonMuslim", Value = "1" } 
-                        }, new { @class = "form-control valid" })
+                        }, new { @class = "form-control valid", @required="required" })
                 </div>
 
             </div>
@@ -194,7 +196,7 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.DropDownListFor(x => x.ClassId, new SelectList(ViewBag.dpClass, "Value", "Text", "Selected"), new { @class = "form-control" })
-                      @Html.ValidationMessageFor(m => m.ClassId, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.ClassId, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             <div class="form-group">
@@ -203,18 +205,18 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.DropDownListFor(x => x.SectionId, new SelectList(ViewBag.dpSection, "Value", "Text", "Selected"), new { @class = "form-control" })
-                      @Html.ValidationMessageFor(m => m.SectionId, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.SectionId, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
         
            
-       <div class="form-group">
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Date of Birth</label>
                 <div class="col-md-6 col-sm-6 col-xs-12 xdisplay_inputx form-group has-feedback">
-                    <input type="text" class="form-control has-feedback-left" id="dateoFBirth" name="DateOfBirth" placeholder="Date of Birth" aria-describedby="inputSuccess2Status2">
+                    <input type="text" class="form-control has-feedback-left" id="dateoFBirth" name="DateOfBirth" placeholder="Date of Birth" aria-describedby="inputSuccess2Status2" required="required">
                     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                     <span id="inputSuccess2Status2" class="sr-only">(success)</span>
-                     @Html.ValidationMessageFor(m => m.DateOfBirth, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.DateOfBirth, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             <div class="form-group">
@@ -223,7 +225,7 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             <div class="form-group">
@@ -232,7 +234,7 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.HomeNumber, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.HomeNumber, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.HomeNumber, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             
@@ -242,45 +244,34 @@
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.MoblieNumber, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.MoblieNumber, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.MoblieNumber, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
-               <div class="form-group">
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
                     Mobile #2 <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.OtherMobNo, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.OtherMobNo, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.OtherMobNo, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                  Office Number <span class="required">*</span>
+                    Office Number <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     @Html.TextBoxFor(m => m.OfficeNumber, new { @class = "form-control col-md-7 col-xs-12" })
-                      @Html.ValidationMessageFor(m => m.OfficeNumber, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.OfficeNumber, string.Empty, new { @class = "help-block error" })
                 </div>
-            </div>@*
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                            Admission Date <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          @Html.TextBoxFor(m => m.DateOfAdmission, new { @class = "form-control col-md-7 col-xs-12" })
-                        </div>
-                    </div>*@
-
-            
-            
-             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Date of Birth</label>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Date of Admission</label>
                 <div class="col-md-6 col-sm-6 col-xs-12 xdisplay_inputx form-group has-feedback">
-                    <input type="text" class="form-control has-feedback-left" id="dateoFAddmission" name="DateOfAdmission" placeholder="Date of Birth" aria-describedby="inputSuccess2Status2">
+                    <input type="text" class="form-control has-feedback-left" id="dateoFAddmission" name="DateOfAdmission" placeholder="Date of Birth" aria-describedby="inputSuccess2Status2" required="required">
                     <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                     <span id="inputSuccess2Status2" class="sr-only">(success)</span>
-                     @Html.ValidationMessageFor(m => m.DateOfAdmission, string.Empty, new { @class = "help-block error" })
+                    @Html.ValidationMessageFor(m => m.DateOfAdmission, string.Empty, new { @class = "help-block error" })
                 </div>
             </div>
             <div class="form-group">
@@ -292,14 +283,14 @@
                 </div>
             </div>
 
-             <div class="form-group">
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
                     Student Pic<span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                 <input type="file" name="Simage" id="studentImage"/>
+                    <input type="file" name="Simage" id="studentImage" />
                 </div>
-                 
+
             </div>
             <div>
                 <img id="preview" src="#" alt="your image" />
@@ -311,7 +302,7 @@
 
                     <input type="submit" class="btn btn-success" value="Submit">
                 </div>
-                
+
             </div>
         }
     </div>

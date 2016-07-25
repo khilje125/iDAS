@@ -39,6 +39,7 @@ namespace iDAS
                 "~/Scripts/jquery.validate.unobtrusive.min.js",
                  "~/vendors/validator/validator.min.js",
                 "~/Scripts/iPaymentService.min.js"
+           
                 ));
             bundles.Add(new ScriptBundle("~/js/DataTable").Include(
                 "~/vendors/datatables.net/js/jquery.dataTables.min.js",

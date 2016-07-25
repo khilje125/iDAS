@@ -305,6 +305,47 @@ namespace iDAS.Controllers
             return PartialView(customview("_GetFormStudentFeeInfo", "StudentFee"), objModelStudent);
         }
 
+        public JsonResult AdvanceFeeInserTion(List<FeeViewModel> StudentIndividualFeesInsertion)
+        {
+
+           decimal  result;
+            string message = "";
+            BLLStudentFee objBLLStudentFee = new BLLStudentFee();
+            foreach (var item in StudentIndividualFeesInsertion)
+            {
+                if (item.studentId > 0 && item.FeeMonth >0)
+                {
+                    try
+                    {
+                        item.SchoolAccountId = Convert.ToInt32(Session[DALVariables.SchoolAccountId]);
+
+                        result = objBLLStudentFee.InsertStudentMonthlyAdvanceFeeByStudentId(item.studentId, item.FeeMonth, item.AdmissionFee, item.ReAdmissin, item.RegistrationFee, item.ComputerFee, item.Fine, item.ExamFee, item.GenatorFee, item.FeeDate, item.SchoolAccountId);
+                        if (result > 0)
+                        {
+                            message = "Success";
+
+                        }
+                        else
+                        {
+                            message = "Failed";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        DALUtility.ErrorLog(ex.Message, "StudentFeeController, GetStudentSingleFeeRecord");
+                    }
+                }
+                else
+                {
+                    message= "Error1";
+                }
+            }
+            
+            return Json(message, JsonRequestBehavior.AllowGet);
+        }
+
+
+
         // POST: /GetStudentFeeRecord/
         [HttpPost]
         public ActionResult GetAdvanceStudentFeeRecord(string studentID)

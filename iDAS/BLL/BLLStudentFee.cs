@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace iDAS.BLL
 {
-    public class BLLStudentFee 
+    public class BLLStudentFee
     {
         public List<ModelStudent> GetStudentListReport(string SearchCriteria, decimal SchoolAccountId)
         {
@@ -29,7 +29,7 @@ namespace iDAS.BLL
                 {
                     ModelStudent objModelStudent = new ModelStudent();
                     objModelStudent.StudentId = Convert.ToInt32(aStudent["StudentId"]);
-                    objModelStudent.ComputerCode =  Convert.ToInt32(aStudent["ComputerCode"]);
+                    objModelStudent.ComputerCode = Convert.ToInt32(aStudent["ComputerCode"]);
                     objModelStudent.RegNo = Convert.ToInt32(aStudent["RegNo"]);
                     objModelStudent.StudentName = Convert.ToString(aStudent["StudentName"]);
                     objModelStudent.FatherName = Convert.ToString(aStudent["FatherName"]);
@@ -53,13 +53,13 @@ namespace iDAS.BLL
 
         public DataTable getFeeMonthsByYearDP()
         {
-            
-                 DataTable adataSetTable = new DataTable();
 
-                 adataSetTable = DALCommon.GetDataByStoredProcedure("[sp_Admin_GetFeeMothByYear]");
-                 return adataSetTable;
-           
-        
+            DataTable adataSetTable = new DataTable();
+
+            adataSetTable = DALCommon.GetDataByStoredProcedure("[sp_Admin_GetFeeMothByYear]");
+            return adataSetTable;
+
+
         }
         public DataTable GetStudentDataTableForReport(string SearchCriteria, decimal SchoolAccountId)
         {
@@ -73,6 +73,36 @@ namespace iDAS.BLL
             return DALCommon.GetDataUsingDataTable("[sp_Admin_GetStudentListBySchoolId]", param);
         }
 
+
+
+
+        public  decimal InsertStudentMonthlyAdvanceFeeByStudentId(decimal StudentId, int Feemonth, int AdmissionFee, int ReAdmissionFee,
+         int RegistrationFee,  int ComputerFee, int Fine, int ExamFee, int GenatorFee, string FeeDate,int SchoolAccountId)
+          {
+            try
+            {
+                SqlParameter[] paramStudentFee = new SqlParameter[11];
+                paramStudentFee[0] = new SqlParameter("@StudentId", Convert.ToDecimal(StudentId));
+                paramStudentFee[1] = new SqlParameter("@FeeMonth",Feemonth);
+                paramStudentFee[2] = new SqlParameter("@AdmissionFee", AdmissionFee);
+               
+                paramStudentFee[3] = new SqlParameter("@ReAdmissionFee", ReAdmissionFee);
+                paramStudentFee[4] = new SqlParameter("@RegistrationFee", RegistrationFee);
+                paramStudentFee[5] = new SqlParameter("@ComputerFee", ComputerFee);
+                paramStudentFee[6] = new SqlParameter("@Fine", Fine);
+                paramStudentFee[7] = new SqlParameter("@ExamFee", ExamFee);
+                paramStudentFee[8] = new SqlParameter("@GeneratorFee", GenatorFee);
+                paramStudentFee[9] = new SqlParameter("@FeeDate",Convert.ToString(FeeDate));
+                paramStudentFee[10] = new SqlParameter("@SchoolAccountId", SchoolAccountId);
+                return DALCommon.ExecuteNonQueryReturnIdentity("[sp_Admin_InsertStudentMonthlyFeeByStudentId]", paramStudentFee);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         public ModelStudent GetStudentFeeInfoById(decimal StudentID)
         {
             ModelStudent objModelStudent = new ModelStudent();
@@ -120,7 +150,7 @@ namespace iDAS.BLL
                         {
                             objModelStudentFee.FeeDate = DateTime.Now;
                         }
-                        
+
                         objModelStudentFee.AdmissionFee = DALUtility.isNumericDBNULL(studentFeeRow["AdmissionFee"].ToString());
                         objModelStudentFee.Admission = DALUtility.isNumericDBNULL(studentFeeRow["Admission"].ToString());
                         objModelStudentFee.ReAdmissionFee = DALUtility.isNumericDBNULL(studentFeeRow["ReAdmissionFee"].ToString());
@@ -133,7 +163,7 @@ namespace iDAS.BLL
                         objModelStudentFee.FeeMonth = Convert.ToString(studentFeeRow["FeeMonth"]);
                         objModelStudentFee.Total = DALUtility.isNumericDBNULL(studentFeeRow["Total"].ToString());
                         objModelStudentFee.FeePaidStatus = Convert.ToInt32(studentFeeRow["FeePaidStatus"]);
-                        
+
                         objModelStudent.StudentMonthlyFeeList.Add(objModelStudentFee);
                     }
                 }
@@ -238,14 +268,14 @@ namespace iDAS.BLL
 
         //for bulk Fee Insertion
 
-        public int InsertBulkStudentMonthlyFee(ModelStudentFee objModelStudentFee,string SearchCriteria,int FeeMonth)
+        public int InsertBulkStudentMonthlyFee(ModelStudentFee objModelStudentFee, string SearchCriteria, int FeeMonth)
         {
             ModelStudent objModelStudent = new ModelStudent();
             DataTable tblStudents = new DataTable();
             int _result = 0;
             decimal _UserAccountId = Convert.ToDecimal(HttpContext.Current.Session[DAL.DALVariables.UserAccountId].ToString());
             decimal _SchoolAccountId = Convert.ToDecimal(HttpContext.Current.Session[DAL.DALVariables.SchoolAccountId].ToString());
-            
+
             SqlParameter[] param = new SqlParameter[2];
 
             param[0] = new SqlParameter("@SearchCriteria", SearchCriteria);

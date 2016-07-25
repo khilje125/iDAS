@@ -31,7 +31,8 @@
          
                 @using (Html.BeginForm("UpdateStudentInfo", "StudentData", FormMethod.Post, new { @class = "form-horizontal", id = "frmEditStudentInfo" }))
                 {
-                     @Html.ValidationSummary(true)
+                     @Html.AntiForgeryToken()       
+                      @Html.ValidationSummary(true)
                     @Html.HiddenFor(m => m.StudentId);
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">

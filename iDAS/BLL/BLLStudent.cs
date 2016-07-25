@@ -36,7 +36,7 @@ namespace iDAS.BLL
                     objModelStudent.MonthlyFee = Convert.ToInt32(aStudent["MonthlyFee"]);
                     objModelStudent.Sex = Convert.ToInt32(aStudent["Gender"]);
                     objModelStudent.DateOfBirth = Convert.ToDateTime(aStudent["DateOfBirth"]);
-                    objModelStudent.Status = Convert.ToInt32(aStudent["Status"]);
+                    objModelStudent.Status =Convert.ToInt32(aStudent["Status"]);
                     objModelStudent.StatusText = Convert.ToString(aStudent["StatusText"]);
                     objModelStudent.StudentClass.ClassName = Convert.ToString(aStudent["ClassName"]);
                     objModelStudent.StudentSection.SectionName = Convert.ToString(aStudent["SectionName"]);
@@ -86,7 +86,7 @@ namespace iDAS.BLL
         {
             aStudent.AddedBy = Convert.ToInt32(HttpContext.Current.Session[DALVariables.SchoolAccountId]);
           
-            SqlParameter[] param = new SqlParameter[22];
+            SqlParameter[] param = new SqlParameter[23];
             SqlCommand cmd = new SqlCommand();
             // cmd.CommandType = CommandType.StoredProcedure;
           
@@ -115,6 +115,7 @@ namespace iDAS.BLL
             param[19] = new SqlParameter("@Religon", aStudent.Religon);
             param[20] = new SqlParameter("@StudentImage", aStudent.Simage);
             param[21] = new SqlParameter("@AddedBy", aStudent.AddedBy);
+            param[22] = new SqlParameter("@Status", aStudent.Status);
       
 
             return DALCommon.ExecuteNonQueryReturnIdentity("[InsertUpdateStudentInfo]", param);
